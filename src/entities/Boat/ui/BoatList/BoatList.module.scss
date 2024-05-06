@@ -1,0 +1,16 @@
+
+
+.BoatList.list{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.BoatList.box{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card{
+  margin-bottom: var(--spacing-m);
+  margin-right: var(--spacing-m);
+}

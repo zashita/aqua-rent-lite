@@ -1,0 +1,17 @@
+.Navbar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid var(--stroke-primary-outline);
+    background-color: var(--background-primary);
+    height: var(--navbar-height);
+    justify-content: center;
+    gap: 20px;
+}
+
+
+
+.Text {
+    color: var(--primary-color)
+}

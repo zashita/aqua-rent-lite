@@ -1,0 +1,165 @@
+:root {
+    --font-family-main: consolas, "Times New Roman", serif;
+    --font-size-m: 16px;
+    --font-line-m: 24px;
+    --font-m: var(--font-size-m) / var(--font-line-m) var(--font-family-main);
+    --font-size-l: 24px;
+    --font-line-l: 32px;
+    --font-l: var(--font-size-l) / var(--font-line-l) var(--font-family-main);
+    --font-size-xl: 32px;
+    --font-line-xl: 40px;
+    --font-xl: var(--font-size-xl) / var(--font-line-xl) var(--font-family-main);
+
+
+
+        // Размеры
+        --navbar-height: 60px;
+        --sidebar-height: calc(100vh - var(--navbar-height));
+        --sidebar-width: 300px;
+        --sidebar-width-collapsed: 150px;
+
+        // z - индекс
+
+        --modal-z-index: 10;
+
+        // System Colors
+        --overlay-color: rgba(0 0 0 / 80%);
+        --red-color: rgb(255, 0, 0);
+        --red-dark-color: rgb(107, 3, 3);
+
+        //Stroke
+        --stroke-accent: var(--purple-500);
+        --stroke-accent-disabled: var(--purple-300);
+        --stroke-accent-hover: var(--purple-400);
+        --stroke-accent-inverse: var(--coral-main—500);
+        --stroke-caution: var(--red-main—500);
+        --stroke-primary-outline: var(--blacks-300);
+        --stroke-primary-outline-disabled: var(--blacks-300);
+        --stroke-primary-outline-hover: var(--blacks-400);
+
+        //Text
+        --text-accent: var(--purple-main-600);
+        --text-accent-disabled: var(--purple-400);
+        --text-accent-inverse: var(--coral-main—500);
+        --text-accent-inverse-disabled: var(--coral-400);
+        --text-caution: var(--red-main—500);
+        --text-caution-disabled: var(--red-300);
+        --text-disabled: var(--blacks-400);
+        --text-inverse: var(--whites-main—900);
+        --text-on_color: var(--whites-main—900);
+        --text-on_color-disabled: var(--whites-700);
+        --text-positive: var(--green-main—500);
+        --text-primary: var(--blacks-main—900);
+        --text-secondary: var(--blacks-700);
+
+        //Background
+        --background-accent-inverse: var(--coral-main—500);
+        --background-accent-inverse-subdued: var(--coral-200);
+        --background-accent-subdued: var(--purple-100);
+        --background-additional: var(--blacks-700);
+        --background-additional-strong: var(--blacks-800);
+        --background-caution: var(--red-main—500);
+        --background-caution-subdued: var(--red-100);
+        --background-colored: var(--purple-900);
+        --background-primary: var(--whites-main—900);
+        --background-primary-inverse: var(--blacks-main—900);
+        --background-secondary: var(--blacks-100);
+        --background-secondary-strong: var(--blacks-400);
+        --background-accent: var(--purple-main-600);
+        --background-accent-inverted: var(--coral-main—500);
+        --background-accent-inverse-hover: var(--coral-400);
+        --background-accent-hover: var(--purple-700);
+        --background-accent-disabled: var(--blacks-100);
+
+        //Icons
+        --icon-accent: var(--purple-main—600);
+        --icon-accent-disabled: var(--purple-400);
+        --icon-accent-hover: var(--purple-500);
+        --icon-caution: var(--red-main—500);
+        --icon-disabled: var(--blacks-400);
+        --icon-inverse: var(--whites-main—900);
+        --icon-on_color: var(--whites-main—900);
+        --icon-positive: var(--green-main—500);
+        --icon-primary: var(--blacks-main—900);
+        --icon-secondary: var(--blacks-700);
+        --icon-warning: var(--orange-main—500);
+        //Purple
+        --purple-700: rgba(109, 68, 166, 100%);
+        --purple-main-600: rgba(134, 84, 204, 100%);
+        --purple-500: rgba(140, 62, 238, 80%);
+        --purple-400: rgba(140, 62, 238, 50%);
+        --purple-300: rgba(140, 62, 238, 30%);
+        --purple-200: rgba(140, 62, 238, 15%);
+        --purple-100: rgba(140, 62, 238, 10%);
+
+        //Coral
+        --coral-main—500: rgba(255, 127, 80, 100%);
+        --coral-400: rgba(255, 127, 80, 75%);
+        --coral-200: rgba(255, 127, 80, 20%);
+
+        //Black
+
+        --blacks-100: #2926320C;
+        --blacks-300: #2A273226;
+        --blacks-400: #2A27324C;
+        --blacks-700: #2A27327F;
+        --blacks-800: #2A2732CC;
+        --blacks-main—900: #2A2732FF;
+
+        //White
+        --whites-100: #FDFDFD14;
+        --whites-300: #FDFDFD26;
+        --whites-400: #FDFDFD4C;
+        --whites-700: #FDFDFD7F;
+        --whites-800: #FDFDFDCC;
+        --whites-main—900: #FDFDFDFF;
+
+        //Orange
+        --orange-100: #FFA80026;
+        --orange-main—500: #FFA800FF;
+
+        //Red
+        --red-100: #FF3B3026;
+        --red-300: #FF3B3066;
+        --red-main—500: #FF3B30FF;
+
+        //Green
+        --green-color: #4CAF5019;
+        --green-main—500: #4CAF50FF;
+
+
+        // Радиусы
+        --modal-border-radius: 16px;
+        --input-border-radius: 8px;
+        --card-border-radius: 16px;
+        --card-image-border-radius: 8px;
+
+        // Spacing
+        --spacing-2xs: 4px;
+        --spacing-xs: 8px;
+        --spacing-s: 12px;
+        --spacing-m: 16px;
+        --spacing-l: 20px;
+        --spacing-xl: 24px;
+        --spacing-2xl: 32px;
+        --spacing-3xl: 40px;
+        --spacing-4xl: 60px;
+
+        // Paddings
+        --padding-s: 12px;
+        --padding-m: 16px;
+        --padding-l: 32px;
+        --padding-xl: 64px;
+
+
+        //Button Size
+        --button-height-l: 60px;
+        --button-height-m: 40px;
+        --button-height-s: 36px;
+
+        //Input Size
+        --input-height: 60px;
+
+
+    }
+

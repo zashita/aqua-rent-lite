@@ -1,0 +1,95 @@
+.BoatListItem.list{
+  display: flex;
+  width: 100%;
+  height: 200px;
+  .card{
+    display: flex;
+    transition: 0.2s;
+    cursor: pointer;
+    padding: var(--spacing-xs);
+    background-color: var(--background-secondary);
+    border-radius: var(--card-border-radius);
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+  }
+  &:hover{
+    opacity: 0.8;
+    transform: scale(1.01);
+  }
+  .Image{
+      height: 100%;
+      width: auto;
+      border-radius: var(--card-image-border-radius);
+  }
+  .date{
+
+  }
+  .InfoWrapper{
+
+  }
+  .type{
+
+  }
+  .views{
+
+  }
+  .title{
+
+  }
+}
+
+.BoatListItem.box{
+  display: flex;
+  width: 300px;
+  .card{
+      transition: 0.2s;
+      cursor: pointer;
+      padding: var(--spacing-xs);
+      background-color: var(--background-secondary);
+    border-radius: var(--card-border-radius);
+
+  }
+  .Image{
+    width: 100%;
+    border-radius: var(--card-image-border-radius);
+  }
+  .ImageWrapper{
+    position: relative;
+    display: flex;
+      width: 100%;
+      height: auto;
+  }
+  .date{
+    position: absolute;
+    right: var(--spacing-2xs);
+    top: var(--spacing-2xs);
+    display: none;
+    color: var(--text-on_color);
+    font-size: var(--spacing-s);
+
+
+  }
+  &:hover{
+  opacity: 0.8;
+    transform: scale(1.01);
+    .date{
+      display: block;
+    }
+}
+  .InfoWrapper{
+      display: flex;
+    justify-content: space-between;
+  }
+  .type{
+      color: var(--text-secondary)
+  }
+  .views{
+      display: flex;
+    align-items: center;
+    column-gap: var(--spacing-2xs);
+  }
+  .title{
+    color: var(--text-primary)
+  }
+}
