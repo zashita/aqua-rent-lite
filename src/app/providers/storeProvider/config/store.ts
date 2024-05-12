@@ -4,6 +4,7 @@ import {loginReducer} from "features/authByEmail";
 import {boatReducer} from "entities/Boat";
 import {ThunkExtraArg} from "../types/types";
 import {$api} from "shared/api/api";
+import {mainPageReducer} from "pages/MainPage";
 
 const extraArg: ThunkExtraArg = {
     api: $api
@@ -13,7 +14,8 @@ export const store = configureStore({
     reducer: {
         user: userReducer,
         loginForm: loginReducer,
-        boats: boatReducer
+        boats: boatReducer,
+        mainPage: mainPageReducer
     },
     middleware:(getDefaultMiddleware)=>
         getDefaultMiddleware({

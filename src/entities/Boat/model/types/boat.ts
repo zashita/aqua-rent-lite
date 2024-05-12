@@ -18,6 +18,7 @@ export enum BoatTypes{
 
 export interface BoatSchema{
     boatList?: Boat[];
+    currentBoat?: Boat;
     isLoading?: boolean;
 }
 
