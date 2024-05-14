@@ -1,7 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { USER_LOCALSTORAGE_KEY } from 'shared/const/localStorage';
-import { Boat, BoatSchema } from '../types/boat';
-import {fetchBoatList} from "../../services/fetchBoatList/fetchBoatList";
+
 import {Order, OrderSchema} from "../types/orderSchema";
 
 const initialState: OrderSchema = {};

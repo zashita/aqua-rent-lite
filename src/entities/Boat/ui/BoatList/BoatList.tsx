@@ -12,12 +12,14 @@ export interface BoatListProps{
     className?: string;
     data?: Boat[];
     view?: BoatListView;
+    isLoading?: boolean
 }
 export const BoatList:React.FC<BoatListProps> = (props) => {
     const {
         data,
         view = BoatListView.BOX,
-        className
+        className,
+        isLoading
     } = props
 
     const mods: Record<string, boolean> = {
@@ -32,6 +34,9 @@ export const BoatList:React.FC<BoatListProps> = (props) => {
             className = {cls.card}
         />
     }
+
+
+
 
     return (
         <div className={classNames(cls.BoatList, mods, [className])}>

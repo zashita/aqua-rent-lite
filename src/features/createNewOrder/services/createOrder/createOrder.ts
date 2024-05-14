@@ -5,21 +5,23 @@ import {$api} from "shared/api/api";
 import {AppDispatch} from "app/providers/storeProvider/config/store";
 import {USER_LOCALSTORAGE_KEY} from "shared/const/localStorage";
 import {ThunkConfig} from "../../../../app/providers/storeProvider/types/types";
+import {Order} from "../../../../entities/Order/model/types/orderSchema";
 
-export interface LoginByEmail{
-    email: string;
-    password: string;
+export interface CreateOrder{
+    userId: string;
+    boatId: string;
+    date: string;
 }
-export const loginByEmail = createAsyncThunk<User, LoginByEmail, ThunkConfig<string>>(
-    'login/loginByEmail',
-    async (user, thunkAPI)=>{
+export const createOrder = createAsyncThunk<Order, CreateOrder, ThunkConfig<string>>(
+    'create/createOrder',
+    async (order, thunkAPI)=>{
         const {dispatch, extra} = thunkAPI
-        const response = await extra.api.post( '/auth/login', user)
+        const response = await extra.api.post( '/order', order)
         if(!response.data){
             throw new Error()
         }
         dispatch(userActions.setAuthData(response.data))
-        localStorage.setItem(USER_LOCALSTORAGE_KEY, JSON.stringify(response.data.token));
+        localStorage.setItem(USER_LOCALSTORAGE_KEY, JSON.stringify(response.data));
         return response.data;
     }
 )

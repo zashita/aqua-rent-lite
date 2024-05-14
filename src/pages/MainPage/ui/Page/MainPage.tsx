@@ -7,6 +7,7 @@ import {Button, Divider, Typography} from "@mui/material";
 import {mainPageActions} from "../../model/slice/mainPageSlice";
 import {ViewModeSwitcher} from "../ViewModeSwitcher/ViewModeSwitcher";
 import cls from './MainPage.module.scss'
+import {MainPageSkeleton} from "../PageSkeleton/MainPageSkeleton";
 
 
 const MainPage = () => {
@@ -17,13 +18,12 @@ const MainPage = () => {
     const {boatList, isLoading} = useSelector(getBoatState)
     const viewMode = useSelector(getMainPageViewMode)
 
-
     if(isLoading){
         return (
-            <p>Loading</p>
+            <MainPageSkeleton/>
         )
     }
-    else
+
     return (
         <div>
             <div className={cls.topContainer}>

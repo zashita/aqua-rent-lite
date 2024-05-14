@@ -1,7 +1,7 @@
 import React, {useCallback, useState} from 'react';
 import { classNames } from 'shared/lib/classNames/classNames';
 // import { useTranslation } from 'react-i18next';
-// import { LoginModal } from 'features/AuthByUsername';
+// import { CreateOrderModal } from 'features/AuthByUsername';
 // import { useDispatch, useSelector } from 'react-redux';
 // import { getUserAuthData, userActions } from 'entities/User';
 import cls from './Navbar.module.scss';
