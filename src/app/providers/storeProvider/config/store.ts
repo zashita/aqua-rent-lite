@@ -5,7 +5,8 @@ import {boatReducer} from "entities/Boat";
 import {ThunkExtraArg} from "../types/types";
 import {$api} from "shared/api/api";
 import {mainPageReducer} from "pages/MainPage";
-import {createOrderReducer, createOrderSlice} from "../../../../features/createNewOrder";
+import {createOrderReducer, createOrderSlice} from "features/createNewOrder";
+import {createBoatReducer} from "features/registrateNewBoat";
 
 const extraArg: ThunkExtraArg = {
     api: $api
@@ -18,6 +19,7 @@ export const store = configureStore({
         boats: boatReducer,
         mainPage: mainPageReducer,
         createOrder: createOrderReducer,
+        createBoat: createBoatReducer
     },
     middleware:(getDefaultMiddleware)=>
         getDefaultMiddleware({

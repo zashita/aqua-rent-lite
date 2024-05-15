@@ -10,6 +10,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {getUserAuthData} from "entities/User";
 import {userActions} from "entities/User";
 import {LoginModal} from "features/authByEmail";
+import {CreateBoatModal} from 'features/registrateNewBoat'
 
 export interface NavbarProps{
     className?: string;
@@ -21,6 +22,12 @@ export const Navbar:React.FC<NavbarProps> = ({ className }) => {
     const toggleModal = useCallback(() => {
         setAuthModal((prevState) => !prevState);
     }, []);
+
+    const [createBoatModal, setCreateBoatModal] = useState(false);
+    const toggleBoatModal = useCallback(() => {
+        setCreateBoatModal((prevState) => !prevState);
+    }, []);
+
 
     const onLogout = () => {
         dispatch(userActions.logout());
@@ -51,7 +58,7 @@ export const Navbar:React.FC<NavbarProps> = ({ className }) => {
                     Profile
                 </Link>
                 <Button
-                    onClick={() => {}}
+                    onClick={toggleBoatModal}
                 >
                     Create boat
                 </Button>
@@ -60,6 +67,10 @@ export const Navbar:React.FC<NavbarProps> = ({ className }) => {
                 >
                     Logout
                 </Button>
+                <CreateBoatModal
+                    open={createBoatModal}
+                    onCLose={toggleBoatModal}
+                />
 
             </div>
         );
@@ -87,6 +98,7 @@ export const Navbar:React.FC<NavbarProps> = ({ className }) => {
                 open={authModal}
                 onCLose={toggleModal}
             />
+
 
         </div>
     );
