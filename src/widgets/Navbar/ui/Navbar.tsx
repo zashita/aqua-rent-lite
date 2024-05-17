@@ -11,6 +11,7 @@ import {getUserAuthData} from "entities/User";
 import {userActions} from "entities/User";
 import {LoginModal} from "features/authByEmail";
 import {CreateBoatModal} from 'features/registrateNewBoat'
+import {AppRoutes, RoutePath} from "../../../shared/config/routeConfig/routeConfig";
 
 export interface NavbarProps{
     className?: string;
@@ -37,25 +38,30 @@ export const Navbar:React.FC<NavbarProps> = ({ className }) => {
         return (
             <div className={classNames(cls.Navbar, {}, [className])}>
                 <Link
-                    href="/"
+                    href={RoutePath.main}
                 >
                     Main
 
                 </Link>
                 <Link
-                    href="/about"
+                    href={RoutePath.about}
                 >
                     About
                 </Link>
                 <Link
-                    href="/about"
+                    href={RoutePath.about}
                 >
                     Orders
                 </Link>
                 <Link
-                    href="/profile"
+                    href={RoutePath.profile}
                 >
                     Profile
+                </Link>
+                <Link
+                    href={RoutePath.admin_page}
+                >
+                    Administrator panel
                 </Link>
                 <Button
                     onClick={toggleBoatModal}

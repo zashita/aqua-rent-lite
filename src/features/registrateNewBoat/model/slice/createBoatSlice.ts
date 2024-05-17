@@ -32,6 +32,7 @@ export const createBoatSlice = createSlice({
             },
             setImage: (state, action: PayloadAction<File>) =>{
                 state.image = action.payload
+                console.log(action.payload)
             }
 
         },

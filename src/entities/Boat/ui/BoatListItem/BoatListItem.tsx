@@ -1,13 +1,17 @@
-import React, {memo} from 'react';
+import React, {memo, MouseEventHandler, useCallback} from 'react';
 import Box from '@mui/material/Box';
 import {Boat, BoatListView, BoatTypes} from "../../model/types/boat";
 import cls from './BoatListItem.module.scss'
 import {classNames} from "../../../../shared/lib/classNames/classNames";
-import {Typography} from "@mui/material";
+import {Button, Typography} from "@mui/material";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import {$api, baseUrl} from "../../../../shared/api/api";
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
+import {RoutePath} from "../../../../shared/config/routeConfig/routeConfig";
+import {useDispatch} from "react-redux";
+import {AppDispatch} from "../../../../app/providers/storeProvider";
+import {deleteBoatById} from "../../services/deleteBoatById/deleteBoatById";
 
 const bull = (
     <Box
@@ -26,17 +30,26 @@ export interface BoatListItemProps{
     className?: string
     boat: Boat;
     view?: BoatListView;
+    admin?: boolean
 }
 export const BoatListItem = memo((props: BoatListItemProps) => {
     const {
       boat,
       view,
-      className
+      className,
+      admin = false
     } = props
 const navigate = useNavigate();
-    const navigateToBoatPage = (id: string) =>{
-        navigate(`boat/${boat.id}`)
-    }
+    const dispatch = useDispatch<AppDispatch>()
+    
+    const navigateToBoatPage = useCallback(() => {
+        navigate(RoutePath.boat_page + boat.id)
+    }, [boat.id, navigate])
+
+    const deleteBoat = useCallback((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        event.stopPropagation()
+        dispatch(deleteBoatById(boat.id))
+    }, [boat.id, dispatch])
 
     const {t} = useTranslation()
     if(view === BoatListView.LIST){
@@ -46,7 +59,7 @@ const navigate = useNavigate();
             >
                 <div
                     className={cls.card}
-                    onClick={() => navigateToBoatPage(boat.id)}
+                    onClick={navigateToBoatPage}
                 >
                     <img
                         alt = {boat.name}
@@ -63,11 +76,21 @@ const navigate = useNavigate();
                         <Typography>
                             description: <b>{boat.description}</b>
                         </Typography>
+                        {
+                            admin?
+                                <Button onClick={(e) => deleteBoat(e)}>
+                                    Delete
+                                </Button>
+                                :
+                                null
+                        }
+
                     </div>
                     <Typography className = {cls.date}>
                         created: <b>{boat.createdAt.slice(5,10)}</b>
                     </Typography>
                 </div>
+
             </div>
         )
     }
@@ -78,7 +101,7 @@ const navigate = useNavigate();
         >
             <div
                 className={cls.card}
-                onClick={() => navigateToBoatPage(boat.id)}
+                onClick={navigateToBoatPage}
             >
                 <div className={cls.ImageWrapper}>
                     <img

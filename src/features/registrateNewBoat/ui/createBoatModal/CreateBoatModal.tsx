@@ -15,8 +15,8 @@ export const CreateBoatModal:React.FC<CreateBoatModalProps> = (props) => {
     return (
         <Modal
             className={cls.Modal}
-    open={open}
-    onClose={onCLose}
+            open={open}
+            onClose={onCLose}
         >
         <CreateBoatForm/>
         </Modal>

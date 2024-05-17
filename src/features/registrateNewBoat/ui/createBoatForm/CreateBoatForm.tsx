@@ -9,6 +9,7 @@ import {USER_LOCALSTORAGE_KEY} from "../../../../shared/const/localStorage";
 import {getBoatCreationData} from "../../model/selectors/getBoatCreationData/getBoatCreationData";
 import {createBoatActions} from "../../model/slice/createBoatSlice";
 import {createBoat} from "../../services/createBoat/createBoat";
+import Uploader from 'shared/ui/Uploader';
 
 
 export interface CreateOrderFormProps{
@@ -38,12 +39,14 @@ export const CreateBoatForm:React.FC<CreateOrderFormProps> = ({className}) => {
     }, [dispatch]);
 
     const onChangeImage = useCallback((value: File) => {
+        console.log(value)
         dispatch(createBoatActions.setImage(value));
     }, [dispatch]);
 
 
     const onSubmitClick = useCallback( () => {
         dispatch(createBoat({name, userId, description, image}));
+        console.log(image)
     }, [dispatch, name, userId, description, image]);
 
     return (
@@ -68,14 +71,7 @@ export const CreateBoatForm:React.FC<CreateOrderFormProps> = ({className}) => {
                 onChange={event => onChangeDescription(event.target.value)}
                 value={description}
             />
-            <Input
-                // color={'secondary'}
-                placeholder={'Изображение'}
-                type={'file'}
-                // @ts-ignore
-                onChange={event => onChangeImage(event.target.value)}
-                value={image}
-            />
+            <Uploader file={image} setFile={onChangeImage} fileType={'image'}/>
             <Button
                 onClick={onSubmitClick}
                 disabled={isLoading}
