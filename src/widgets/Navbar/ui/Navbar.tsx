@@ -12,6 +12,10 @@ import {userActions} from "entities/User";
 import {LoginModal} from "features/authByEmail";
 import {CreateBoatModal} from 'features/registrateNewBoat'
 import {AppRoutes, RoutePath} from "../../../shared/config/routeConfig/routeConfig";
+import {USER_LOCALSTORAGE_KEY} from "../../../shared/const/localStorage";
+import {jwtDecode} from "jwt-decode";
+import {getMyId} from "../../../shared/lib/getMyId/getMyId";
+import {useNavigate} from "react-router-dom";
 
 export interface NavbarProps{
     className?: string;
@@ -24,15 +28,20 @@ export const Navbar:React.FC<NavbarProps> = ({ className }) => {
         setAuthModal((prevState) => !prevState);
     }, []);
 
+
+    const userId = getMyId()
+
     const [createBoatModal, setCreateBoatModal] = useState(false);
     const toggleBoatModal = useCallback(() => {
         setCreateBoatModal((prevState) => !prevState);
     }, []);
 
-
+    const navigate = useNavigate()
     const onLogout = () => {
         dispatch(userActions.logout());
+        navigate(RoutePath.main)
     };
+
 
     if (authData) {
         return (
@@ -54,7 +63,7 @@ export const Navbar:React.FC<NavbarProps> = ({ className }) => {
                     Orders
                 </Link>
                 <Link
-                    href={RoutePath.profile}
+                    href={RoutePath.profile + userId}
                 >
                     Profile
                 </Link>

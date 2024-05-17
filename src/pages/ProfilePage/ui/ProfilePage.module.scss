@@ -1,0 +1,22 @@
+.ProfileImage{
+  width: 250px;
+  height: 250px;
+}
+.InfoWrapper{
+  width: 85%;
+  display: flex;
+  justify-content: space-between;
+  align-self: center;
+}
+
+.ProfilePage{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0 auto;
+  row-gap: var(--spacing-3xl);
+}
+.Title{
+  align-self: center;
+
+}

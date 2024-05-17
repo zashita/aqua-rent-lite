@@ -7,7 +7,7 @@ export interface BoatId{
     id: string;
 }
 
-export const deleteBoatById = createAsyncThunk<User, string, ThunkConfig<string>>(
+export const deleteUserById = createAsyncThunk<User, string, ThunkConfig<string>>(
     'users/deleteUserById',
     async (userId, thunkAPI)=>{
         const {extra} = thunkAPI

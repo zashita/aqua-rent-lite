@@ -12,8 +12,16 @@ export {
 }from "./model/selectors/getUserList/getUserList"
 
 export {
-    fetchUsersList
+    fetchUsersList,
 } from './services/fetchUsersList/fetchUsersList'
+
+export {
+    deleteUserById
+} from './services/deleteUserById/deleteUserById'
+
+export {
+    fetchUserProfile
+} from './services/fetchUserProfile/fetchUserProfile'
 
 export {
     userSlice,

@@ -23,7 +23,10 @@ export const userSlice = createSlice({
         },
         setUsersList: (state, action: PayloadAction<User[]>) => {
             state.usersList = action.payload
-        }
+        },
+        setCurrentProfile: (state, action: PayloadAction<User>)=>{
+            state.currentProfile =action.payload;
+        },
     },
 });
 

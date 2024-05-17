@@ -1,0 +1,28 @@
+.Card.list{
+  width: 100%;
+  display: flex;
+  transition: 0.2s;
+  cursor: pointer;
+  padding: var(--spacing-xs);
+  background-color: var(--background-secondary);
+  border-radius: var(--card-border-radius);
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  &:hover{
+      opacity: 0.8;
+      transform: scale(1.01);
+  }
+}
+
+.Card.grid{
+  transition: 0.2s;
+  cursor: pointer;
+  padding: var(--spacing-xs);
+  background-color: var(--background-secondary);
+  border-radius: var(--card-border-radius);
+  &:hover{
+    opacity: 0.8;
+    transform: scale(1.01);
+  }
+}

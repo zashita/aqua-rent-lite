@@ -7,6 +7,9 @@ import {classNames} from "shared/lib/classNames/classNames";
 import cls from "./UserListItem.module.scss";
 import {Button, Typography} from "@mui/material";
 import {User} from "../../model/types/user";
+import {deleteUserById} from "../../services/deleteUserById/deleteUserById";
+import {RoutePath} from "../../../../shared/config/routeConfig/routeConfig";
+import {Card} from "../../../../shared/ui/Card/Card";
 
 
 export interface UserListItemProps{
@@ -23,14 +26,14 @@ export const UserListItem = memo((props: UserListItemProps) => {
         const navigate = useNavigate();
         const dispatch = useDispatch<AppDispatch>()
 
-        // const navigateToBoatPage = useCallback(() => {
-        //     navigate(RoutePath.boat_page + boat.id)
-        // }, [boat.id, navigate])
+        const navigateToUserProfile = useCallback(() => {
+            navigate(RoutePath.profile + user.id)
+        }, [user.id, navigate])
 
-        // const deleteBoat = useCallback((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        //     event.stopPropagation()
-        //     dispatch(deleteBoatById(boat.id))
-        // }, [boat.id, dispatch])
+        const deleteUser = useCallback((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+            event.stopPropagation()
+            dispatch(deleteUserById(user.id))
+        }, [user.id, dispatch])
 
         const {t} = useTranslation()
 
@@ -38,9 +41,9 @@ export const UserListItem = memo((props: UserListItemProps) => {
                 <div
                     className={classNames(cls.UserListItem, {}, [className])}
                 >
-                    <div
+                    <Card
                         className={cls.card}
-                        onClick={()=> {}}
+                        onClick={navigateToUserProfile}
                     >
                         {/*<img*/}
                         {/*    alt = {user.name}*/}
@@ -59,7 +62,7 @@ export const UserListItem = memo((props: UserListItemProps) => {
                             </Typography>
                             <Button
                                 // onClick={(e) => deleteBoat(e)}>
-                                onClick={()=> {}}>
+                                onClick={(e)=> deleteUser(e)}>
                                 Delete
                             </Button>
                         </div>
@@ -69,7 +72,7 @@ export const UserListItem = memo((props: UserListItemProps) => {
                         <Typography className = {cls.date}>
                             updated: <b>{user.updatedAt.slice(5,10)}</b>
                         </Typography>
-                    </div>
+                    </Card>
 
                 </div>
             )

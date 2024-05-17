@@ -20,6 +20,7 @@ export const loginByEmail = createAsyncThunk<User, LoginByEmail, ThunkConfig<str
         }
         dispatch(userActions.setAuthData(response.data))
         localStorage.setItem(USER_LOCALSTORAGE_KEY, JSON.stringify(response.data.token));
+
         return response.data;
     }
 )

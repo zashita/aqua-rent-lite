@@ -1,17 +1,19 @@
-import React, {memo, MouseEventHandler, useCallback} from 'react';
+import React, {memo, useCallback} from 'react';
 import Box from '@mui/material/Box';
-import {Boat, BoatListView, BoatTypes} from "../../model/types/boat";
+import {Boat, BoatListView} from "../../model/types/boat";
 import cls from './BoatListItem.module.scss'
 import {classNames} from "../../../../shared/lib/classNames/classNames";
 import {Button, Typography} from "@mui/material";
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import {$api, baseUrl} from "../../../../shared/api/api";
+import {baseUrl} from "../../../../shared/api/api";
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import {RoutePath} from "../../../../shared/config/routeConfig/routeConfig";
 import {useDispatch} from "react-redux";
 import {AppDispatch} from "../../../../app/providers/storeProvider";
 import {deleteBoatById} from "../../services/deleteBoatById/deleteBoatById";
+import {Card, CardViewModes} from "../../../../shared/ui/Card/Card";
+import {updateBoatViews} from "../../services/updateBoatViews/updateBoatViews";
 
 const bull = (
     <Box
@@ -43,8 +45,9 @@ const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>()
     
     const navigateToBoatPage = useCallback(() => {
+        dispatch(updateBoatViews(boat.id))
         navigate(RoutePath.boat_page + boat.id)
-    }, [boat.id, navigate])
+    }, [boat.id, dispatch, navigate])
 
     const deleteBoat = useCallback((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         event.stopPropagation()
@@ -57,8 +60,7 @@ const navigate = useNavigate();
             <div
                 className={classNames(cls.BoatListItem, {}, [className, cls[view]])}
             >
-                <div
-                    className={cls.card}
+                <Card
                     onClick={navigateToBoatPage}
                 >
                     <img
@@ -89,7 +91,7 @@ const navigate = useNavigate();
                     <Typography className = {cls.date}>
                         created: <b>{boat.createdAt.slice(5,10)}</b>
                     </Typography>
-                </div>
+                </Card>
 
             </div>
         )
@@ -99,9 +101,9 @@ const navigate = useNavigate();
         <div
             className={classNames(cls.BoatListItem, {}, [className, cls[view]])}
         >
-            <div
-                className={cls.card}
+            <Card
                 onClick={navigateToBoatPage}
+                viewMode={CardViewModes.GRID}
             >
                 <div className={cls.ImageWrapper}>
                     <img
@@ -127,7 +129,7 @@ const navigate = useNavigate();
                 <Typography className = {cls.title}>
                     name: <b>{boat.name}</b>
                 </Typography>
-            </div>
+            </Card>
         </div>
     );
 }

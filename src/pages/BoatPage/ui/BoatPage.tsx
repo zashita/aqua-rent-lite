@@ -18,7 +18,7 @@ const BoatPage:React.FC<BoatPageProps> = ({className}) => {
     const dispatch = useDispatch<AppDispatch>()
     useEffect(() => {
         dispatch(fetchBoatById(id))
-    }, [dispatch]);
+    }, [dispatch, id]);
     const {currentBoat, isLoading} = useSelector(getBoatState)
     const [orderModal, setOrderModal] = useState(false);
     const toggleModal = useCallback(() => {
