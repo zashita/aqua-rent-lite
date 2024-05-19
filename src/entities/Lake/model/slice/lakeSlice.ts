@@ -1,15 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import {Order, OrderSchema} from "../types/orderSchema";
+import {Lake, LakeSchema} from "../types/lake";
 
-const initialState: OrderSchema = {};
+const initialState: LakeSchema = {
+    isLoading: false
+};
 
-export const orderSlice = createSlice({
-    name: 'order',
+export const lakeSlice = createSlice({
+    name: 'lake',
     initialState,
     reducers: {
-        setOrderList: (state, action: PayloadAction<Order[]>) => {
-            state.ordersList = action.payload;
+        setLakeList: (state, action: PayloadAction<Lake[]>) => {
+            state.lakesList = action.payload;
         },
     },
     // extraReducers: (builder) => {
@@ -23,5 +25,5 @@ export const orderSlice = createSlice({
     // }
 });
 
-export const { actions: orderActions } = orderSlice;
-export const { reducer: orderReducer } = orderSlice;
+export const { actions: lakeActions } = lakeSlice;
+export const { reducer: lakeReducer } = lakeSlice;

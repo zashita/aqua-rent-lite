@@ -6,14 +6,27 @@ export interface Boat{
     description: string;
     image: string;
     views?: string;
+    price: number;
+    lakeName: string;
+    passengerCapacity: number;
+    moveType: string;
+    captain: boolean;
     createdAt: string;
     updatedAt: string;
+    userEmail: string;
+}
+
+export enum MooveType{
+    WIND = 'Парус',
+    ENGINE = 'Двигатель',
+    HAND = 'Мышечная сила',
 }
 
 export enum BoatTypes{
-    YACHT = 'yacht',
-    BOAT = 'boat',
-    KATAMARAN = 'katamaran',
+    YACHT = 'Яхта',
+    BOAT = 'Катер',
+    KATAMARAN = 'Катамаран',
+    HYDROCYCLE= 'Гидроцикл'
 }
 
 export interface BoatSchema{

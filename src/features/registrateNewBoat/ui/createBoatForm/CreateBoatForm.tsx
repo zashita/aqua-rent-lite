@@ -1,4 +1,15 @@
-import {Button, Input, TextField} from '@mui/material';
+import {
+    Button,
+    Checkbox,
+    FormControl,
+    FormControlLabel,
+    Input,
+    InputLabel,
+    MenuItem,
+    Select,
+    TextField,
+    Typography
+} from '@mui/material';
 import React, {useCallback} from 'react';
 import {classNames} from "shared/lib/classNames/classNames";
 import cls from './CreateBoatForm.module.scss'
@@ -10,6 +21,8 @@ import {getBoatCreationData} from "../../model/selectors/getBoatCreationData/get
 import {createBoatActions} from "../../model/slice/createBoatSlice";
 import {createBoat} from "../../services/createBoat/createBoat";
 import Uploader from 'shared/ui/Uploader';
+import {BoatTypes, MooveType} from "../../../../entities/Boat";
+import {getLakesList} from "../../../../entities/Lake";
 
 
 export interface CreateOrderFormProps{
@@ -22,7 +35,13 @@ export const CreateBoatForm:React.FC<CreateOrderFormProps> = ({className}) => {
         name,
         isLoading,
         description,
-        image
+        image,
+        type,
+        price,
+        moveType,
+        captain,
+        passengerCapacity,
+        lakeId,
     } = useSelector(getBoatCreationData);
     const jwtToken = localStorage.getItem(USER_LOCALSTORAGE_KEY);
     const decoded = jwtDecode(jwtToken)
@@ -43,12 +62,52 @@ export const CreateBoatForm:React.FC<CreateOrderFormProps> = ({className}) => {
         dispatch(createBoatActions.setImage(value));
     }, [dispatch]);
 
+    const onChangePrice = useCallback((value: number) => {
+        dispatch(createBoatActions.setPrice(value));
+    }, [dispatch]);
+
+    const onChangeCapacity = useCallback((value: number) => {
+        dispatch(createBoatActions.setPassengerCapacity(value));
+    }, [dispatch]);
+
+    const onChangeLake = useCallback((value: string) => {
+        dispatch(createBoatActions.setLakeId(value));
+    }, [dispatch]);
+
+    const onChangeCaptain = useCallback((value: boolean) => {
+        dispatch(createBoatActions.setCaptain(value));
+    }, [dispatch]);
+
+    const onChangeMoveType = useCallback((value: MooveType) => {
+        dispatch(createBoatActions.setMoveType(value));
+    }, [dispatch]);
+
+    const onChangeType = useCallback((value: BoatTypes) =>{
+        dispatch(createBoatActions.setType(value))
+    }, [dispatch])
+
+    // price: number;
+    // lakeName: string;
+    // passengerCapacity: number;
+    // moveType: string;
+    // captain: boolean;
 
     const onSubmitClick = useCallback( () => {
-        dispatch(createBoat({name, userId, description, image}));
+        dispatch(createBoat({
+            name, 
+            userId, 
+            type, 
+            description, 
+            image, 
+            price, 
+            lakeId,
+            passengerCapacity, 
+            moveType, 
+            captain
+        }));
         console.log(image)
-    }, [dispatch, name, userId, description, image]);
-
+    }, [dispatch, name, userId, type, description, image, price, lakeId, passengerCapacity, moveType, captain]);
+    const lakeList = useSelector(getLakesList)
     return (
         <div className={classNames(cls.CreateBoatForm, {}, [className])}>
             {/*{false && (*/}
@@ -57,20 +116,93 @@ export const CreateBoatForm:React.FC<CreateOrderFormProps> = ({className}) => {
             {/*        Ошибка авторизации*/}
             {/*    </div>*/}
             {/*)}*/}
-            <Input
+            <Typography variant={'h5'}>
+                Введите данные судна
+            </Typography>
+            <TextField
                 // color={'secondary'}
-                placeholder={'Название судна'}
+                label={'Название судна'}
                 type={'text'}
                 onChange={event => onChangeName(event.target.value)}
                 value={name}
             />
-            <Input
+            <TextField
                 // color={'secondary'}
-                placeholder={'Описание судна'}
+                label={'Цена за день, BYN'}
+                type={'number'}
+                onChange={event => onChangePrice(Number(event.target.value))}
+                value={price}
+            />
+            <TextField
+                // color={'secondary'}
+                label={'Количиество пассажиров'}
+                type={'number'}
+                onChange={event => onChangeCapacity(Number(event.target.value))}
+                value={passengerCapacity}
+            />
+            <TextField
+                // color={'secondary'}
+                label={'Описание судна'}
                 type={'text'}
                 onChange={event => onChangeDescription(event.target.value)}
                 value={description}
             />
+            <FormControl>
+                <InputLabel id="demo-simple-select-label">Тип судна</InputLabel>
+                <Select
+                    value={type}
+                    label = {'Тип судна'}
+                    // @ts-ignore
+                    onChange={(event) => onChangeType(event.target.value)}
+                >
+                    <MenuItem value={BoatTypes.BOAT}>Катер</MenuItem>
+                    <MenuItem value={BoatTypes.YACHT}>Яхта</MenuItem>
+                    <MenuItem value={BoatTypes.HYDROCYCLE}>Гидроцикл</MenuItem>
+                    <MenuItem value={BoatTypes.KATAMARAN}>Катамаран</MenuItem>
+
+                </Select>
+            </FormControl>
+
+            <FormControl>
+                <InputLabel id="demo-simple-select-label">Приводится в движение с помощью</InputLabel>
+                <Select
+                    label={'Приводится в движение с помощью'}
+                    value={moveType}
+                    // @ts-ignore
+                    onChange={(event) => onChangeMoveType(event.target.value)}
+                >
+                    <MenuItem value={MooveType.ENGINE}>Двигателя</MenuItem>
+                    <MenuItem value={MooveType.WIND}>Силы ветра</MenuItem>
+                    <MenuItem value={MooveType.HAND}>Ручной силы</MenuItem>
+                </Select>
+            </FormControl>
+            <FormControl>
+                <InputLabel id="demo-simple-select-label">Озеро</InputLabel>
+                <Select
+                    label={'Озеро'}
+                    value={lakeId}
+                    // @ts-ignore
+                    onChange={(event) => onChangeLake(event.target.value)}
+                >
+                    {lakeList.map((lake)=>{
+                        return(
+                            <MenuItem value={lake.id}>{lake.name}</MenuItem>
+                        )
+                    })}
+                </Select>
+            </FormControl>
+            <FormControlLabel control=
+                {
+                    <Checkbox
+                        checked={captain}
+                        //@ts-ignore
+                        onChange={(e) => onChangeCaptain(e.target.checked)}
+                        inputProps={{ 'aria-label': 'controlled' }}
+                    />
+            } label="Наличие капитана" />
+
+
+
             <Uploader file={image} setFile={onChangeImage} fileType={'image'}/>
             <Button
                 onClick={onSubmitClick}

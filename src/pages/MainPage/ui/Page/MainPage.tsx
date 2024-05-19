@@ -8,11 +8,13 @@ import {mainPageActions} from "../../model/slice/mainPageSlice";
 import {ViewModeSwitcher} from "../ViewModeSwitcher/ViewModeSwitcher";
 import cls from './MainPage.module.scss'
 import {MainPageSkeleton} from "../PageSkeleton/MainPageSkeleton";
+import {fetchLakesList} from "../../../../entities/Lake/services/fetchLakesList/fetchLakesList";
 
 
 const MainPage = () => {
     const dispatch = useDispatch<AppDispatch>()
     useEffect(() => {
+        dispatch(fetchLakesList())
         dispatch(fetchBoatList())
     }, [dispatch]);
     const {boatList, isLoading} = useSelector(getBoatState)

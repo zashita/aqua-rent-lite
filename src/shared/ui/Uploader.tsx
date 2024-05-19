@@ -30,23 +30,23 @@ const Uploader:React.FC<IUploaderProps> = ({fileType, setFile, file}) => {
                 display = {'flex'}
                 justifyContent={'space-between'}
                 alignItems={'center'}
-                marginBottom={'15px'}
                 >
                 <Grid
                     onClick={input_click}
-                    sx={{width: '95%', height: '50px', margin: '0',
-                        borderRadius: '10px', border: '0.5px solid black',
-                        backgroundColor: '#4f4f4f'}}
+                    sx={{width: '90%', height: '55px', margin: '0',
+                        borderRadius: '4px', border: '0.5px dotted gray',
+                        backgroundColor: '#ffffff',
+                        paddingLeft: '13px'}}
                     display={'flex'}
                     alignItems={'center'}
-                    justifyContent = 'center'>
+                    // justifyContent = 'center'
+                >
                         <Typography
-                            variant={'h5'}
-                            color={'black'}>
+                            color={'gray'}>
                             {
                                 file!==null?
                                 file.name:
-                                    `Upload track ${fileType}`
+                                    `Изображение`
                             }
 
                         </Typography>
@@ -57,14 +57,13 @@ const Uploader:React.FC<IUploaderProps> = ({fileType, setFile, file}) => {
             </Grid>
             <Grid
                 onClick={clear}
-                sx={{width: '35%', height: '25px',
-                    borderRadius: '7px', border: '0.5px solid black',
-                    backgroundColor: '#4f4f4f'}}
+                sx={{width: '35%', height: '35px',
+                    borderRadius: '4px', border: '0.5px dotted gray',
+                    backgroundColor: '#ffffff', paddingLeft: '13px'}}
                 display={'flex'}
                 alignItems={'center'}
-                justifyContent = {'center'}
-                marginBottom={'40px'}>
-                    <Typography>
+                >
+                    <Typography color = {'gray'}>
                         Clear
                     </Typography>
             </Grid>

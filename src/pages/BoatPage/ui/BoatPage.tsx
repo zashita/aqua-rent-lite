@@ -1,22 +1,27 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {classNames} from "shared/lib/classNames/classNames";
 import cls from './BoatPage.module.scss'
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch} from "../../../app/providers/storeProvider";
-import {fetchBoatById} from "../../../entities/Boat/services/fetchBoatById/fetchBoatById";
-import {getBoatState} from "../../../entities/Boat";
-import { Button } from '@mui/material';
+import {AppDispatch} from "app/providers/storeProvider";
+import {fetchBoatById} from "entities/Boat";
+import {getBoatState} from "entities/Boat";
+import {Button, Divider, Typography} from '@mui/material';
 import { CreateOrderModal } from 'features/createNewOrder';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import {baseUrl} from "shared/api/api";
+import ProfileImage from 'shared/assets/images/user/User-avatar.png'
+import {Card} from "shared/ui/Card/Card";
+import {RoutePath} from "../../../shared/config/routeConfig/routeConfig";
 
 
 export interface BoatPageProps{
     className?: string;
 }
 const BoatPage:React.FC<BoatPageProps> = ({className}) => {
-    const { id} = useParams();
     const dispatch = useDispatch<AppDispatch>()
-    useEffect(() => {
+    const {id} = useParams();
+    useMemo(() => {
         dispatch(fetchBoatById(id))
     }, [dispatch, id]);
     const {currentBoat, isLoading} = useSelector(getBoatState)
@@ -24,18 +29,133 @@ const BoatPage:React.FC<BoatPageProps> = ({className}) => {
     const toggleModal = useCallback(() => {
         setOrderModal((prevState) => !prevState);
     }, []);
+    
+    const navigate = useNavigate()
+    const navigateToUserProfile = useCallback(() =>{
+        navigate(RoutePath.profile + currentBoat?.userId)
+    }, [currentBoat?.userId, navigate])
+
+    if(isLoading){
+        return
+        <Typography>
+            Loading
+        </Typography>
+    }
 
     return (
         <div className={classNames(cls.BoatPage, {}, [className])}>
-            <Button
-                onClick={toggleModal}
-            >
-                Заказать
-            </Button>
+            <div className={cls.PostHeader}>
+                <div className = {cls.Pricelocation}>
+                    <div className = {cls.Prices}>
+                        <Typography className = {cls.PriceHour}>
+                            {currentBoat?.price}р/день
+                        </Typography>
+                    </div>
+                    <div className = {cls.Location}>
+                        <LocationOnIcon className = {cls.LocationSvg}/>
+                        <Typography className = {cls.LocationText}>
+                            {currentBoat?.lakeName}
+                        </Typography>
+                    </div>
+                </div>
+                <Button
+                    onClick={toggleModal}
+                >
+                    Заказать
+                </Button>
+            </div>
+            <div className={cls.MainBlock}>
+                    <img
+                        alt={currentBoat?.name}
+                        src={`${baseUrl}/${currentBoat?.image}`}
+                        className={cls.Image}
+                    />
+                <div className={cls.Info}>
+                    <div className={cls.BoatSpecs}>
+                        <Typography variant='h5'>
+                            Характеристики судна
+                        </Typography>
+                        <div className={cls.SpecList}>
+                            <div className={cls.Parameter}>
+                                <Typography>
+                                    Тип судна
+                                </Typography>
+                                <div className={cls.ParamLine}/>
+                                <Typography>
+                                    {currentBoat?.type}
+                                </Typography>
+                            </div>
+
+                            <div className={cls.SpecList}>
+                                <div className={cls.Parameter}>
+                                    <Typography>
+                                        Количество пассажиров
+                                    </Typography>
+                                    <div className={cls.ParamLine}/>
+                                    <Typography>
+                                        {currentBoat?.passengerCapacity}
+                                    </Typography>
+                                </div>
+                            </div>
+
+                            <div className={cls.SpecList}>
+                                <div className={cls.Parameter}>
+                                    <Typography>
+                                        Приводится в движение
+                                    </Typography>
+                                    <div className={cls.ParamLine}/>
+                                    <Typography>
+                                        {currentBoat?.moveType}
+                                    </Typography>
+                                </div>
+                            </div>
+
+                            <div className={cls.SpecList}>
+                                <div className={cls.Parameter}>
+                                    <Typography>
+                                        Наличие капитана
+                                    </Typography>
+                                    <div className={cls.ParamLine}/>
+                                    <Typography>
+                                        {currentBoat?.captain? "Да": "Нет"}
+                                    </Typography>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className={cls.Description}>
+                        <div className={cls.title}>
+                            <Typography variant={'h5'}>
+                                Описание судна
+                            </Typography>
+                        </div>
+                        <div className={cls.Text}>
+                            <Typography>
+                                {currentBoat?.description}
+                            </Typography>
+                        </div>
+                    </div>
+
+                    <div className={cls.ProfileBlock}>
+                        <Card
+                            onClick={navigateToUserProfile}
+                            className={cls.ProfilePreview}>
+                            <img
+                                src={ProfileImage}
+                                alt="boar"
+                                className={cls.ProfileImg}/>
+                            <Typography textAlign={'center'}>
+                                {currentBoat?.userEmail}
+                            </Typography>
+                        </Card>
+                    </div>
+                </div>
+            </div>
+
             <CreateOrderModal
                 open={orderModal}
                 onCLose={toggleModal}/>
         </div>
-);
+    );
 };
 export default BoatPage

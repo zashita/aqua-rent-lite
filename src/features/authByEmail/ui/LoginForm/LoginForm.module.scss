@@ -8,3 +8,12 @@
   border-radius: var(--modal-border-radius);
   padding: var(--spacing-3xl);
 }
+
+.Link{
+  color: #0452ff;
+  transition: 0.3s;
+  &:hover{
+    scale: 1.01;
+    opacity: 0.8;
+  }
+}

@@ -4,13 +4,13 @@ import cls from './ProfilePage.module.scss'
 import ProfileImage from 'shared/assets/images/user/User-avatar.png'
 import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch} from "../../../app/providers/storeProvider";
-import {fetchUserProfile} from "../../../entities/User";
-import {getCurrentProfile} from "../../../entities/User/model/selectors/getCurrentProfile/getCurrentProfile";
+import {AppDispatch} from "app/providers/storeProvider";
+import {fetchUserProfile} from "entities/User";
+import {getCurrentProfile} from "entities/User/model/selectors/getCurrentProfile/getCurrentProfile";
 import {Divider, Typography} from "@mui/material";
-import {getMyId} from "../../../shared/lib/getMyId/getMyId";
-import {Card} from "../../../shared/ui/Card/Card";
-import {BoatList, BoatListView} from "../../../entities/Boat";
+import {getMyId} from "shared/lib/getMyId/getMyId";
+import {Card} from "shared/ui/Card/Card";
+import {BoatList, BoatListView} from "entities/Boat";
 
 
 export interface ProfilePageProps{

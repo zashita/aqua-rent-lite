@@ -1,18 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import {loginByEmail} from "../../services/loginByEmail/loginByEmail";
+import {registrate} from "../../services/registrate/registrate";
 
+export enum AuthModes{
+    LOGIN = 'login',
+    REGISTRATION = 'registration'
+}
 export interface LoginState {
     isLoading: boolean,
     email: string,
     password: string,
-    error: string}
+    error: string,
+    mode: AuthModes
+}
+
 
 const initialState: LoginState = {
     isLoading: false,
     email: '',
     password: '',
-    error: ''
+    error: '',
+    mode: AuthModes.LOGIN,
 }
 
 export const loginSlice = createSlice({
@@ -25,6 +34,9 @@ export const loginSlice = createSlice({
         setPassword: (state, action: PayloadAction<string>) => {
             state.password = action.payload;
         },
+        setAuthMode: (state, action: PayloadAction<AuthModes>)=>{
+            state.mode = action.payload
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -37,7 +49,18 @@ export const loginSlice = createSlice({
             })
             .addCase(loginByEmail.rejected, (state, action) => {
                 state.isLoading = false;
-            });
+            })
+            .addCase(registrate.pending, (state) => {
+                state.error = undefined;
+                state.isLoading = true;
+            })
+            .addCase(registrate.fulfilled, (state) => {
+                state.isLoading = false;
+            })
+            .addCase(registrate.rejected, (state, action) => {
+                state.isLoading = false;
+            })
+        ;
     },
 }
 )

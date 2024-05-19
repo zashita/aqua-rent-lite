@@ -1,7 +1,7 @@
 export interface Order{
     id: string;
     date: string;
-    state: string;
+    state: OrderStates;
     userId: string;
     boatId: string;
 }
@@ -9,4 +9,10 @@ export interface Order{
 export interface OrderSchema{
     ordersList?: Order[];
     isLoading?: boolean
+}
+
+export enum OrderStates{
+    WAITING = "Заказ ожидает подверждения арендодателя",
+    CONFIRMED = 'Заказ подтвержден арендодателем',
+    FINISHED = 'Заказ завершен, вы можете оставить отзыв'
 }

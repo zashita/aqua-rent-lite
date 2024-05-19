@@ -1,20 +1,33 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
+import {BoatTypes, MooveType} from "../../../../entities/Boat";
 
 export interface BoatCreationState {
     isLoading: boolean,
     name: string,
     userId: string,
+    type: BoatTypes,
     description: string,
     image: File,
+    price: number;
+    lakeId: string;
+    passengerCapacity: number;
+    moveType: string;
+    captain: boolean;
 }
 
 const initialState: BoatCreationState = {
     isLoading: false,
     name: '',
     userId: '',
+    type: null,
     description: '',
     image: null,
+    price: null,
+    lakeId: '',
+    passengerCapacity: null,
+    moveType: null,
+    captain: false,
 }
 
 export const createBoatSlice = createSlice({
@@ -33,7 +46,26 @@ export const createBoatSlice = createSlice({
             setImage: (state, action: PayloadAction<File>) =>{
                 state.image = action.payload
                 console.log(action.payload)
+            },
+            setPrice: (state, action: PayloadAction<number>) =>{
+                state.price = action.payload
+            },
+            setLakeId: (state, action: PayloadAction<string>) =>{
+                state.lakeId = action.payload
+            },
+            setPassengerCapacity: (state, action: PayloadAction<number>) =>{
+                state.passengerCapacity = action.payload
+            },
+            setMoveType: (state, action: PayloadAction<MooveType>) =>{
+                state.moveType = action.payload;
+            },
+            setCaptain: (state, action: PayloadAction<boolean>) =>{
+                state.captain = action.payload
+            },
+            setType: (state, action: PayloadAction<BoatTypes>) =>{
+                state.type = action.payload
             }
+
 
         },
         // extraReducers: (builder) => {
