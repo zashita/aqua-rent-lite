@@ -1,0 +1,62 @@
+.OrderListItem{
+  display: flex;
+  width: 660px;
+  padding: var(--spacing-xl);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-3xl);
+  border-radius: var(--spacing-l);
+  background: var(--background-secondary);
+}
+
+.TitleAndContent{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--XL, 24px);
+  align-self: stretch;
+}
+
+.DateAndUser{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--S, 12px);
+  align-self: stretch;
+}
+
+.ProfilePreview{
+  display: flex;
+  padding: var(--S, 12px);
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+  border-radius: 8px;
+  background: var(--background-secondary, rgba(41, 38, 50, 0.05));
+}
+
+.ProfileImage{
+  width: 40px;
+  height: 40px;
+}
+
+.SpecList{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--2XS, 4px);
+  align-self: stretch;
+}
+
+.Parameter{
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--2XS, 4px);
+  align-self: stretch;
+}
+
+.ParamLine{
+  flex: 1;
+  border-bottom: 1px dotted black;
+}

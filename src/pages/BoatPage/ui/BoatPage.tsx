@@ -13,6 +13,8 @@ import {baseUrl} from "shared/api/api";
 import ProfileImage from 'shared/assets/images/user/User-avatar.png'
 import {Card} from "shared/ui/Card/Card";
 import {RoutePath} from "../../../shared/config/routeConfig/routeConfig";
+import {ReviewCreationForm} from "../../../features/addComment";
+import {getMyId} from "../../../shared/lib/getMyId/getMyId";
 
 
 export interface BoatPageProps{
@@ -21,6 +23,7 @@ export interface BoatPageProps{
 const BoatPage:React.FC<BoatPageProps> = ({className}) => {
     const dispatch = useDispatch<AppDispatch>()
     const {id} = useParams();
+    const userId = getMyId()
     useMemo(() => {
         dispatch(fetchBoatById(id))
     }, [dispatch, id]);
@@ -144,11 +147,16 @@ const BoatPage:React.FC<BoatPageProps> = ({className}) => {
                                 src={ProfileImage}
                                 alt="boar"
                                 className={cls.ProfileImg}/>
-                            <Typography textAlign={'center'}>
+                            <Typography>
                                 {currentBoat?.userEmail}
                             </Typography>
                         </Card>
                     </div>
+
+                    <ReviewCreationForm
+                        userId={userId}
+                        boatId={currentBoat?.id}
+                    />
                 </div>
             </div>
 

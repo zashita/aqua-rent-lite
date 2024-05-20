@@ -3,9 +3,10 @@ import {classNames} from "shared/lib/classNames/classNames";
 import cls from './UserModeration.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch} from "app/providers/storeProvider";
-import {fetchUsersList, getUserList} from "entities/User";
+import {fetchUsersList, getMyInfo, getUserList} from "entities/User";
 import {Divider, Typography} from "@mui/material";
 import {UserList} from "entities/User/ui/UserList/UserList";
+import {getMyRoles} from "../../../../shared/lib/getMyRoles/getMyRoles";
 
 
 export interface UserModerationProps{
@@ -17,13 +18,17 @@ export const UserModeration:React.FC<UserModerationProps> = ({className}) => {
     useMemo(() => {
         dispatch(fetchUsersList())
     }, [dispatch]);
+    const myInfo= useSelector(getMyInfo)
+    const roles = myInfo?.roles;
+    const admin = !!roles?.find((role) => role === 'ADMIN')
+
     return (
         <div>
             <div className={cls.topContainer}>
                 <Typography>Поиск водного транспорта ({userList?.length.toString()} пользователей)</Typography>
             </div>
             <Divider className={cls.divider}/>
-            <UserList data={userList} admin={true}/>
+            <UserList data={userList} admin={admin}/>
         </div>
     );
 }

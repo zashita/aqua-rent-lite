@@ -24,8 +24,18 @@ export {
 } from './services/fetchUserProfile/fetchUserProfile'
 
 export {
+    makeSeller
+} from './services/makeSeller/makeSeller'
+
+export {
     userSlice,
     userActions,
     userReducer
 } from './model/slice/userSlice'
+
+export {getCurrentProfile} from './model/selectors/getCurrentProfile/getCurrentProfile'
+
+export {
+    getMyInfo
+} from './model/selectors/getMyInfo/getMyInfo'
 

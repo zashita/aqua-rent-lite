@@ -4,6 +4,7 @@ export interface Order{
     state: OrderStates;
     userId: string;
     boatId: string;
+    userEmail: string;
 }
 
 export interface OrderSchema{

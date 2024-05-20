@@ -10,6 +10,7 @@ import {User} from "../../model/types/user";
 import {deleteUserById} from "../../services/deleteUserById/deleteUserById";
 import {RoutePath} from "../../../../shared/config/routeConfig/routeConfig";
 import {Card} from "../../../../shared/ui/Card/Card";
+import {makeSeller} from "../../services/makeSeller/makeSeller";
 
 
 export interface UserListItemProps{
@@ -35,6 +36,11 @@ export const UserListItem = memo((props: UserListItemProps) => {
             dispatch(deleteUserById(user.id))
         }, [user.id, dispatch])
 
+    const onMakeSeller = useCallback((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        event.stopPropagation()
+        dispatch(makeSeller(user.id))
+    }, [user.id, dispatch])
+
         const {t} = useTranslation()
 
             return (
@@ -54,16 +60,15 @@ export const UserListItem = memo((props: UserListItemProps) => {
                             <Typography>
                                 email: <b>{user.email}</b>
                             </Typography>
-                            <Typography>
-                                boats: <b>{user.boats?.map((boat)=> boat.name+ ',')}</b>
-                            </Typography>
-                            <Typography>
-                                orders: <b>{user.orders.map((order)=> order.date + order.state)}</b>
-                            </Typography>
                             <Button
                                 // onClick={(e) => deleteBoat(e)}>
                                 onClick={(e)=> deleteUser(e)}>
                                 Delete
+                            </Button>
+                            <Button
+                                // onClick={(e) => deleteBoat(e)}>
+                                onClick={(e)=> onMakeSeller(e)}>
+                                Выдать роль арендодателя
                             </Button>
                         </div>
                         <Typography className = {cls.date}>

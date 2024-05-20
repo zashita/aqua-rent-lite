@@ -10,7 +10,7 @@ export interface Registrate{
     email: string;
     password: string;
 }
-export const registrate = createAsyncThunk<User, Registrate, ThunkConfig<string>>(
+export const registrate = createAsyncThunk<string, Registrate, ThunkConfig<string>>(
     'registrate/registrateNewUser',
     async (user, thunkAPI)=>{
         const {dispatch, extra} = thunkAPI
@@ -18,9 +18,9 @@ export const registrate = createAsyncThunk<User, Registrate, ThunkConfig<string>
         if(!response.data){
             throw new Error()
         }
-        dispatch(userActions.setAuthData(response.data))
+        dispatch(userActions.setAuthData(response.data.token))
         localStorage.setItem(USER_LOCALSTORAGE_KEY, JSON.stringify(response.data.token));
 
-        return response.data;
+        return response.data.token;
     }
 )

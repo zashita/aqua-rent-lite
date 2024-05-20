@@ -12,10 +12,13 @@ export interface User{
     updatedAt?: string;
 
 }
-
+export interface MyInfo{
+    id: string;
+    roles: []
+}
 export interface UserSchema{
     usersList?: User[]
-    authData?: User;
-    myId?: string;
+    authData?: string;
     currentProfile?: User;
+    myInfo?: MyInfo;
 }

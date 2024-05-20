@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch} from "../../../../app/providers/storeProvider";
 import {BoatList, BoatListView, fetchBoatList, getBoatState} from "entities/Boat";
 import {Divider, Typography} from "@mui/material";
+import {getMyInfo, getUserAuthData} from "../../../../entities/User";
 
 
 export interface BoatModerationProps{
@@ -16,6 +17,9 @@ export const BoatModeration:React.FC<BoatModerationProps> = ({className}) => {
     useMemo(() => {
         dispatch(fetchBoatList())
     }, [dispatch]);
+    const myInfo= useSelector(getMyInfo)
+    const roles = myInfo?.roles;
+    const admin = !!roles?.find((role) => role === 'ADMIN')
 
 
     return (
@@ -24,7 +28,7 @@ export const BoatModeration:React.FC<BoatModerationProps> = ({className}) => {
                 <Typography>Поиск водного транспорта ({boatList?.length.toString()} объявлений)</Typography>
             </div>
             <Divider className = {cls.divider}/>
-            <BoatList view={BoatListView.LIST} data={boatList} admin={true}/>
+            <BoatList view={BoatListView.LIST} data={boatList} admin={admin}/>
         </div>
     );
 }

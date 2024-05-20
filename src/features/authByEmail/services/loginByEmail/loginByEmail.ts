@@ -10,7 +10,7 @@ export interface LoginByEmail{
     email: string;
     password: string;
 }
-export const loginByEmail = createAsyncThunk<User, LoginByEmail, ThunkConfig<string>>(
+export const loginByEmail = createAsyncThunk<string, LoginByEmail, ThunkConfig<string>>(
     'login/loginByEmail',
     async (user, thunkAPI)=>{
         const {dispatch, extra} = thunkAPI
@@ -18,9 +18,10 @@ export const loginByEmail = createAsyncThunk<User, LoginByEmail, ThunkConfig<str
         if(!response.data){
             throw new Error()
         }
-        dispatch(userActions.setAuthData(response.data))
+        dispatch(userActions.setAuthData(response.data.token))
+
         localStorage.setItem(USER_LOCALSTORAGE_KEY, JSON.stringify(response.data.token));
 
-        return response.data;
+        return response.data.token;
     }
 )

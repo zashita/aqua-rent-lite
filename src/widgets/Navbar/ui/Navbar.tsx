@@ -7,7 +7,7 @@ import { classNames } from 'shared/lib/classNames/classNames';
 import cls from './Navbar.module.scss';
 import {Button, Link} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
-import {getUserAuthData} from "entities/User";
+import {getMyInfo, getUserAuthData} from "entities/User";
 import {userActions} from "entities/User";
 import {LoginModal} from "features/authByEmail";
 import {CreateBoatModal} from 'features/registrateNewBoat'
@@ -16,6 +16,8 @@ import {USER_LOCALSTORAGE_KEY} from "../../../shared/const/localStorage";
 import {jwtDecode} from "jwt-decode";
 import {getMyId} from "../../../shared/lib/getMyId/getMyId";
 import {useNavigate} from "react-router-dom";
+import ProfilePicture from '../../../shared/assets/images/user/User-avatar.png'
+import{ NavbarMenu } from './Menu';
 
 export interface NavbarProps{
     className?: string;
@@ -29,7 +31,15 @@ export const Navbar:React.FC<NavbarProps> = ({ className }) => {
     }, []);
 
 
-    const userId = getMyId()
+    const myInfo = useSelector(getMyInfo)
+
+    const id = myInfo?.id;
+    const roles = myInfo?.roles
+
+    const admin = !!roles?.find((role) => role === 'ADMIN')
+    const seller = !!roles?.find((role) => role === 'SELLER')
+
+
 
     const [createBoatModal, setCreateBoatModal] = useState(false);
     const toggleBoatModal = useCallback(() => {
@@ -49,8 +59,7 @@ export const Navbar:React.FC<NavbarProps> = ({ className }) => {
                 <Link
                     href={RoutePath.main}
                 >
-                    Main
-
+                    Главная
                 </Link>
                 <Link
                     href={RoutePath.about}
@@ -58,19 +67,19 @@ export const Navbar:React.FC<NavbarProps> = ({ className }) => {
                     About
                 </Link>
                 <Link
-                    href={RoutePath.about}
+                    href={RoutePath.orders_page + id}
                 >
-                    Orders
+                    Мои сделки
                 </Link>
                 <Link
-                    href={RoutePath.profile + userId}
+                    href={RoutePath.profile + id}
                 >
-                    Profile
+                    Мой профиль
                 </Link>
                 <Link
                     href={RoutePath.admin_page}
                 >
-                    Administrator panel
+                   Панель администратора
                 </Link>
                 <Button
                     onClick={toggleBoatModal}
@@ -86,7 +95,9 @@ export const Navbar:React.FC<NavbarProps> = ({ className }) => {
                     open={createBoatModal}
                     onCLose={toggleBoatModal}
                 />
-
+                <div className = {cls.Dropdown}>
+                    <NavbarMenu/>
+                </div>
             </div>
         );
     }

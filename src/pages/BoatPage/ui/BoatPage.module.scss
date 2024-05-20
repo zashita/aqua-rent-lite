@@ -129,8 +129,7 @@
 }
 .ProfilePreview{
   display: flex;
-  padding: var(--S, 12px);
-  justify-content: space-between;
+  padding: var(--spacing-s);
   align-items: center;
   align-self: stretch;
   border-radius: 8px;
