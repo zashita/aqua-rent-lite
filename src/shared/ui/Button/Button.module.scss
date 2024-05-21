@@ -1,0 +1,139 @@
+.Button {
+    cursor: pointer;
+    border-radius: 4px;
+    display: inline-flex;
+    justify-content: center;
+    flex-shrink: 0;
+    align-items: center;
+    border: 0;
+}
+
+.primary_accent {
+    background: var(--background-accent);
+    color: var(--text-on_color);
+    &:hover, &:active{
+        background: var(--background-accent-hover);
+    }
+    &.disabled{
+        background-color: var(--background-accent-disabled);
+        color: var(--text-disabled)
+    }
+
+}
+
+
+.primary_inverted {
+    background: var(--background-accent-inverted);
+    color: var(--text-on_color);
+    &:hover, &:active{
+        background: var(--background-accent-inverse-hover);
+    }
+    &.disabled{
+        background-color: var(--background-accent-disabled);
+        color: var(--text-disabled)
+    }
+}
+
+
+.secondary_neutral{
+    border: 1px solid var(--stroke-primary-outline);
+    background-color: transparent;
+    &:hover, &:active{
+        border: 1px solid var(--stroke-primary-outline-hover);
+    }
+    &.disabled{
+        background-color: transparent;
+        border: 1px solid var(--stroke-primary-outline-disabled);
+        color: var(--text-disabled)
+    }
+}
+
+.secondary_accent{
+    border: 1px solid var(--stroke-accent);
+    background-color: transparent;
+    color: var(--text-accent);
+    &:hover, &:active{
+        border: 1px solid var(--stroke-accent-hover);
+    }
+    &.disabled{
+        color: var(--text-accent-disabled);
+        background-color: transparent;
+        border: 1px solid var(--stroke-accent-disabled);
+    }
+}
+
+.ghost_neutral{
+    color: var(--text-primary);
+    background-color: transparent;
+    &:hover, &:active{
+        background-color: var(--background-secondary);
+    }
+    &:disabled{
+        color: var(--text-disabled);
+        background-color: transparent;
+    }
+}
+
+.ghost_accent{
+    color: var(--text-accent);
+    background-color: transparent;
+    &:hover, &:active{
+        background-color: var(--background-accent-subdued);
+    }
+    &:disabled{
+        color: var(--text-accent-disabled);
+        background-color: transparent;
+    }
+}
+
+.ghost_critical{
+    color: var(--text-caution);
+    background-color: transparent;
+    &:hover, &:active{
+        background-color: var(--background-caution-subdued);
+    }
+    &.disabled{
+        background-color: transparent;
+        color: var(--text-caution-disabled);
+    }
+}
+
+.ghost_accent_inverted{
+    color: var(--text-accent-inverse);
+    background-color: transparent;
+    &:hover, &:active{
+        background-color: var(--background-accent-inverse-subdued);
+    }
+    &.disabled{
+        color: var(--text-accent-inverse-disabled);
+        background-color: transparent;
+    }
+}
+
+
+.square{
+    width: var(--button-height-s);
+    height: var(--button-height-s);
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.size_s {
+    height: var(--button-height-s);
+    padding: var(--spacing-2xs) var(--spacing-xs)
+}
+
+.size_m {
+    height: var(--button-height-m);
+    padding: var(--spacing-m) var(--spacing-xl);
+}
+// ПОТЕНЦИАЛЬНАЯ ХУЙНЯ
+.size_l {
+    height: var(--button-height-l);
+    padding: 0 var(--spacing-3xl);
+}
+
+.disabled {
+    background: var(--background-accent-disabled);
+}

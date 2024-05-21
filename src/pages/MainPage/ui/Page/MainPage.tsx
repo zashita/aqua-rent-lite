@@ -1,24 +1,40 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch} from "app/providers/storeProvider";
-import {BoatList, BoatListView, fetchBoatList, getBoatState} from "entities/Boat";
-import {getMainPageViewMode} from "../../model/selectors/getMainPageViewMode/getMainPageViewMode";
-import {Button, Divider, Typography} from "@mui/material";
-import {mainPageActions} from "../../model/slice/mainPageSlice";
-import {ViewModeSwitcher} from "../ViewModeSwitcher/ViewModeSwitcher";
+import {BoatTypes, fetchBoatList, getBoatState} from "entities/Boat";
+import {
+    Checkbox,
+    FormControl,
+    FormControlLabel,
+    InputLabel,
+    MenuItem,
+    Select,
+    TextField,
+    Typography
+} from "@mui/material";
 import cls from './MainPage.module.scss'
 import {MainPageSkeleton} from "../PageSkeleton/MainPageSkeleton";
-import {fetchLakesList} from "../../../../entities/Lake/services/fetchLakesList/fetchLakesList";
+import {Button, ButtonSize, ButtonThemes} from 'shared/ui/Button/Button';
+import {mainPageActions} from "../../model/slice/mainPageSlice";
+import {getQuery} from "../../model/selectors/getQuery/getQuery";
+import {fetchLakesList} from "entities/Lake";
+import {getLakesList} from "entities/Lake";
+import {fetchBoatFilteredList} from "../../services/fetchFilteredBoatList/fetchFilteredBoatList";
+import { InputBlock } from '../InputBlock/InputBlock';
 
 
 const MainPage = () => {
     const dispatch = useDispatch<AppDispatch>()
-    useEffect(() => {
-        dispatch(fetchLakesList())
+    useMemo(() => {
         dispatch(fetchBoatList())
+        dispatch(fetchLakesList())
     }, [dispatch]);
+
+
+
+
     const {boatList, isLoading} = useSelector(getBoatState)
-    const viewMode = useSelector(getMainPageViewMode)
+
 
     if(isLoading){
         return (
@@ -28,12 +44,7 @@ const MainPage = () => {
 
     return (
         <div>
-            <div className={cls.topContainer}>
-                <Typography>Поиск водного транспорта ({boatList?.length.toString()} объявлений)</Typography>
-                <ViewModeSwitcher viewMode={viewMode}/>
-            </div>
-            <Divider className = {cls.divider}/>
-            <BoatList view={viewMode} data={boatList}/>
+            <InputBlock/>
         </div>
     );
 };

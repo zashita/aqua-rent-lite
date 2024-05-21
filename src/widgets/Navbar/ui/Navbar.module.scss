@@ -2,12 +2,47 @@
     width: 100%;
     display: flex;
     align-items: center;
+    border-bottom: 1px solid var(--stroke-primary-outline);
+    background-color: var(--background-colored);
+    height: var(--navbar-height);
+    justify-content: space-between;
+    padding: 20px 130px;
+}
+
+.LogoText{
+    color: var(--text-accent-inverse);
+    cursor: pointer;
+    transition: 0.3s;
+    &:hover{
+        scale: 1.01;
+        opacity: 0.8;
+    }
+}
+
+.Navigation{
+    width: 100%;
+    display: flex;
+    align-items: center;
     padding: 20px;
     border-bottom: 1px solid var(--stroke-primary-outline);
-    background-color: var(--background-primary);
+    background-color: var(--background-colored);
     height: var(--navbar-height);
     justify-content: center;
     gap: 20px;
+}
+
+.Buttons{
+    display: flex;
+    column-gap: 20px;
+}
+
+.link{
+    transition: 0.3s;
+    &:hover{
+        scale: 1.01;
+        opacity: 0.8;
+    }
+
 }
 
 

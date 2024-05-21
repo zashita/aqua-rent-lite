@@ -9,11 +9,12 @@ import {baseUrl} from "../../../../shared/api/api";
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import {RoutePath} from "../../../../shared/config/routeConfig/routeConfig";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch} from "../../../../app/providers/storeProvider";
 import {deleteBoatById} from "../../services/deleteBoatById/deleteBoatById";
-import {Card, CardViewModes} from "../../../../shared/ui/Card/Card";
+import {Card, CardViewModes} from "shared/ui/Card/Card";
 import {updateBoatViews} from "../../services/updateBoatViews/updateBoatViews";
+import {getUserAuthData} from "../../../User";
 
 const bull = (
     <Box
@@ -43,16 +44,30 @@ export const BoatListItem = memo((props: BoatListItemProps) => {
     } = props
 const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>()
+    const authData = useSelector(getUserAuthData)
     
     const navigateToBoatPage = useCallback(() => {
-        dispatch(updateBoatViews(boat.id))
-        navigate(RoutePath.boat_page + boat.id)
-    }, [boat.id, dispatch, navigate])
+        if(authData){
+            dispatch(updateBoatViews(boat.id))
+            navigate(RoutePath.boat_page + boat.id)
+        }
+    }, [authData, boat.id, dispatch, navigate])
 
     const deleteBoat = useCallback((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         event.stopPropagation()
         dispatch(deleteBoatById(boat.id))
     }, [boat.id, dispatch])
+
+    const getBoatRating = (): {rating: number, numberOfReviews: number} =>{
+        let sum = 0;
+        for(let i = 0; i < boat.reviews?.length; i++){
+            sum += boat.reviews[i].rating;
+        }
+        return {rating: sum /= boat.reviews?.length, numberOfReviews: boat.reviews?.length};
+    }
+
+    const {rating, numberOfReviews} = getBoatRating()
+
 
     const {t} = useTranslation()
     if(view === BoatListView.LIST){
@@ -111,24 +126,40 @@ const navigate = useNavigate();
                         src={`${baseUrl}/${boat.image}`}
                         className={cls.Image}
                     />
-                    <Typography className={cls.date}>
-                        {boat.updatedAt.slice(0, 10)}
-                    </Typography>
+                    <div className={cls.Rating}>
+                        {rating}'  '{numberOfReviews}
+                    </div>
                 </div>
-                <div className={cls.InfoWrapper}>
-                    <Typography className = {cls.type}>
-                        type: <b>{boat.type}</b>
+                <div className = {cls.PriceAndViews}>
+                    <Typography className = {cls.Price}>
+                        <b>{boat.price}</b> BYN/день
                     </Typography>
-
                     <Typography className = {cls.views}>
                         <VisibilityIcon/>
                         {boat.views}
                     </Typography>
+                </div>
+
+                <div className={cls.InfoWrapper}>
+
+                    <Typography className = {cls.Location}>
+                        {boat.lakeName}
+                    </Typography>
+                    <div className={cls.SpecList}>
+                        <Typography className = {cls.title}>
+                            Тип судна: <b>{boat.type}</b>
+                        </Typography>
+                        <Typography className = {cls.title}>
+                            Пассажировместимость: <b>{boat.passengerCapacity}</b>
+                        </Typography>
+                        <Typography className = {cls.title}>
+                            Наличие капитана: <b>{boat.captain?'Да': "Нет"}</b>
+                        </Typography>
+                    </div>
+
+
 
                 </div>
-                <Typography className = {cls.title}>
-                    name: <b>{boat.name}</b>
-                </Typography>
             </Card>
         </div>
     );

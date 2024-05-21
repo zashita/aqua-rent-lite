@@ -8,7 +8,6 @@
     transition: 0.2s;
     cursor: pointer;
     padding: var(--spacing-xs);
-    background-color: var(--background-secondary);
     border-radius: var(--card-border-radius);
     align-items: center;
     justify-content: space-between;
@@ -38,36 +37,83 @@
 
 .BoatListItem.box{
   display: flex;
-  width: 300px;
+  width: 320px;
+  height: 360px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--S, 12px);
+  flex-shrink: 0;
   .Image{
-    width: 100%;
-    border-radius: var(--card-image-border-radius);
+    align-self: stretch;
+    border-radius: var(--M, 8px);
+    width: 320px;
+    height: 205px;
   }
   .ImageWrapper{
     position: relative;
     display: flex;
-      width: 100%;
-      height: auto;
+    margin-bottom: 20px;
+
   }
-  .date{
+  .Rating{
     position: absolute;
     right: var(--spacing-2xs);
     top: var(--spacing-2xs);
     display: none;
     color: var(--text-on_color);
     font-size: var(--spacing-s);
+    height: 24px;
+    padding: 0 var(--Inner-spacing-XS, 8px);
+    align-items: center;
+    gap: var(--XS, 8px);
 
 
   }
   &:hover{
-    .date{
+    .Rating{
       display: block;
     }
 }
   .InfoWrapper{
-      display: flex;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--Gap-S, 12px);
+    align-self: stretch;;
+  }
+
+  .Price{
+    color: var(--text-primary, #2A2732);
+    /* H4 */
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 550;
+    line-height: 110%; /* 22px */
+    letter-spacing: -0.8px;
+  }
+
+  .Location{
+    color: var(--text-accent, #8654CC);
+    /* Caption Large */
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 450;
+    line-height: 120%; /* 15.6px */
+    letter-spacing: -0.26px;
+  }
+
+  .SpecList{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--2XS, 4px);
+  }
+
+  .PriceAndViews{
+    display: flex;
     justify-content: space-between;
   }
+
   .type{
       color: var(--text-secondary)
   }

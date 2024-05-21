@@ -2,7 +2,7 @@ import React, {useCallback} from 'react';
 import {classNames} from "shared/lib/classNames/classNames";
 import cls from './OrderListItem.module.scss'
 import {Order, OrderStates} from "../../model/types/orderSchema";
-import {Button, Link, Typography} from "@mui/material";
+import {Link, Typography} from "@mui/material";
 import {Card} from "../../../../shared/ui/Card/Card";
 import ProfileImage from 'shared/assets/images/user/User-avatar.png'
 import {useNavigate} from "react-router-dom";
@@ -12,6 +12,7 @@ import {AppDispatch} from "../../../../app/providers/storeProvider";
 import {updateOrderState} from "../../services/updateOrderState/updateOrderState";
 import {fetchUserBoatsOrders} from "../../../../pages/OrdersPage/services/fetchUserBoatsOrders/fetchUserBoatsOrders";
 import {getMyInfo} from "../../../User";
+import {Button, ButtonSize, ButtonThemes} from 'shared/ui/Button/Button';
 
 
 export interface OrderListItemProps{
@@ -30,7 +31,9 @@ export const OrderListItem:React.FC<OrderListItemProps> = (props) => {
         navigate(RoutePath.profile+ order.userId)
     }, [navigate, order.userId])
 
-    const {id} = useSelector(getMyInfo)
+
+    const myInfo = useSelector(getMyInfo)
+    const id = myInfo?.id
     
     const dispatch = useDispatch<AppDispatch>()
     
@@ -58,7 +61,10 @@ export const OrderListItem:React.FC<OrderListItemProps> = (props) => {
                             {order.userEmail}
                         </Typography>
                     </Card>
-                    <Link onClick={navigateToBoat}>
+                    <Link
+                        underline={'none'}
+                        color={'#cf00fd'}
+                        onClick={navigateToBoat}>
                         Посмотреть объявление
                     </Link>
                 </div>
@@ -77,6 +83,8 @@ export const OrderListItem:React.FC<OrderListItemProps> = (props) => {
 
                 {seller?
                     <Button
+                        theme={ButtonThemes.PRIMARY_ACCENT}
+                        size={ButtonSize.M}
                         disabled={order.state === OrderStates.FINISHED}
                         onClick={onUpdateOrderState}
                     >

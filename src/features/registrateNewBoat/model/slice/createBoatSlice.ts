@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import {BoatTypes, MooveType} from "../../../../entities/Boat";
+import {BoatTypes, MoveType} from "../../../../entities/Boat";
 
 export interface BoatCreationState {
     isLoading: boolean,
@@ -56,7 +56,7 @@ export const createBoatSlice = createSlice({
             setPassengerCapacity: (state, action: PayloadAction<number>) =>{
                 state.passengerCapacity = action.payload
             },
-            setMoveType: (state, action: PayloadAction<MooveType>) =>{
+            setMoveType: (state, action: PayloadAction<MoveType>) =>{
                 state.moveType = action.payload;
             },
             setCaptain: (state, action: PayloadAction<boolean>) =>{

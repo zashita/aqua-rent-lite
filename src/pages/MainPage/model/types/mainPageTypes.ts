@@ -1,5 +1,16 @@
-import {BoatListView} from "../../../../entities/Boat";
+import {Boat, BoatListView, BoatTypes, MoveType} from "../../../../entities/Boat";
 
 export interface MainPageSchema{
-    viewMode: BoatListView
+    query?: string;
+    boatList?: Boat[];
+    type?: BoatTypes,
+    moveType?: MoveType
+    captain?: boolean;
+    lakeName?: string
+
+}
+
+export interface QueryItem{
+    id: number;
+    value: any;
 }

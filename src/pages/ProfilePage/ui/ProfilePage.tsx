@@ -11,6 +11,7 @@ import {Divider, Typography} from "@mui/material";
 import {getMyId} from "shared/lib/getMyId/getMyId";
 import {Card} from "shared/ui/Card/Card";
 import {BoatList, BoatListView} from "entities/Boat";
+import {OrderList} from "../../../entities/Order";
 
 
 export interface ProfilePageProps{
@@ -26,11 +27,6 @@ const ProfilePage:React.FC<ProfilePageProps> = ({className}) => {
     }, [dispatch, id])
     return (
         <div className={classNames(cls.ProfilePage, {}, [className])}>
-            <Typography className={cls.Title} variant={'h3'}>
-                {isMine? "Мой профиль": "Профиль пользователя"}
-            </Typography>
-            <Divider/>
-
             <div className={cls.InfoWrapper}>
                 <img src={ProfileImage} className={cls.ProfileImage}/>
                 <div>
@@ -42,34 +38,24 @@ const ProfilePage:React.FC<ProfilePageProps> = ({className}) => {
                     </Typography>
                 </div>
             </div>
-            <Typography className={cls.Title} variant={'h3'}>Мои заказы</Typography>
+            {isMine?
+                <Typography className={cls.Title} variant={'h5'}>Мои заказы</Typography>
+                : null
+            }
             <Divider/>
 
 
             <div className={cls.ListWrapper}>
-                {isMine
+                {isMine && profile?.orders
                 ?
-
-                            profile?.orders.map((order)=>{
-                                return(
-                                    <Card className={cls.Card}>
-                                        <div>
-                                            {order.date}
-                                        </div>
-                                        <div>
-                                            {order.state}
-                                        </div>
-                                    </Card>
-                                )
-                            })
-
+                    <OrderList data={profile?.orders}/>
                 :
-                    <Typography variant={'h4'}>
+                    <Typography variant={'h5'}>
                         Пока что нет заказов
                     </Typography>
                 }
             </div>
-            <Typography className={cls.Title} variant={'h3'}>
+            <Typography className={cls.Title} variant={'h5'}>
                 {isMine?
                     `Мои объявления (${profile?.boats.length})`
                     :

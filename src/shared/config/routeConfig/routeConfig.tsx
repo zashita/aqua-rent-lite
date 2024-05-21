@@ -6,6 +6,7 @@ import {ProfilePage} from "pages/ProfilePage";
 import {BoatPage} from "pages/BoatPage";
 import { AdminPage } from "pages/AdminPage";
 import {OrdersPage} from "../../../pages/OrdersPage";
+import AdsPage from "../../../pages/AdsPage/ui/Page/AdsPage";
 
 export enum AppRoutes {
     MAIN = "main",
@@ -14,6 +15,7 @@ export enum AppRoutes {
     BOAT_PAGE = 'boat_page',
     ADMIN_PAGE = 'admin_page',
     ORDERS_PAGE = 'orders_page',
+    ADS_PAGE = 'ads_page',
     NOT_FOUND = 'not_found',
 }
 export const RoutePath: Record<AppRoutes, string> = {
@@ -23,6 +25,7 @@ export const RoutePath: Record<AppRoutes, string> = {
     [AppRoutes.BOAT_PAGE]: '/boat/',
     [AppRoutes.ADMIN_PAGE]: '/admin',
     [AppRoutes.ORDERS_PAGE]: '/orders/',
+    [AppRoutes.ADS_PAGE]: '/ads',
 
     [AppRoutes.NOT_FOUND]: '*'
 }
@@ -51,6 +54,10 @@ export const routerConfig: Record<AppRoutes, RouteProps> = {
     [AppRoutes.ORDERS_PAGE]:{
         path: `${RoutePath.orders_page}:id`,
         element: <OrdersPage/>
+    },
+    [AppRoutes.ADS_PAGE]:{
+        path: RoutePath.ads_page,
+        element: <AdsPage/>
     },
     [AppRoutes.NOT_FOUND]:{
         path: RoutePath.not_found,

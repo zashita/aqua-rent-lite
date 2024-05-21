@@ -11,3 +11,7 @@ export {
     lakeReducer,
     lakeActions
 } from './model/slice/lakeSlice'
+
+export {
+    fetchLakesList
+} from './services/fetchLakesList/fetchLakesList'

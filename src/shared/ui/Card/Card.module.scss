@@ -4,7 +4,7 @@
   transition: 0.2s;
   cursor: pointer;
   padding: var(--spacing-xs);
-  background-color: var(--background-secondary);
+  background-color: var(--background-primary);
   border-radius: var(--card-border-radius);
   align-items: center;
   justify-content: space-between;
@@ -12,6 +12,7 @@
   &:hover{
       opacity: 0.8;
       transform: scale(1.01);
+    background-color: var(--background-secondary);
   }
 }
 
@@ -19,10 +20,11 @@
   transition: 0.2s;
   cursor: pointer;
   padding: var(--spacing-xs);
-  background-color: var(--background-secondary);
+  background-color: var(--background-primary);
   border-radius: var(--card-border-radius);
   &:hover{
     opacity: 0.8;
     transform: scale(1.01);
+    background-color: var(--background-secondary);
   }
 }

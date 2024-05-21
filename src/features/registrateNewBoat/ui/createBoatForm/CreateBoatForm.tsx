@@ -10,7 +10,7 @@ import {
     TextField,
     Typography
 } from '@mui/material';
-import React, {useCallback} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {classNames} from "shared/lib/classNames/classNames";
 import cls from './CreateBoatForm.module.scss'
 import {useDispatch, useSelector} from "react-redux";
@@ -21,14 +21,16 @@ import {getBoatCreationData} from "../../model/selectors/getBoatCreationData/get
 import {createBoatActions} from "../../model/slice/createBoatSlice";
 import {createBoat} from "../../services/createBoat/createBoat";
 import Uploader from 'shared/ui/Uploader';
-import {BoatTypes, MooveType} from "../../../../entities/Boat";
+import {BoatTypes, MoveType} from "../../../../entities/Boat";
 import {getLakesList} from "../../../../entities/Lake";
+import {fetchLakesList} from "../../../../entities/Lake/services/fetchLakesList/fetchLakesList";
 
 
 export interface CreateOrderFormProps{
     className?: string;
+    onClose?: () => void;
 }
-export const CreateBoatForm:React.FC<CreateOrderFormProps> = ({className}) => {
+export const CreateBoatForm:React.FC<CreateOrderFormProps> = ({className, onClose}) => {
 
     const dispatch = useDispatch<AppDispatch>();
     const {
@@ -43,6 +45,11 @@ export const CreateBoatForm:React.FC<CreateOrderFormProps> = ({className}) => {
         passengerCapacity,
         lakeId,
     } = useSelector(getBoatCreationData);
+
+    useMemo(()=>{
+        dispatch(fetchLakesList())
+    },[dispatch])
+
     const jwtToken = localStorage.getItem(USER_LOCALSTORAGE_KEY);
     const decoded = jwtDecode(jwtToken)
 
@@ -78,7 +85,7 @@ export const CreateBoatForm:React.FC<CreateOrderFormProps> = ({className}) => {
         dispatch(createBoatActions.setCaptain(value));
     }, [dispatch]);
 
-    const onChangeMoveType = useCallback((value: MooveType) => {
+    const onChangeMoveType = useCallback((value: MoveType) => {
         dispatch(createBoatActions.setMoveType(value));
     }, [dispatch]);
 
@@ -93,20 +100,24 @@ export const CreateBoatForm:React.FC<CreateOrderFormProps> = ({className}) => {
     // captain: boolean;
 
     const onSubmitClick = useCallback( () => {
-        dispatch(createBoat({
-            name, 
-            userId, 
-            type, 
-            description, 
-            image, 
-            price, 
-            lakeId,
-            passengerCapacity, 
-            moveType, 
-            captain
-        }));
+        if(name && userId && type && description && image && price && lakeId && passengerCapacity &&moveType){
+            dispatch(createBoat({
+                name,
+                userId,
+                type,
+                description,
+                image,
+                price,
+                lakeId,
+                passengerCapacity,
+                moveType,
+                captain
+            }));
+            onClose();
+        }
+        
         console.log(image)
-    }, [dispatch, name, userId, type, description, image, price, lakeId, passengerCapacity, moveType, captain]);
+    }, [name, userId, type, description, image, price, lakeId, passengerCapacity, moveType, dispatch, captain, onClose]);
     const lakeList = useSelector(getLakesList)
     return (
         <div className={classNames(cls.CreateBoatForm, {}, [className])}>
@@ -171,9 +182,9 @@ export const CreateBoatForm:React.FC<CreateOrderFormProps> = ({className}) => {
                     // @ts-ignore
                     onChange={(event) => onChangeMoveType(event.target.value)}
                 >
-                    <MenuItem value={MooveType.ENGINE}>Двигателя</MenuItem>
-                    <MenuItem value={MooveType.WIND}>Силы ветра</MenuItem>
-                    <MenuItem value={MooveType.HAND}>Ручной силы</MenuItem>
+                    <MenuItem value={MoveType.ENGINE}>Двигателя</MenuItem>
+                    <MenuItem value={MoveType.WIND}>Силы ветра</MenuItem>
+                    <MenuItem value={MoveType.HAND}>Ручной силы</MenuItem>
                 </Select>
             </FormControl>
             <FormControl>
@@ -184,7 +195,7 @@ export const CreateBoatForm:React.FC<CreateOrderFormProps> = ({className}) => {
                     // @ts-ignore
                     onChange={(event) => onChangeLake(event.target.value)}
                 >
-                    {lakeList.map((lake)=>{
+                    {lakeList?.map((lake)=>{
                         return(
                             <MenuItem value={lake.id}>{lake.name}</MenuItem>
                         )

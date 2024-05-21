@@ -1,13 +1,12 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {classNames} from "shared/lib/classNames/classNames";
 import cls from './BoatPage.module.scss'
 import {useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch} from "app/providers/storeProvider";
-import {fetchBoatById} from "entities/Boat";
-import {getBoatState} from "entities/Boat";
-import {Button, Divider, Typography} from '@mui/material';
-import { CreateOrderModal } from 'features/createNewOrder';
+import {fetchBoatById, getBoatState} from "entities/Boat";
+import {Typography} from '@mui/material';
+import {CreateOrderModal} from 'features/createNewOrder';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import {baseUrl} from "shared/api/api";
 import ProfileImage from 'shared/assets/images/user/User-avatar.png'
@@ -15,6 +14,7 @@ import {Card} from "shared/ui/Card/Card";
 import {RoutePath} from "../../../shared/config/routeConfig/routeConfig";
 import {ReviewCreationForm} from "../../../features/addComment";
 import {getMyId} from "../../../shared/lib/getMyId/getMyId";
+import {Button, ButtonSize, ButtonThemes} from 'shared/ui/Button/Button';
 
 
 export interface BoatPageProps{
@@ -62,9 +62,11 @@ const BoatPage:React.FC<BoatPageProps> = ({className}) => {
                     </div>
                 </div>
                 <Button
+                    theme={ButtonThemes.PRIMARY_ACCENT}
+                    size={ButtonSize.M}
                     onClick={toggleModal}
                 >
-                    Заказать
+                    <Typography>Заказать</Typography>
                 </Button>
             </div>
             <div className={cls.MainBlock}>

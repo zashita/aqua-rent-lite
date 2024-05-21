@@ -1,12 +1,12 @@
 .ProfileImage{
-  width: 250px;
-  height: 250px;
+  width: 150px;
+  height: 150px;
 }
 .InfoWrapper{
-  width: 85%;
   display: flex;
-  justify-content: space-between;
-  align-self: center;
+  align-items: flex-start;
+  gap: var(--L, 20px);
+  margin: 40px 40px;
 }
 
 .ProfilePage{
@@ -17,6 +17,11 @@
   row-gap: var(--spacing-3xl);
 }
 .Title{
-  align-self: center;
 
+padding-left: 40px;
+}
+
+.ListWrapper{
+  padding-bottom: 80px;
+  padding-left: 40px;
 }

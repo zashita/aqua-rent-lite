@@ -4,9 +4,10 @@ import cls from './ReviewCreationForm.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch} from "../../../../app/providers/storeProvider";
 import {getCommentCreationData} from "../../model/selectors/getCommentCreationData/getCommentCreationData";
-import {Button, Rating, TextareaAutosize, TextField} from "@mui/material";
+import {Rating, TextareaAutosize, TextField} from "@mui/material";
 import {addCommentActions} from "../../model/slice/addComment";
 import {addReview} from "../../services/addReview/addReview";
+import {Button, ButtonSize, ButtonThemes} from 'shared/ui/Button/Button';
 
 
 export interface ReviewCreationFormProps{
@@ -59,6 +60,8 @@ export const ReviewCreationForm:React.FC<ReviewCreationFormProps> = (props) => {
                 onChange={(e) => onChangeComment(e.target.value)}
             />
             <Button
+                theme={ButtonThemes.PRIMARY_ACCENT}
+                size={ButtonSize.M}
                 onClick={sendReview}
             >
                 Отправить отзыв

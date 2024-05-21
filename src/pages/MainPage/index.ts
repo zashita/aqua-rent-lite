@@ -9,4 +9,4 @@ export {
 
 export * from './model/types/mainPageTypes'
 
-export {getMainPageViewMode} from './model/selectors/getMainPageViewMode/getMainPageViewMode'
+export {getQuery} from './model/selectors/getQuery/getQuery'

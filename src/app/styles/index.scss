@@ -9,8 +9,8 @@
     color: var(--primary-color);
 }
 
-.app {
-    background: var(--bg-color);
+#root {
+    background-color: var(--background-primary);
     min-height: 100vh;
 }
 
@@ -20,5 +20,4 @@
 
 .page-wrapper {
     flex-grow: 1;
-    padding: 20px;
 }

@@ -1,3 +1,5 @@
+import {Review} from "../../../Review/model/types/review";
+
 export interface Boat{
     id: string;
     name: string;
@@ -9,14 +11,15 @@ export interface Boat{
     price: number;
     lakeName: string;
     passengerCapacity: number;
-    moveType: string;
+    moveType: MoveType;
     captain: boolean;
     createdAt: string;
     updatedAt: string;
     userEmail: string;
+    reviews?: Review[]
 }
 
-export enum MooveType{
+export enum MoveType{
     WIND = 'Парус',
     ENGINE = 'Двигатель',
     HAND = 'Мышечная сила',

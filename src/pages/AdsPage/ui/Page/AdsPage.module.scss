@@ -1,0 +1,29 @@
+.topContainer{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-m);
+}
+
+.divider{
+  margin-bottom: var(--spacing-2xl);
+}
+
+.FilterContainer{
+  width: 100vw;
+  height: 480px;
+  flex-shrink: 0;
+  background: var(--background-colored);
+}
+
+.Title{
+  color: var(--text-on_color, #FDFDFD);
+  text-align: center;
+  font-feature-settings: 'case' on;
+  /* H1 */
+  font-family: Inter;
+  font-size: 46px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 110%; /* 50.6px */
+  letter-spacing: -1.84px;
+}
