@@ -1,4 +1,3 @@
-import {findByRole} from "@testing-library/react";
 
 export
     *
@@ -17,8 +16,24 @@ export {
 } from './model/slice/boatSlice'
 
 export {
+    getCurrentBoat
+} from './model/selectors/getCurrentBoat/getCurrentBoat'
+
+export {
+    getBoatIsLoading
+} from './model/selectors/getBoatIsLoading/getBoatIsLoading'
+
+export {
     fetchBoatList,
 } from './services/fetchBoatList/fetchBoatList'
+
+export {
+    fetchAdminBoatList
+} from './services/fetchAdminBoatList/fetchAdminBoatList'
+
+export {
+    confirmBoat
+} from './services/confirmBoat/confirmBoat'
 
 export {
     fetchBoatById
@@ -29,5 +44,5 @@ export {
 } from './services/deleteBoatById/deleteBoatById'
 
 export {
-    getBoatState
-} from './model/selectors/getBoatState/getBoatState'
+    getBoatList
+} from './model/selectors/getBoatList/getBoatList'

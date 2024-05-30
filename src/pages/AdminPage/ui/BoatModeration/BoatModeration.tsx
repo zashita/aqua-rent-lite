@@ -2,7 +2,7 @@ import React, {memo, useEffect, useMemo} from 'react';
 import cls from './BoatModeration.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch} from "../../../../app/providers/storeProvider";
-import {BoatList, BoatListView, fetchBoatList, getBoatState} from "entities/Boat";
+import {BoatList, BoatListView, fetchAdminBoatList, fetchBoatList, getBoatIsLoading, getBoatList} from "entities/Boat";
 import {Divider, Typography} from "@mui/material";
 import {getMyInfo, getUserAuthData} from "../../../../entities/User";
 
@@ -13,9 +13,10 @@ export interface BoatModerationProps{
 export const BoatModeration:React.FC<BoatModerationProps> = ({className}) => {
 
     const dispatch = useDispatch<AppDispatch>()
-    const {boatList, isLoading} = useSelector(getBoatState)
+    const boatList = useSelector(getBoatList)
+    const isLoading = useSelector(getBoatIsLoading)
     useMemo(() => {
-        dispatch(fetchBoatList())
+        dispatch(fetchAdminBoatList())
     }, [dispatch]);
     const myInfo= useSelector(getMyInfo)
     const roles = myInfo?.roles;

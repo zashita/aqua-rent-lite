@@ -25,7 +25,7 @@ export const UserModeration:React.FC<UserModerationProps> = ({className}) => {
     return (
         <div>
             <div className={cls.topContainer}>
-                <Typography>Поиск водного транспорта ({userList?.length.toString()} пользователей)</Typography>
+                <Typography>Зарегистированные пользователи({userList?.length.toString()} пользователей)</Typography>
             </div>
             <Divider className={cls.divider}/>
             <UserList data={userList} admin={admin}/>

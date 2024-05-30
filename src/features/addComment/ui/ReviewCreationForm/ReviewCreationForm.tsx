@@ -8,29 +8,22 @@ import {Rating, TextareaAutosize, TextField} from "@mui/material";
 import {addCommentActions} from "../../model/slice/addComment";
 import {addReview} from "../../services/addReview/addReview";
 import {Button, ButtonSize, ButtonThemes} from 'shared/ui/Button/Button';
+import {Simulate} from "react-dom/test-utils";
+import submit = Simulate.submit;
 
 
 export interface ReviewCreationFormProps{
     className?: string;
-    boatId: string;
-    userId: string;
+    submit: () => void;
 }
 export const ReviewCreationForm:React.FC<ReviewCreationFormProps> = (props) => {
     const {
         className,
-
+        submit
     } = props
     const dispatch = useDispatch<AppDispatch>()
-    useMemo(()=>{
-        dispatch(addCommentActions.setBoatId(props.boatId))
-        dispatch(addCommentActions.setUserId(props.userId))
-    }, [dispatch, props.boatId, props.userId])
     const {
-        userId,
-        boatId,
-        isLoading,
         comment,
-        error,
         rating
     } = useSelector(getCommentCreationData)
 
@@ -42,9 +35,7 @@ export const ReviewCreationForm:React.FC<ReviewCreationFormProps> = (props) => {
         dispatch(addCommentActions.setComment(value))
     }, [dispatch])
     
-    const sendReview = useCallback(()=>{
-        dispatch(addReview({userId, boatId, rating, comment}))
-    }, [boatId, comment, dispatch, rating, userId])
+
 
     return (
         <div className={classNames(cls.ReviewCreationForm, {}, [className])}>
@@ -60,9 +51,9 @@ export const ReviewCreationForm:React.FC<ReviewCreationFormProps> = (props) => {
                 onChange={(e) => onChangeComment(e.target.value)}
             />
             <Button
-                theme={ButtonThemes.PRIMARY_ACCENT}
+                theme={ButtonThemes.PRIMARY_INVERTED}
                 size={ButtonSize.M}
-                onClick={sendReview}
+                onClick={submit}
             >
                 Отправить отзыв
             </Button>

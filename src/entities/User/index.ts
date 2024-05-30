@@ -16,6 +16,18 @@ export {
 } from './services/fetchUsersList/fetchUsersList'
 
 export {
+    setStatusWaiting
+} from './services/setStatusWaiting/setStatusWaiting'
+
+export {
+    setStatusConfirmed
+} from './services/setStatusConfirmed/setStatusConfirmed'
+
+export {
+    fetchNotConfirmedUsers
+} from './services/fetchNotConfirmedUsers/fetchNotConfirmedUsers'
+
+export {
     deleteUserById
 } from './services/deleteUserById/deleteUserById'
 

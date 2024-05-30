@@ -4,7 +4,7 @@ import cls from './BoatList.module.scss'
 import {Grid, List} from "@mui/material";
 import {BoatListItem} from "../BoatListItem/BoatListItem";
 import {useSelector} from "react-redux";
-import {getBoatState} from "../../model/selectors/getBoatState/getBoatState";
+import {getBoatList} from "../../model/selectors/getBoatList/getBoatList";
 import {Boat, BoatListView} from "../../model/types/boat";
 
 

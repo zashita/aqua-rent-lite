@@ -16,7 +16,8 @@ export interface Boat{
     createdAt: string;
     updatedAt: string;
     userEmail: string;
-    reviews?: Review[]
+    reviews?: Review[];
+    confirmed?: boolean;
 }
 
 export enum MoveType{

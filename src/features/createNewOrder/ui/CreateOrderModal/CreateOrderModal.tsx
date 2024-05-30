@@ -7,18 +7,18 @@ import {CreateOrderForm} from "../CreateOrderForm/CreateOrderForm";
 
 export interface CreateOrderModalProps{
     open: boolean;
-    onCLose: () => void;
+    onClose: () => void;
 }
 export const CreateOrderModal:React.FC<CreateOrderModalProps> = (props) => {
-    const {open, onCLose} = props;
+    const {open, onClose} = props;
 
     return (
         <Modal
             className={cls.Modal}
             open={open}
-            onClose={onCLose}
+            onClose={onClose}
             >
-            <CreateOrderForm/>
+            <CreateOrderForm onClose={onClose}/>
         </Modal>
 );
 };

@@ -9,7 +9,8 @@ export interface CommentCreationState {
     boatId: string,
     rating: number,
     comment?: string,
-    error?: string
+    error?: boolean,
+    message?: string;
 }
 
 const initialState: CommentCreationState = {
@@ -18,7 +19,8 @@ const initialState: CommentCreationState = {
     boatId: '',
     rating: null,
     comment: '',
-    error: '',
+    error: false,
+    message: null,
 }
 
 export const addCommentSlice = createSlice({
@@ -40,24 +42,33 @@ export const addCommentSlice = createSlice({
             setIsLoading: (state, action: PayloadAction<boolean>)=>{
                 state.isLoading = action.payload
             },
-            setError: (state, action: PayloadAction<string>)=>{
-                state.error = action.payload
-            }
+
 
 
         },
         extraReducers: (builder) => {
             builder
                 .addCase(addReview.pending, (state) => {
-                    state.error = undefined;
+                    state.error = false;
                     state.isLoading = true;
+                    state.comment = null
                 })
                 .addCase(addReview.fulfilled, (state) => {
                     state.isLoading = false;
+                    state.message = 'Отзыв успешно оставлен'
                 })
                 .addCase(addReview.rejected, (state, action) => {
                     state.isLoading = false;
-                    state.error = action.payload
+                    state.error = true
+                    switch (action.error.message){
+                        case 'Request failed with status code 405'
+                        : state.message = 'У вас нет завершенных заказов на данное судно';
+                            break;
+                        case 'Request failed with status code 406'
+                        : state.message = 'Вы уже оставили отзыв на данное объявление';
+                            break;
+                        default: state.message = action.error.message
+                    }
                 });
         },
     }

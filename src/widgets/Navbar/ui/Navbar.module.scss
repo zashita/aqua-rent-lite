@@ -9,8 +9,10 @@
     padding: 20px 130px;
 }
 
-.LogoText{
-    color: var(--text-accent-inverse);
+.LogoImg{
+    height: 55px;
+    width: auto;
+    position: relative;
     cursor: pointer;
     transition: 0.3s;
     &:hover{

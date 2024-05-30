@@ -18,12 +18,13 @@ export interface OrdersPageProps{
 const OrdersPage:React.FC<OrdersPageProps> = ({className}) => {
     const {id} = useParams()
     const dispatch = useDispatch<AppDispatch>()
-    useMemo(()=>{
-        dispatch(fetchUserBoatsOrders(id))
-    }, [dispatch, id])
     const {
         ordersList
     } = useSelector(getUserBoatsOrders)
+    useMemo(()=>{
+        dispatch(fetchUserBoatsOrders(id))
+    }, [dispatch, id])
+
     const myInfo = useSelector(getMyInfo)
     const roles = myInfo?.roles
     return (

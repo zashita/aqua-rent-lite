@@ -4,7 +4,7 @@ import cls from './BoatPage.module.scss'
 import {useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch} from "app/providers/storeProvider";
-import {fetchBoatById, getBoatState} from "entities/Boat";
+import {fetchBoatById, getBoatIsLoading, getBoatList, getCurrentBoat} from "entities/Boat";
 import {Typography} from '@mui/material';
 import {CreateOrderModal} from 'features/createNewOrder';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -12,9 +12,11 @@ import {baseUrl} from "shared/api/api";
 import ProfileImage from 'shared/assets/images/user/User-avatar.png'
 import {Card} from "shared/ui/Card/Card";
 import {RoutePath} from "../../../shared/config/routeConfig/routeConfig";
-import {ReviewCreationForm} from "../../../features/addComment";
+import {addReview, getCommentCreationData, ReviewCreationForm} from "../../../features/addComment";
 import {getMyId} from "../../../shared/lib/getMyId/getMyId";
 import {Button, ButtonSize, ButtonThemes} from 'shared/ui/Button/Button';
+import { ReviewsList } from 'entities/Review';
+import { Message } from 'shared/ui/Message/Message';
 
 
 export interface BoatPageProps{
@@ -27,7 +29,14 @@ const BoatPage:React.FC<BoatPageProps> = ({className}) => {
     useMemo(() => {
         dispatch(fetchBoatById(id))
     }, [dispatch, id]);
-    const {currentBoat, isLoading} = useSelector(getBoatState)
+    const currentBoat = useSelector(getCurrentBoat)
+    const isLoading = useSelector(getBoatIsLoading)
+    const {
+        comment,
+        error,
+        message,
+        rating
+    } = useSelector(getCommentCreationData)
     const [orderModal, setOrderModal] = useState(false);
     const toggleModal = useCallback(() => {
         setOrderModal((prevState) => !prevState);
@@ -38,11 +47,25 @@ const BoatPage:React.FC<BoatPageProps> = ({className}) => {
         navigate(RoutePath.profile + currentBoat?.userId)
     }, [currentBoat?.userId, navigate])
 
+    const sendReview = useCallback(()=>{
+        dispatch(addReview({userId, boatId: currentBoat?.id, rating, comment}))
+        displayMessage();
+    }, [currentBoat?.id, comment, dispatch, rating, userId])
+
+    const [messageOpen, setMessageOpen] = useState(false)
+    const displayMessage = () => {
+        setMessageOpen(true);
+        setTimeout(() => {
+            setMessageOpen(false)
+        }, 2000)
+    }
+
     if(isLoading){
-        return
-        <Typography>
-            Loading
-        </Typography>
+        return(
+            <Typography>
+                Loading
+            </Typography>
+            )
     }
 
     return (
@@ -65,6 +88,7 @@ const BoatPage:React.FC<BoatPageProps> = ({className}) => {
                     theme={ButtonThemes.PRIMARY_ACCENT}
                     size={ButtonSize.M}
                     onClick={toggleModal}
+                    disabled={!currentBoat?.confirmed}
                 >
                     <Typography>Заказать</Typography>
                 </Button>
@@ -154,17 +178,20 @@ const BoatPage:React.FC<BoatPageProps> = ({className}) => {
                             </Typography>
                         </Card>
                     </div>
+                    <div className={cls.Reviews}>
+                        <ReviewsList reviewsList={currentBoat?.reviews}/>
+                    </div>
 
                     <ReviewCreationForm
-                        userId={userId}
-                        boatId={currentBoat?.id}
+                        submit={sendReview}
                     />
                 </div>
             </div>
 
             <CreateOrderModal
                 open={orderModal}
-                onCLose={toggleModal}/>
+                onClose={toggleModal}/>
+            <Message error={error} message={message} open={messageOpen}/>
         </div>
     );
 };

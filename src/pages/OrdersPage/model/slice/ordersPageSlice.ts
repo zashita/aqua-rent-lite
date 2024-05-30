@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import {Order} from "entities/Order";
+import {Order, updateOrderState} from "entities/Order";
+import {fetchUserBoatsOrders} from "../../services/fetchUserBoatsOrders/fetchUserBoatsOrders";
 
 export interface OrdersPageState {
     isLoading: boolean,
@@ -25,20 +26,32 @@ export const ordersPageSlice = createSlice({
 
 
         },
-        // extraReducers: (builder) => {
-        //     builder
-        //         .addCase(addReview.pending, (state) => {
-        //             state.error = undefined;
-        //             state.isLoading = true;
-        //         })
-        //         .addCase(addReview.fulfilled, (state) => {
-        //             state.isLoading = false;
-        //         })
-        //         .addCase(addReview.rejected, (state, action) => {
-        //             state.isLoading = false;
-        //             state.error = action.payload
-        //         });
-        // },
+        extraReducers: (builder) => {
+            builder
+                .addCase(fetchUserBoatsOrders.pending, (state) => {
+                    state.error = undefined;
+                    state.isLoading = true;
+                })
+                .addCase(fetchUserBoatsOrders.fulfilled, (state, action) => {
+                    state.isLoading = false;
+                })
+                .addCase(fetchUserBoatsOrders.rejected, (state, action) => {
+                    state.isLoading = false;
+                    state.error = action.payload
+                })
+                .addCase(updateOrderState.pending, (state) => {
+                state.error = undefined;
+                state.isLoading = true;
+                })
+                .addCase(updateOrderState.fulfilled, (state, action) => {
+                    state.isLoading = false;
+                })
+                .addCase(updateOrderState.rejected, (state, action) => {
+                    state.isLoading = false;
+                    state.error = action.payload
+                });
+
+        },
     }
 )
 

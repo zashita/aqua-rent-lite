@@ -1,4 +1,4 @@
-import {Button, Input, Link, Typography} from '@mui/material';
+import {Link, TextField, Typography} from '@mui/material';
 import React, {useCallback, useState} from 'react';
 import {classNames} from "shared/lib/classNames/classNames";
 import cls from './LoginForm.module.scss'
@@ -8,6 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {getLoginState} from "../../model/selectors/getLoginState/getLoginState";
 import {AppDispatch} from "app/providers/storeProvider";
 import {registrate} from "../../services/registrate/registrate";
+import {Button, ButtonSize, ButtonThemes} from 'shared/ui/Button/Button';
 
 
 export interface LoginFormProps{
@@ -21,9 +22,14 @@ export const LoginForm:React.FC<LoginFormProps> = ({className}) => {
         password,
         isLoading,
         error,
-        mode
+        mode, name
     } = useSelector(getLoginState);
     const [verifyPassword, setVerifyPassword] = useState('')
+
+    const validateEmail = (value: string): boolean => {
+        const reg = new RegExp("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$");
+        return reg.test(value)
+    }
 
     const onChangeEmail = useCallback((value: string) => {
         dispatch(loginActions.setEmail(value));
@@ -37,15 +43,24 @@ export const LoginForm:React.FC<LoginFormProps> = ({className}) => {
         dispatch(loginActions.setPassword(value));
     }, [dispatch]);
 
+    const onChangeName = useCallback((value: string) => {
+        dispatch(loginActions.setName(value));
+    }, [dispatch]);
+
      const onSubmitClick = useCallback( () => {
-         dispatch(loginByEmail({email, password}));
+         if(email && password){
+             dispatch(loginByEmail({email, password}));
+         }
     }, [dispatch, email, password]);
 
     const onSubmitClickRegistration = useCallback( () => {
-        if(password === verifyPassword){
-            dispatch(registrate({email, password}));
+        if(
+            password === verifyPassword
+            && name
+        ){
+            dispatch(registrate({email, name, password}));
         }
-    }, [dispatch, email, password, verifyPassword]);
+    }, [dispatch, email, name, password, verifyPassword]);
 
 
     const onChangeVerify = (value: string) =>{
@@ -64,31 +79,46 @@ export const LoginForm:React.FC<LoginFormProps> = ({className}) => {
                 <Typography variant={'h5'}>
                     Вход в аккаунт
                 </Typography>
-                <Input
+                <TextField
                     // color={'secondary'}
-                    placeholder={'Имя пользователя'}
+                    label={'Введите электронную почту'}
+
+                    type={'email'}
+                    color = {validateEmail(email)? 'primary': 'warning'}
                     onChange={event => onChangeEmail(event.target.value)}
                     value={email}
                 />
-                <Input
+                <TextField
                     // color = 'secondary'
                     onChange={event => onChangePassword(event.target.value)}
                     value={password}
-                    placeholder={'Пароль'}
+                    color = 'primary'
+                    label={'Введите пароль'}
                     type={'password'}
 
                 />
                 <Button
+                    size={ButtonSize.L}
+                    theme={ButtonThemes.PRIMARY_ACCENT}
                     onClick={onSubmitClick}
                     disabled={isLoading}
                 >
-                    Войти
+                    <Typography>
+                        Войти
+                    </Typography>
+
                 </Button>
                 <Link
                     textAlign={'center'}
                     onClick={() => onChangeMode(AuthModes.REGISTRATION)}
+                    color={'#0b9378'}
+                    underline={'hover'}
+                    width={"200px"}
                 >
-                    У меня еще нет аккаунта.
+                    <Typography>
+                        У меня еще нет аккаунта.
+
+                    </Typography>
                 </Link>
 
 
@@ -107,40 +137,58 @@ export const LoginForm:React.FC<LoginFormProps> = ({className}) => {
             <Typography variant={'h5'}>
                 Регистрация
             </Typography>
-            <Input
+            <TextField
                 // color={'secondary'}
-                placeholder={'Имя пользователя'}
+                label={'Введите электронную почту'}
+                color = {validateEmail(email)? 'primary': 'warning'}
                 onChange={event => onChangeEmail(event.target.value)}
                 value={email}
-                type = {'email'}
             />
-            <Input
+
+            <TextField
+                // color={'secondary'}
+                label={'Введите свое имя'}
+                color = 'primary'
+                onChange={event => onChangeName(event.target.value)}
+                value={name}
+            />
+            <TextField
                 // color = 'secondary'
                 onChange={event => onChangePassword(event.target.value)}
                 value={password}
-                placeholder={'Пароль'}
-                type = {'password'}
+                color = 'primary'
+                label={'Введите пароль'}
+                type={'password'}
+
             />
-            <Input
+            <TextField
                 // color = 'secondary'
                 onChange={event => onChangeVerify(event.target.value)}
+                color={'primary'}
                 value={verifyPassword}
-                placeholder={'Подтвердите пароль'}
+                label={'Подтвердите пароль'}
                 type = {'password'}
             />
             <Button
                 onClick={onSubmitClickRegistration}
                 disabled={isLoading}
+                theme={ButtonThemes.PRIMARY_ACCENT}
+                size={ButtonSize.L}
             >
-                Зарегистрироваться
+                <Typography>
+                    Зарегистрироваться
+                </Typography>
             </Button>
             <Link
                 textAlign={'center'}
                 onClick={() => onChangeMode(AuthModes.LOGIN)}
+                underline={'hover'}
+                color = {'#0b9378'}
             >
-                У меня уже есть аккаунт.
+                <Typography>
+                    У меня уже есть аккаунт.
+                </Typography>
             </Link>
-
         </div>
     );
 };

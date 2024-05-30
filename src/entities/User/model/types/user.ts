@@ -10,8 +10,15 @@ export interface User{
     orders?: Order[];
     createdAt?: string;
     updatedAt?: string;
+    roles?: Role[];
+    waitingForStatusConfirmation?: boolean
 
 }
+
+export interface Role{
+    value: string
+}
+
 export interface MyInfo{
     id: string;
     roles: []

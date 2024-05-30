@@ -11,6 +11,7 @@ import {deleteUserById} from "../../services/deleteUserById/deleteUserById";
 import {RoutePath} from "../../../../shared/config/routeConfig/routeConfig";
 import {Card} from "../../../../shared/ui/Card/Card";
 import {makeSeller} from "../../services/makeSeller/makeSeller";
+import {setStatusConfirmed} from "../../services/setStatusConfirmed/setStatusConfirmed";
 
 
 export interface UserListItemProps{
@@ -39,6 +40,7 @@ export const UserListItem = memo((props: UserListItemProps) => {
     const onMakeSeller = useCallback((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         event.stopPropagation()
         dispatch(makeSeller(user.id))
+        dispatch(setStatusConfirmed(user.id))
     }, [user.id, dispatch])
 
         const {t} = useTranslation()
@@ -65,11 +67,19 @@ export const UserListItem = memo((props: UserListItemProps) => {
                                 onClick={(e)=> deleteUser(e)}>
                                 Delete
                             </Button>
-                            <Button
-                                // onClick={(e) => deleteBoat(e)}>
-                                onClick={(e)=> onMakeSeller(e)}>
-                                Выдать роль арендодателя
-                            </Button>
+                            {
+                                user.waitingForStatusConfirmation
+                                &&
+                                !user.roles.find((role)=> role.value === 'SELLER')
+                                ?
+                                    <Button
+                                        onClick={(e)=> onMakeSeller(e)}>
+                                        Выдать роль арендодателя
+                                    </Button>
+                                    : null
+
+                            }
+
                         </div>
                         <Typography className = {cls.date}>
                             created: <b>{user.createdAt.slice(5,10)}</b>

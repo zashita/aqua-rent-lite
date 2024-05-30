@@ -130,7 +130,10 @@ export const InputBlock:React.FC<InputBlockProps> = ({className}) => {
                     theme={ButtonThemes.PRIMARY_INVERTED}
                     onClick={onSubmitClick}
                 >
-                    Найти
+                    <Typography>
+                        Найти
+                    </Typography>
+
                 </Button>
 
 

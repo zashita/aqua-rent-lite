@@ -1,67 +1,108 @@
-import {Button, Input, TextField} from '@mui/material';
-import React, {useCallback} from 'react';
+import {Typography} from '@mui/material';
+import React, {useCallback, useState} from 'react';
 import {classNames} from "shared/lib/classNames/classNames";
 import cls from './CreateOrderForm.module.scss'
 import {createOrder} from "../../services/createOrder/createOrder";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch} from "app/providers/storeProvider";
 import {getOrderCreationData} from "../../model/selectors/getOrderCreationData/getOrderCreationData";
-import {getBoatState} from "../../../../entities/Boat";
-import {jwtDecode, JwtPayload} from "jwt-decode";
-import {USER_LOCALSTORAGE_KEY} from "../../../../shared/const/localStorage";
+import {getCurrentBoat} from "../../../../entities/Boat";
 import {createOrderActions} from "../../model/slice/createOrderSlice";
+import {getMyInfo} from "../../../../entities/User";
+import {DateTimePicker, LocalizationProvider} from "@mui/x-date-pickers";
+import dayjs, {Dayjs} from "dayjs";
+import {DemoContainer} from "@mui/x-date-pickers/internals/demo";
+import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
+import {Button, ButtonSize, ButtonThemes} from 'shared/ui/Button/Button';
+
+
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+import { Message } from 'shared/ui/Message/Message';
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
 
 
 export interface CreateOrderFormProps{
+    onClose: () => void
     className?: string;
 }
-export const CreateOrderForm:React.FC<CreateOrderFormProps> = ({className}) => {
+export const CreateOrderForm:React.FC<CreateOrderFormProps> = ({className, onClose}) => {
 
     const dispatch = useDispatch<AppDispatch>();
     const {
         date,
         isLoading,
         error,
+        message
     } = useSelector(getOrderCreationData);
 
-    const {currentBoat} = useSelector(getBoatState)
-    const boatId = currentBoat.id;
-    const jwtToken = localStorage.getItem(USER_LOCALSTORAGE_KEY);
-    const decoded = jwtDecode(jwtToken)
+    const myInfo = useSelector(getMyInfo)
+    const userId = myInfo?.id;
 
-    // @ts-ignore
-    const userId = decoded.id
+    const {id} = useSelector(getCurrentBoat)
 
-    const onChangeDate = useCallback((value: string) => {
-        dispatch(createOrderActions.setDate(value));
-    }, [dispatch]);
+
+    const onChangeDate = useCallback((value: Dayjs) => {
+        dispatch(createOrderActions.setDate(dayjs(value).tz('Europe/Minsk')));
+        console.log(dayjs(date).tz('Europe/Minsk').toString())
+    }, [date, dispatch]);
+
 
 
      const onSubmitClick = useCallback( () => {
-         dispatch(createOrder({userId, boatId, date}));
-    }, [dispatch, boatId, date]);
+         if(date && id && userId){
+             dispatch(createOrder({userId, boatId: id, date}));
+             // onClose();
+             displayMessage();
+
+             console.log(dayjs(date).tz)
+         }
+    }, [date, id, userId, dispatch, onClose]);
+
+     const [messageOpen, setMessageOpen] = useState(false)
+    const displayMessage = () => {
+         setMessageOpen(true);
+         setTimeout(() => {
+             setMessageOpen(false)
+         }, 2000)
+    }
+
+     const dateNow = new Date()
+    console.log(`${dateNow.getFullYear()}-${dateNow.getMonth() + 1}-${dateNow.getDate()}`)
 
     return (
         <div className={classNames(cls.LoginForm, {}, [className])}>
-            {error && (
-                <div>
-                    {' '}
-                    Ошибка авторизации
-                </div>
-            )}
-            <Input
-                // color={'secondary'}
-                placeholder={'Имя пользователя'}
-                type={'date'}
-                onChange={event => onChangeDate(event.target.value)}
-                value={date}
-            />
+            <Typography variant = {'h5'}>
+                Оформление заказа
+            </Typography>
+            <Typography>
+                Выберите дату и время:
+            </Typography>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DemoContainer components={['DateTimePicker']}>
+                    <DateTimePicker
+                        minDate={dayjs(`${dateNow.getFullYear()}-${dateNow.getMonth()+1}-${dateNow.getDate()}`)}
+                        onChange={(value) => onChangeDate(value)}
+                        timeSteps={{hours: 3}}
+                        value={date}
+                        ampm={false}
+                    />
+                </DemoContainer>
+            </LocalizationProvider>
             <Button
+                theme={ButtonThemes.PRIMARY_ACCENT}
+                size = {ButtonSize.M}
                 onClick={onSubmitClick}
                 disabled={isLoading}
             >
-                Заказать
+                <Typography>
+                    Заказать
+                </Typography>
             </Button>
+            <Message error={error} message={message} open={messageOpen}/>
+
 
         </div>
     );

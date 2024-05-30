@@ -1,20 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
+import {Dayjs} from "dayjs";
+import {createOrder} from "../../services/createOrder/createOrder";
+import {AxiosError} from "axios";
 
 export interface OrderCreationState {
     isLoading: boolean,
     userId: string,
     boatId: string,
-    error: string,
-    date: string
+    error: boolean,
+    date: Dayjs,
+    message: string;
 }
 
 const initialState: OrderCreationState = {
     isLoading: false,
     userId: '',
     boatId: '',
-    date: '',
-    error: '',
+    date: null,
+    error: false,
+    message: null
 }
 
 export const createOrderSlice = createSlice({
@@ -27,23 +32,40 @@ export const createOrderSlice = createSlice({
             setBoatId: (state, action: PayloadAction<string>) => {
                 state.boatId = action.payload;
             },
-            setDate: (state, action: PayloadAction<string>) => {
+            setDate: (state, action: PayloadAction<Dayjs>) => {
                 state.date = action.payload;
             },
+
+
         },
-        // extraReducers: (builder) => {
-        //     builder
-        //         .addCase(loginByEmail.pending, (state) => {
-        //             state.error = undefined;
-        //             state.isLoading = true;
-        //         })
-        //         .addCase(loginByEmail.fulfilled, (state) => {
-        //             state.isLoading = false;
-        //         })
-        //         .addCase(loginByEmail.rejected, (state, action) => {
-        //             state.isLoading = false;
-        //         });
-        // },
+         extraReducers: (builder) => {
+             builder
+                 .addCase(createOrder.pending, (state) => {
+                     state.error = false;
+                     state.isLoading = true;
+                     state.message = null
+                 })
+                 .addCase(createOrder.fulfilled, (state) => {
+                     state.isLoading = false;
+                     state.error = false
+                     state.message = 'Заказ успешно оформлен'
+                 })
+                 .addCase(createOrder.rejected, (state, action) => {
+                     state.isLoading = false;
+                     state.error = true
+                     switch (action.error.message){
+                         case 'Request failed with status code 406'
+                         : state.message = 'Невозможно взять в аренду собственную лодку';
+                         break;
+                         case 'Request failed with status code 405'
+                         : state.message = 'Судно уже забронировано на выбранное время';
+                         break;
+                         default: state.message = action.error.message
+                     }
+                     // state.error = action.error.name
+                     // console.log(action.error.stack)
+                 });
+         },
     }
 )
 

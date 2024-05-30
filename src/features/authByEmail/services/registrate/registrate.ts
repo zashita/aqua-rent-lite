@@ -8,6 +8,7 @@ import {ThunkConfig} from "../../../../app/providers/storeProvider/types/types";
 
 export interface Registrate{
     email: string;
+    name: string;
     password: string;
 }
 export const registrate = createAsyncThunk<string, Registrate, ThunkConfig<string>>(

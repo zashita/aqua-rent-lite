@@ -13,18 +13,28 @@ import {updateOrderState} from "../../services/updateOrderState/updateOrderState
 import {fetchUserBoatsOrders} from "../../../../pages/OrdersPage/services/fetchUserBoatsOrders/fetchUserBoatsOrders";
 import {getMyInfo} from "../../../User";
 import {Button, ButtonSize, ButtonThemes} from 'shared/ui/Button/Button';
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+import dayjs, {Dayjs} from "dayjs";
+import {Simulate} from "react-dom/test-utils";
+import submit = Simulate.submit;
+import {getUserBoatsOrders} from "../../../../pages/OrdersPage/model/selectors/getUserBoatsOrders/getUserBoatsOrders";
+
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
 
 
 export interface OrderListItemProps{
     className?: string;
     order: Order;
-    roles?: string[]
+    roles?: string[];
 }
 export const OrderListItem:React.FC<OrderListItemProps> = (props) => {
     const {
         order,
         roles,
-        className
+        className,
     } = props
     const navigate = useNavigate()
     const navigateToUser = useCallback(()=>{
@@ -34,13 +44,16 @@ export const OrderListItem:React.FC<OrderListItemProps> = (props) => {
 
     const myInfo = useSelector(getMyInfo)
     const id = myInfo?.id
+    const {isLoading} = useSelector(getUserBoatsOrders)
     
     const dispatch = useDispatch<AppDispatch>()
     
     const onUpdateOrderState = useCallback(()=>{
-        dispatch(fetchUserBoatsOrders(id))
         dispatch(updateOrderState(order.id))
-    },[dispatch, order.id])
+        setTimeout(() => {
+            dispatch(fetchUserBoatsOrders(id))
+        }, 1000)
+    },[dispatch, id, order.id])
 
     const seller = !!roles?.find((role) => role === 'SELLER')
 
@@ -48,12 +61,15 @@ export const OrderListItem:React.FC<OrderListItemProps> = (props) => {
     const navigateToBoat = useCallback(()=>{
         navigate(RoutePath.boat_page+ order.boatId)
     }, [navigate, order.boatId])
+
+    const date = dayjs(order.date).toDate()
     return (
         <div className={classNames(cls.OrderListItem, {}, [className])}>
             <div className={cls.TitleAndContent}>
                 <div className={cls.DateAndUser}>
                     <Typography variant='h5'>
-                        Сделка от {order.date}
+                            Заказ на {date.getDate()}.{date.getMonth()}.{date.getFullYear()}<br/>
+                            Время: {date.getHours()}: {date.getMinutes()}
                     </Typography>
                     <Card onClick={navigateToUser}>
                         <img src={ProfileImage} className={cls.ProfileImage}/>
@@ -62,10 +78,12 @@ export const OrderListItem:React.FC<OrderListItemProps> = (props) => {
                         </Typography>
                     </Card>
                     <Link
+                        className={cls.Link}
                         underline={'none'}
-                        color={'#cf00fd'}
                         onClick={navigateToBoat}>
-                        Посмотреть объявление
+                        <Typography>
+                            Посмотреть объявление
+                        </Typography>
                     </Link>
                 </div>
 

@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {memo, useMemo, useState} from 'react';
 import {classNames} from "shared/lib/classNames/classNames";
 import cls from './ProfilePage.module.scss'
 import ProfileImage from 'shared/assets/images/user/User-avatar.png'
@@ -11,11 +11,17 @@ import {Divider, Typography} from "@mui/material";
 import {getMyId} from "shared/lib/getMyId/getMyId";
 import {Card} from "shared/ui/Card/Card";
 import {BoatList, BoatListView} from "entities/Boat";
-import {OrderList} from "../../../entities/Order";
+import {OrderList} from "entities/Order";
+import {Button, ButtonSize, ButtonThemes} from "shared/ui/Button/Button";
+
 
 
 export interface ProfilePageProps{
     className?: string;
+}
+export enum ProfileModes {
+    BOATS = 'boats',
+    ORDERS = 'orders',
 }
 const ProfilePage:React.FC<ProfilePageProps> = ({className}) => {
     const dispatch = useDispatch<AppDispatch>();
@@ -25,6 +31,8 @@ const ProfilePage:React.FC<ProfilePageProps> = ({className}) => {
     useMemo(()=>{
         dispatch(fetchUserProfile(id))
     }, [dispatch, id])
+
+    const [profileMode, setProfileMode] = useState(ProfileModes.BOATS)
     return (
         <div className={classNames(cls.ProfilePage, {}, [className])}>
             <div className={cls.InfoWrapper}>
@@ -38,40 +46,49 @@ const ProfilePage:React.FC<ProfilePageProps> = ({className}) => {
                     </Typography>
                 </div>
             </div>
-            {isMine?
-                <Typography className={cls.Title} variant={'h5'}>Мои заказы</Typography>
-                : null
-            }
-            <Divider/>
 
+            <Divider/>
+            <div className={cls.Buttons}>
+                <Button
+                    onClick={() => setProfileMode(ProfileModes.ORDERS)}
+                    theme={ButtonThemes.GHOST_NEUTRAL}
+                    size={ButtonSize.L}
+                    disabled={profileMode === ProfileModes.ORDERS}
+                >
+                    <Typography>
+                        Заказы
+                    </Typography>
+
+                </Button>
+                <Button
+                    onClick={() => setProfileMode(ProfileModes.BOATS)}
+                    theme={ButtonThemes.GHOST_NEUTRAL}
+                    size={ButtonSize.L}
+                    disabled={profileMode === ProfileModes.BOATS}
+
+                >
+                    <Typography>
+                        Объявления
+                    </Typography>
+
+                </Button>
+            </div>
 
             <div className={cls.ListWrapper}>
-                {isMine && profile?.orders
+                {profileMode === ProfileModes.ORDERS && profile?.orders
                 ?
                     <OrderList data={profile?.orders}/>
                 :
-                    <Typography variant={'h5'}>
-                        Пока что нет заказов
-                    </Typography>
+                    null
                 }
             </div>
-            <Typography className={cls.Title} variant={'h5'}>
-                {isMine?
-                    `Мои объявления (${profile?.boats.length})`
-                    :
-                    `Объявления пользователя (${profile?.boats.length})`}
-            </Typography>
-            <Divider/>
 
             <div className={cls.ListWrapper}>
                 {
-                    profile?.boats
+                    profileMode === ProfileModes.BOATS && profile?.boats
                         ?
                         <BoatList data={profile.boats} view={BoatListView.BOX}/>
-                        : <Typography variant={'h4'}>
-                            Пока что нет объявлений
-                        </Typography>
-
+                        : null
 
                 }
             </div>

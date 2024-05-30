@@ -7,7 +7,7 @@ import {classNames} from 'shared/lib/classNames/classNames';
 import cls from './Navbar.module.scss';
 import {Link, Typography} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
-import {getMyInfo, getUserAuthData, userActions} from "entities/User";
+import {getMyInfo, getUserAuthData, setStatusWaiting, userActions} from "entities/User";
 import {LoginModal} from "features/authByEmail";
 import {CreateBoatModal} from 'features/registrateNewBoat'
 import {RoutePath} from "../../../shared/config/routeConfig/routeConfig";
@@ -15,12 +15,15 @@ import {RoutePath} from "../../../shared/config/routeConfig/routeConfig";
 import {useNavigate} from "react-router-dom";
 import {NavbarMenu} from './Menu';
 import {Button, ButtonSize, ButtonThemes} from 'shared/ui/Button/Button';
+import {AppDispatch} from "../../../app/providers/storeProvider";
+import Logo from '../../../shared/assets/images/logo/000.png'
+import { ProfileDropdown } from './ProfileDropdown/ProfileDropdown';
 
 export interface NavbarProps{
     className?: string;
 }
 export const Navbar:React.FC<NavbarProps> = ({ className }) => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const authData = useSelector(getUserAuthData);
     const [authModal, setAuthModal] = useState(false);
     const toggleModal = useCallback(() => {
@@ -49,6 +52,11 @@ export const Navbar:React.FC<NavbarProps> = ({ className }) => {
         navigate(RoutePath.main)
     };
 
+    const onBecomeSellerClick = useCallback(()=>{
+        dispatch(setStatusWaiting(id));
+    }, [dispatch, id])
+    ;
+
     const navigateToMain = useCallback(() => {
         navigate(RoutePath.main)
     },[navigate])
@@ -58,13 +66,10 @@ export const Navbar:React.FC<NavbarProps> = ({ className }) => {
         return (
             <div className={classNames(cls.Navbar, {}, [className])}>
                 <div className = {cls.LogoBlock}>
-                    <Typography
-                        variant={'h4'}
-                        className={cls.LogoText}
-                        onClick={navigateToMain}
-                    >
-                        aquaRent
-                    </Typography>
+                    <img
+                        className={cls.LogoImg}
+                        src={Logo} alt={'Aqua Rent'}
+                        onClick={navigateToMain}/>
                 </div>
                 <div className={cls.Navigation}>
                     <Link
@@ -73,7 +78,9 @@ export const Navbar:React.FC<NavbarProps> = ({ className }) => {
                         color={"#fff"}
                         href={RoutePath.ads_page}
                     >
-                        Обьявления
+                        <Typography>
+                            Объявления
+                        </Typography>
                     </Link>
                     <Link
                         underline={'none'}
@@ -82,7 +89,9 @@ export const Navbar:React.FC<NavbarProps> = ({ className }) => {
                         color={"#fff"}
 
                     >
-                        О нас
+                        <Typography>
+                            О нас
+                        </Typography>
                     </Link>
                     {seller?
                         <Link
@@ -92,7 +101,9 @@ export const Navbar:React.FC<NavbarProps> = ({ className }) => {
                             color={"#fff"}
 
                         >
-                            Мои сделки
+                            <Typography>
+                                Мои сделки
+                            </Typography>
                         </Link>
                         :
                         null
@@ -104,7 +115,10 @@ export const Navbar:React.FC<NavbarProps> = ({ className }) => {
                         color={"#fff"}
                         href={RoutePath.profile + id}
                     >
-                        Мой профиль
+                        <Typography>
+                            Мой профиль
+                        </Typography>
+
                     </Link>
                     {
                         admin?
@@ -115,28 +129,49 @@ export const Navbar:React.FC<NavbarProps> = ({ className }) => {
                                 className={cls.link}
                                 href={RoutePath.admin_page}
                             >
-                                Панель администратора
+                                <Typography>
+                                    Панель администратора
+                                </Typography>
                             </Link>
                             :
                             null
                     }
                 </div>
                 <div className={cls.Buttons}>
+                    {seller
+                        ?
+                        <Button
+                            theme={ButtonThemes.PRIMARY_ACCENT}
+                            size={ButtonSize.M}
+                            onClick={toggleBoatModal}
+                            disabled={!seller}
+                        >
+                            <Typography>
+                                Создать объявление
+                            </Typography>
+                        </Button>
+                        :
+                        <Button
+                            theme={ButtonThemes.PRIMARY_ACCENT}
+                            size={ButtonSize.M}
+                            onClick={onBecomeSellerClick}
+                        >
+                            <Typography>
+                                Стать арендодателем
+                            </Typography>
+                        </Button>
+                    }
+
                     <Button
-                        theme={ButtonThemes.GHOST_ACCENT_INVERTED}
-                        size={ButtonSize.M}
-                        onClick={toggleBoatModal}
-                        disabled={!seller}
-                    >
-                        Создать обьявление
-                    </Button>
-                    <Button
-                        theme={ButtonThemes.GHOST_ACCENT_INVERTED}
+                        theme={ButtonThemes.PRIMARY_ACCENT}
                         size={ButtonSize.M}
                         onClick={onLogout}
                     >
-                        Logout
+                        <Typography>
+                            Выйти
+                        </Typography>
                     </Button>
+                    {/*<ProfileDropdown collapsed={false}/>*/}
                     <CreateBoatModal open={createBoatModal} onCLose={toggleBoatModal}/>
                 </div>
 
@@ -152,13 +187,10 @@ export const Navbar:React.FC<NavbarProps> = ({ className }) => {
     return (
         <div className={classNames(cls.Navbar, {}, [className])}>
             <div className={cls.LogoBlock}>
-                <Typography
-                    variant={'h4'}
-                    className={cls.LogoText}
-                    onClick={navigateToMain}
-                >
-                    aquaRent
-                </Typography>
+                <img
+                    className={cls.LogoImg}
+                    src={Logo} alt={'Aqua Rent'}
+                    onClick={navigateToMain}/>
             </div>
             <div className={cls.Navigation}>
                 <Link
@@ -168,7 +200,9 @@ export const Navbar:React.FC<NavbarProps> = ({ className }) => {
                     className={cls.link}
                     href={RoutePath.ads_page}
                 >
-                    Обьявления
+                    <Typography>
+                        Обьявления
+                    </Typography>
                 </Link>
                 <Link
                     fontFamily={'Roboto'}
@@ -177,17 +211,22 @@ export const Navbar:React.FC<NavbarProps> = ({ className }) => {
                     className={cls.link}
                     href="/about"
                 >
-                    О нас
+                    <Typography>
+                        Объявление
+                    </Typography>
                 </Link>
             </div>
             <div className = {cls.Buttons}>
                 <Button
-                    theme={ButtonThemes.PRIMARY_INVERTED}
+                    theme={ButtonThemes.PRIMARY_ACCENT}
                     size={ButtonSize.M}
                     className={cls.Button}
                     onClick={toggleModal}
                 >
-                    Войти
+                    <Typography>
+                        Войти
+                    </Typography>
+
                 </Button>
             </div>
             <LoginModal

@@ -1,9 +1,7 @@
 import {
-    Button,
     Checkbox,
     FormControl,
     FormControlLabel,
-    Input,
     InputLabel,
     MenuItem,
     Select,
@@ -15,7 +13,7 @@ import {classNames} from "shared/lib/classNames/classNames";
 import cls from './CreateBoatForm.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch} from "app/providers/storeProvider";
-import {jwtDecode, JwtPayload} from "jwt-decode";
+import {jwtDecode} from "jwt-decode";
 import {USER_LOCALSTORAGE_KEY} from "../../../../shared/const/localStorage";
 import {getBoatCreationData} from "../../model/selectors/getBoatCreationData/getBoatCreationData";
 import {createBoatActions} from "../../model/slice/createBoatSlice";
@@ -24,6 +22,7 @@ import Uploader from 'shared/ui/Uploader';
 import {BoatTypes, MoveType} from "../../../../entities/Boat";
 import {getLakesList} from "../../../../entities/Lake";
 import {fetchLakesList} from "../../../../entities/Lake/services/fetchLakesList/fetchLakesList";
+import {Button, ButtonSize, ButtonThemes} from 'shared/ui/Button/Button';
 
 
 export interface CreateOrderFormProps{
@@ -216,6 +215,8 @@ export const CreateBoatForm:React.FC<CreateOrderFormProps> = ({className, onClos
 
             <Uploader file={image} setFile={onChangeImage} fileType={'image'}/>
             <Button
+                theme={ButtonThemes.PRIMARY_ACCENT}
+                size={ButtonSize.M}
                 onClick={onSubmitClick}
                 disabled={isLoading}
             >

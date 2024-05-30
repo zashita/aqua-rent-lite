@@ -1,0 +1,20 @@
+.Message{
+  background-color: #04ff04;
+  border-radius: 16px;
+  display: none;
+  color: white;
+  padding: 8px;
+  transition: 300ms;
+}
+
+.error{
+  background-color: #ff0000;
+}
+.open{
+  position: fixed;
+  left: auto;
+  bottom: 40px;
+  display: block;
+  color: white;
+
+}

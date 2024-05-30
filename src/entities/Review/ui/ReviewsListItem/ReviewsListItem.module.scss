@@ -1,0 +1,21 @@
+.ReviewsListItem{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  align-self: stretch;
+}
+
+.ReviewHead{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+}
+
+.ReviewInfo{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--2XS, 4px);
+}

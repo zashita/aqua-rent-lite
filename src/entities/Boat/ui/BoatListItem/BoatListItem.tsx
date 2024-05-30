@@ -15,6 +15,7 @@ import {deleteBoatById} from "../../services/deleteBoatById/deleteBoatById";
 import {Card, CardViewModes} from "shared/ui/Card/Card";
 import {updateBoatViews} from "../../services/updateBoatViews/updateBoatViews";
 import {getUserAuthData} from "../../../User";
+import { confirmBoat } from 'entities/Boat';
 
 const bull = (
     <Box
@@ -58,6 +59,12 @@ const navigate = useNavigate();
         dispatch(deleteBoatById(boat.id))
     }, [boat.id, dispatch])
 
+
+        const onConfirmBoat = useCallback((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+            event.stopPropagation()
+            dispatch(confirmBoat(boat.id))
+        }, [boat.id, dispatch])
+
     const getBoatRating = (): {rating: number, numberOfReviews: number} =>{
         let sum = 0;
         for(let i = 0; i < boat.reviews?.length; i++){
@@ -95,10 +102,19 @@ const navigate = useNavigate();
                         </Typography>
                         {
                             admin?
-                                <Button onClick={(e) => deleteBoat(e)}>
-                                    Delete
-                                </Button>
+                                <>
+                                    <Button onClick={(e) => deleteBoat(e)}>
+                                        Delete
+                                    </Button>
+                                </>
                                 :
+                                null
+                        }
+                        {
+                            admin&& !boat.confirmed?
+                                <Button onClick={(e) => onConfirmBoat(e)}>
+                                    Одобрить
+                                </Button>:
                                 null
                         }
 

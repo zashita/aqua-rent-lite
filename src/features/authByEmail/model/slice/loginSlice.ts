@@ -12,12 +12,14 @@ export interface LoginState {
     email: string,
     password: string,
     error: string,
+    name?: string,
     mode: AuthModes
 }
 
 
 const initialState: LoginState = {
     isLoading: false,
+    name: '',
     email: '',
     password: '',
     error: '',
@@ -36,6 +38,9 @@ export const loginSlice = createSlice({
         },
         setAuthMode: (state, action: PayloadAction<AuthModes>)=>{
             state.mode = action.payload
+        },
+        setName: (state, action: PayloadAction<string>) => {
+            state.name = action.payload
         }
     },
     extraReducers: (builder) => {
