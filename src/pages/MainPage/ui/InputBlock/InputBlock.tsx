@@ -140,16 +140,17 @@ export const InputBlock:React.FC<InputBlockProps> = ({className}) => {
             </div>
             <div className={cls.CheckBox}>
                 <FormControlLabel
-                    color={'warning'}
+                    color={'primary'}
                     control={
                         <Checkbox
                             checked={captain}
-                            color={'warning'}
+                            color={'info'}
                             //@ts-ignore
                             onChange={(e) => onChangeCaptain(e.target.checked)}
                             inputProps={{'aria-label': 'controlled'}}
                         />
-                    } label="Наличие капитана"/>
+                    }
+                    label="Наличие капитана"/>
             </div>
 
         </div>

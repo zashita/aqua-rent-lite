@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import {Boat, BoatListView} from "../../model/types/boat";
 import cls from './BoatListItem.module.scss'
 import {classNames} from "../../../../shared/lib/classNames/classNames";
-import {Button, Typography} from "@mui/material";
+import {Typography} from "@mui/material";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import {baseUrl} from "../../../../shared/api/api";
 import {useNavigate} from "react-router-dom";
@@ -15,7 +15,8 @@ import {deleteBoatById} from "../../services/deleteBoatById/deleteBoatById";
 import {Card, CardViewModes} from "shared/ui/Card/Card";
 import {updateBoatViews} from "../../services/updateBoatViews/updateBoatViews";
 import {getUserAuthData} from "../../../User";
-import { confirmBoat } from 'entities/Boat';
+import {confirmBoat} from 'entities/Boat';
+import {Button, ButtonSize, ButtonThemes} from 'shared/ui/Button/Button';
 
 const bull = (
     <Box
@@ -85,61 +86,80 @@ const navigate = useNavigate();
                 <Card
                     onClick={navigateToBoatPage}
                 >
-                    <img
-                        alt = {boat.name}
-                        src={`${baseUrl}/${boat.image}`}
-                        className = {cls.Image}
-                    />
-                    <div className={cls.InfoWrapper}>
-                        <Typography>
-                            name: <b>{boat.name}</b>
-                        </Typography>
-                        <Typography>
-                            type: <b>{boat.type}</b>
-                        </Typography>
-                        <Typography>
-                            description: <b>{boat.description}</b>
-                        </Typography>
-                        {
-                            admin?
-                                <>
-                                    <Button onClick={(e) => deleteBoat(e)}>
-                                        Delete
-                                    </Button>
-                                </>
-                                :
-                                null
-                        }
-                        {
-                            admin&& !boat.confirmed?
-                                <Button onClick={(e) => onConfirmBoat(e)}>
-                                    Одобрить
-                                </Button>:
-                                null
-                        }
+                    <div className={cls.Content}>
+                        <img
+                            alt={'BOAT_IMAGE'}
+                            src={`${baseUrl}/${boat.image}`}
+                            className={cls.Image}
+                        />
+                        <div className={cls.Text}>
+                            <div className={cls.PriceAndLocation}>
+                                <Typography className={cls.Price}>
+                                    {boat.price}BYN/час
+                                </Typography>
+                                <Typography className={cls.Location}>
+                                    {boat.lakeName}
+                                </Typography>
+                            </div>
+                            <div className={cls.SpecList}>
+                                <Typography className={cls.title}>
+                                    Тип судна: <b>{boat.type}</b>
+                                </Typography>
+                                <Typography className={cls.title}>
+                                    Пассажировместимость: <b>{boat.passengerCapacity}</b>
+                                </Typography>
+                                <Typography className={cls.title}>
+                                    Наличие капитана: <b>{boat.captain ? 'Да' : "Нет"}</b>
+                                </Typography>
+                            </div>
 
+                        </div>
                     </div>
-                    <Typography className = {cls.date}>
-                        created: <b>{boat.createdAt.slice(5,10)}</b>
-                    </Typography>
+                    <div className={cls.ButtonsAndRating}>
+                        <div className={cls.Buttons}>
+                            {
+                                admin?
+                                    <>
+                                        <Button
+                                            theme={ButtonThemes.PRIMARY_ACCENT}
+                                            size={ButtonSize.M}
+                                            onClick={(e) => deleteBoat(e)}>
+                                            Удалить
+                                        </Button>
+                                    </>
+                                    :
+                                    null
+                            }
+                            {
+                                admin&& !boat.confirmed?
+                                    <Button
+                                        theme={ButtonThemes.PRIMARY_ACCENT}
+                                        size={ButtonSize.M}
+                                        onClick={(e) => onConfirmBoat(e)}>
+                                        Одобрить
+                                    </Button>:
+                                    null
+                            }
+                        </div>
+                    </div>
                 </Card>
 
             </div>
         )
     }
 
-    return (
-        <div
-            className={classNames(cls.BoatListItem, {}, [className, cls[view]])}
-        >
-            <Card
-                onClick={navigateToBoatPage}
-                viewMode={CardViewModes.GRID}
+        return (
+            <div
+                className={classNames(cls.BoatListItem, {}, [className, cls[view]])}
             >
-                <div className={cls.ImageWrapper}>
-                    <img
-                        alt={'BOAT_IMAGE'}
-                        src={`${baseUrl}/${boat.image}`}
+                <Card
+                    onClick={navigateToBoatPage}
+                    viewMode={CardViewModes.GRID}
+                >
+                    <div className={cls.ImageWrapper}>
+                        <img
+                            alt={'BOAT_IMAGE'}
+                            src={`${baseUrl}/${boat.image}`}
                         className={cls.Image}
                     />
                     <div className={cls.Rating}>
@@ -148,7 +168,7 @@ const navigate = useNavigate();
                 </div>
                 <div className = {cls.PriceAndViews}>
                     <Typography className = {cls.Price}>
-                        <b>{boat.price}</b> BYN/день
+                        <b>{boat.price}</b> BYN/час
                     </Typography>
                     <Typography className = {cls.views}>
                         <VisibilityIcon/>

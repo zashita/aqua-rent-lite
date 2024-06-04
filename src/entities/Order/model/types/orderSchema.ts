@@ -1,10 +1,12 @@
 export interface Order{
     id: string;
-    date: string;
+    date: number;
+    dateEnd: number;
     state: OrderStates;
     userId: string;
     boatId: string;
     userEmail: string;
+    price: number;
 }
 
 export interface OrderSchema{

@@ -6,6 +6,8 @@ import {BoatModeration} from '../BoatModeration/BoatModeration';
 import {UserModeration} from "../UserModeration/UserModeration";
 import {NotConfirmedUsers} from "../NotConfirmedUsers/NotConfirmedUsers";
 import {Button, ButtonSize, ButtonThemes} from 'shared/ui/Button/Button';
+import {useSelector} from "react-redux";
+import {getMyInfo} from "../../../../entities/User";
 
 
 export interface AdminPageProps{
@@ -20,6 +22,16 @@ export enum ModerationModes {
 const AdminPage:React.FC<AdminPageProps> = memo(({className}) => {
     const [moderationMode, setModerationMode] = useState(ModerationModes.BOATS)
 
+    const myInfo = useSelector(getMyInfo)
+    const roles = myInfo?.roles
+    const isAdmin = roles?.find((role) => role === 'ADMIN')
+    if(!isAdmin){
+        return (
+            <Typography variant = {'h5'}>
+                У вас нет прав администратора
+            </Typography>
+        )
+    }
     return (
         <div className={classNames(cls.AdminPage, {}, [className])}>
             <Button

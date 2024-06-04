@@ -1,4 +1,5 @@
 import {Review} from "../../../Review/model/types/review";
+import {User} from "../../../User";
 
 export interface Boat{
     id: string;
@@ -18,6 +19,7 @@ export interface Boat{
     userEmail: string;
     reviews?: Review[];
     confirmed?: boolean;
+    owner?: User;
 }
 
 export enum MoveType{

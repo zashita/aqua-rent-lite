@@ -55,6 +55,24 @@ export const OrderListItem:React.FC<OrderListItemProps> = (props) => {
         }, 1000)
     },[dispatch, id, order.id])
 
+    const displayDate = (dateToDisplay: Date) => {
+        const month =
+            (dateToDisplay.getMonth() + 1) < 10? `0${dateToDisplay.getMonth() + 1}`
+                : `${dateToDisplay.getMonth() + 1}`;
+        const orderDate = dateToDisplay.getDate() < 10? `0${dateToDisplay.getDate()}`
+            : `${dateToDisplay.getDate()}`
+
+        const hours = dateToDisplay.getHours() < 10? `0${dateToDisplay.getHours()}`
+            : `${dateToDisplay.getHours()}`
+
+        const minutes = dateToDisplay.getMinutes() < 10? `0${dateToDisplay.getMinutes()}`
+            : `${dateToDisplay.getMinutes()}`
+        return {
+            displayedDate: `${orderDate}:${month}:${dateToDisplay.getFullYear()}`,
+            displayedTime: `${hours}:${minutes}`
+        }
+    }
+
     const seller = !!roles?.find((role) => role === 'SELLER')
 
 
@@ -62,14 +80,25 @@ export const OrderListItem:React.FC<OrderListItemProps> = (props) => {
         navigate(RoutePath.boat_page+ order.boatId)
     }, [navigate, order.boatId])
 
-    const date = dayjs(order.date).toDate()
+    const date = new Date(order.date * 1000)
+    const displayedDateStart = displayDate(date);
+    const dateEnd = new Date(order.dateEnd * 1000)
+    const displayedDateEnd = displayDate(dateEnd);
+
     return (
         <div className={classNames(cls.OrderListItem, {}, [className])}>
             <div className={cls.TitleAndContent}>
                 <div className={cls.DateAndUser}>
-                    <Typography variant='h5'>
-                            Заказ на {date.getDate()}.{date.getMonth()}.{date.getFullYear()}<br/>
-                            Время: {date.getHours()}: {date.getMinutes()}
+                    <Typography variant='h6'>
+                            Начало аренды {displayedDateStart.displayedDate},
+                            Время: {displayedDateStart.displayedTime}
+                    </Typography>
+                    <Typography variant='h6'>
+                        Завершение аренды {displayedDateEnd.displayedDate},
+                        Время: {displayedDateEnd.displayedTime}
+                    </Typography>
+                    <Typography variant='h6'>
+                        Сумма к оплате: {order.price}BYN
                     </Typography>
                     <Card onClick={navigateToUser}>
                         <img src={ProfileImage} className={cls.ProfileImage}/>

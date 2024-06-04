@@ -1,7 +1,10 @@
 import React from 'react';
 import {classNames} from "shared/lib/classNames/classNames";
 import cls from './AdsPageSkeleton.module.scss'
-import {Skeleton} from "@mui/material";
+import {Skeleton, Typography} from "@mui/material";
+import {Card, CardViewModes} from "../../../../shared/ui/Card/Card";
+import {baseUrl} from "../../../../shared/api/api";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 
 export interface MainPageSkeletonProps{
@@ -13,38 +16,58 @@ export const AdsPageSkeleton:React.FC<MainPageSkeletonProps> = ({className}) => 
     return (
         <div className={classNames(cls.MainPageSkeleton, {}, [className])}>
             {skeletonArray.map(()=>{
-                return(
-                    <div className={cls.Item}>
-                        <Skeleton
-                            variant={'rectangular'}
-                            animation={'wave'}
-                            width={'300px'}
-                            height={'200px'}/>
-                        <div className={cls.ItemInfo}>
-                            <Skeleton
+                return (
+                    <div
+                        className={classNames(cls.SkeletonListItem, {}, [className])}
+                    >
+                        <Card
+                            viewMode={CardViewModes.GRID}
+                        >
+                            <div className={cls.ImageWrapper}>
+                                <Skeleton
                                 variant={'rectangular'}
-                                animation={'wave'}
-                                width={'700px'}
-                                height={'50px'}
-                            />
-                            <Skeleton
-                                variant={'rectangular'}
-                                animation={'wave'}
-                                width={'700px'}
-                                height={'50px'}
-                            />
-                            <Skeleton
-                                variant={'rectangular'}
-                                animation={'wave'}
-                                width={'700px'}
-                                height={'50px'}
-                            />
-                        </div>
+                                width={"320px"}
+                                height={'205px'}/>
+
+                            </div>
+                            <div className={cls.PriceAndViews}>
+                                <Skeleton
+                                    variant={'rectangular'}
+                                    width={"100px"}
+                                    height={'20px'}/>
+                                <Skeleton
+                                    variant={'rectangular'}
+                                    width={"50px"}
+                                    height={'20px'}/>
+                            </div>
+
+                            <div className={cls.InfoWrapper}>
+
+                                <Skeleton
+                                    variant={'rectangular'}
+                                    width={"70px"}
+                                    height={'14px'}/>
+                                <div className={cls.SpecList}>
+                                    <Skeleton
+                                        variant={'rectangular'}
+                                        width={"160px"}
+                                        height={'18px'}/>
+                                    <Skeleton
+                                        variant={'rectangular'}
+                                        width={"160px"}
+                                        height={'18px'}/>
+                                    <Skeleton
+                                        variant={'rectangular'}
+                                        width={"160px"}
+                                        height={'18px'}/>
+                                </div>
+                            </div>
+                        </Card>
                     </div>
 
 
                 )
             })}
         </div>
-);
+    );
 };

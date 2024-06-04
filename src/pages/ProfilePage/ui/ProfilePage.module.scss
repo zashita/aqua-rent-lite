@@ -1,6 +1,12 @@
 .ProfileImage{
   width: 150px;
   height: 150px;
+  border-radius: 999px;
+  transition: 0.3s;
+  &:hover{
+    scale: 1.1;
+    opacity: 0.8;
+  }
 }
 .InfoWrapper{
   display: flex;

@@ -31,6 +31,11 @@ export const LoginForm:React.FC<LoginFormProps> = ({className}) => {
         return reg.test(value)
     }
 
+    const validatePassword = (value: string): boolean => {
+        // const reg = new RegExp("/(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{6,}/g");
+        return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{6,}$/.test(value)
+    }
+
     const onChangeEmail = useCallback((value: string) => {
         dispatch(loginActions.setEmail(value));
     }, [dispatch]);
@@ -57,6 +62,8 @@ export const LoginForm:React.FC<LoginFormProps> = ({className}) => {
         if(
             password === verifyPassword
             && name
+            && validateEmail(email)
+            && validatePassword(password)
         ){
             dispatch(registrate({email, name, password}));
         }
@@ -156,7 +163,7 @@ export const LoginForm:React.FC<LoginFormProps> = ({className}) => {
                 // color = 'secondary'
                 onChange={event => onChangePassword(event.target.value)}
                 value={password}
-                color = 'primary'
+                color = {validatePassword(password)? 'primary': 'warning'}
                 label={'Введите пароль'}
                 type={'password'}
 
@@ -164,7 +171,7 @@ export const LoginForm:React.FC<LoginFormProps> = ({className}) => {
             <TextField
                 // color = 'secondary'
                 onChange={event => onChangeVerify(event.target.value)}
-                color={'primary'}
+                color = {verifyPassword === password? 'primary': 'warning'}
                 value={verifyPassword}
                 label={'Подтвердите пароль'}
                 type = {'password'}

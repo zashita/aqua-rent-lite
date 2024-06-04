@@ -16,6 +16,7 @@ import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import {Button, ButtonSize, ButtonThemes} from 'shared/ui/Button/Button';
 
 
+
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import { Message } from 'shared/ui/Message/Message';
@@ -33,6 +34,7 @@ export const CreateOrderForm:React.FC<CreateOrderFormProps> = ({className, onClo
     const dispatch = useDispatch<AppDispatch>();
     const {
         date,
+        dateEnd,
         isLoading,
         error,
         message
@@ -49,17 +51,22 @@ export const CreateOrderForm:React.FC<CreateOrderFormProps> = ({className, onClo
         console.log(dayjs(date).tz('Europe/Minsk').toString())
     }, [date, dispatch]);
 
+    const onChangeDateEnd = useCallback((value: Dayjs) => {
+        dispatch(createOrderActions.setDateEnd(dayjs(value).tz('Europe/Minsk')));
+        console.log(dayjs(dateEnd).tz('Europe/Minsk').toString())
+    }, [dateEnd, dispatch]);
+
 
 
      const onSubmitClick = useCallback( () => {
          if(date && id && userId){
-             dispatch(createOrder({userId, boatId: id, date}));
+             dispatch(createOrder({userId, boatId: id, date: dayjs(date).unix(), dateEnd: dayjs(dateEnd).unix()}));
              // onClose();
              displayMessage();
 
              console.log(dayjs(date).tz)
          }
-    }, [date, id, userId, dispatch, onClose]);
+    }, [date, id, userId, dispatch, dateEnd]);
 
      const [messageOpen, setMessageOpen] = useState(false)
     const displayMessage = () => {
@@ -77,16 +84,30 @@ export const CreateOrderForm:React.FC<CreateOrderFormProps> = ({className, onClo
             <Typography variant = {'h5'}>
                 Оформление заказа
             </Typography>
+            <Typography className = {cls.Warning}>
+                Минимальное время аренды - 1 час, максимальное - 48 часов (2 суток);
+            </Typography>
             <Typography>
-                Выберите дату и время:
+                Выберите дату и время начала аренды
             </Typography>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DemoContainer components={['DateTimePicker']}>
                     <DateTimePicker
                         minDate={dayjs(`${dateNow.getFullYear()}-${dateNow.getMonth()+1}-${dateNow.getDate()}`)}
+                        defaultValue={dayjs(`${dateNow.getFullYear()}-${dateNow.getMonth()+1}-${dateNow.getDate()}`)}
                         onChange={(value) => onChangeDate(value)}
                         timeSteps={{hours: 3}}
                         value={date}
+                        ampm={false}
+                    />
+                    <Typography>
+                        Выберите дату и время завершения аренды
+                    </Typography>
+                    <DateTimePicker
+                        minDate={date}
+                        onChange={(value) => onChangeDateEnd(value)}
+                        timeSteps={{hours: 3}}
+                        value={dateEnd}
                         ampm={false}
                     />
                 </DemoContainer>

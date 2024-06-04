@@ -17,6 +17,7 @@ import {getMyId} from "../../../shared/lib/getMyId/getMyId";
 import {Button, ButtonSize, ButtonThemes} from 'shared/ui/Button/Button';
 import { ReviewsList } from 'entities/Review';
 import { Message } from 'shared/ui/Message/Message';
+import {BoatPageSkeleton} from "./BoatPageSkeleton/BoatPageSkeleton";
 
 
 export interface BoatPageProps{
@@ -62,9 +63,7 @@ const BoatPage:React.FC<BoatPageProps> = ({className}) => {
 
     if(isLoading){
         return(
-            <Typography>
-                Loading
-            </Typography>
+            <BoatPageSkeleton/>
             )
     }
 
@@ -74,7 +73,7 @@ const BoatPage:React.FC<BoatPageProps> = ({className}) => {
                 <div className = {cls.Pricelocation}>
                     <div className = {cls.Prices}>
                         <Typography className = {cls.PriceHour}>
-                            {currentBoat?.price}р/день
+                            {currentBoat?.price} BYN/час
                         </Typography>
                     </div>
                     <div className = {cls.Location}>
@@ -170,7 +169,7 @@ const BoatPage:React.FC<BoatPageProps> = ({className}) => {
                             onClick={navigateToUserProfile}
                             className={cls.ProfilePreview}>
                             <img
-                                src={ProfileImage}
+                                src={currentBoat?.owner.picture?`${baseUrl}/${currentBoat?.owner.picture}` : ProfileImage}
                                 alt="boar"
                                 className={cls.ProfileImg}/>
                             <Typography>
@@ -178,13 +177,12 @@ const BoatPage:React.FC<BoatPageProps> = ({className}) => {
                             </Typography>
                         </Card>
                     </div>
-                    <div className={cls.Reviews}>
-                        <ReviewsList reviewsList={currentBoat?.reviews}/>
-                    </div>
-
                     <ReviewCreationForm
                         submit={sendReview}
                     />
+                    <div className={cls.Reviews}>
+                        <ReviewsList reviewsList={currentBoat?.reviews}/>
+                    </div>
                 </div>
             </div>
 

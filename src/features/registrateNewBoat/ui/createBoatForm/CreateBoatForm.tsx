@@ -138,7 +138,7 @@ export const CreateBoatForm:React.FC<CreateOrderFormProps> = ({className, onClos
             />
             <TextField
                 // color={'secondary'}
-                label={'Цена за день, BYN'}
+                label={'Цена за час, BYN'}
                 type={'number'}
                 onChange={event => onChangePrice(Number(event.target.value))}
                 value={price}

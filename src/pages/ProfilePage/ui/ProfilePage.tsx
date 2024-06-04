@@ -1,11 +1,11 @@
-import React, {memo, useMemo, useState} from 'react';
+import React, {memo, useCallback, useMemo, useState} from 'react';
 import {classNames} from "shared/lib/classNames/classNames";
 import cls from './ProfilePage.module.scss'
 import ProfileImage from 'shared/assets/images/user/User-avatar.png'
 import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch} from "app/providers/storeProvider";
-import {fetchUserProfile} from "entities/User";
+import {fetchUserProfile, getMyInfo} from "entities/User";
 import {getCurrentProfile} from "entities/User/model/selectors/getCurrentProfile/getCurrentProfile";
 import {Divider, Typography} from "@mui/material";
 import {getMyId} from "shared/lib/getMyId/getMyId";
@@ -13,6 +13,8 @@ import {Card} from "shared/ui/Card/Card";
 import {BoatList, BoatListView} from "entities/Boat";
 import {OrderList} from "entities/Order";
 import {Button, ButtonSize, ButtonThemes} from "shared/ui/Button/Button";
+import {ChangePictureModal} from "../../../features/changeUserPicture";
+import {baseUrl} from "../../../shared/api/api";
 
 
 
@@ -31,12 +33,25 @@ const ProfilePage:React.FC<ProfilePageProps> = ({className}) => {
     useMemo(()=>{
         dispatch(fetchUserProfile(id))
     }, [dispatch, id])
+    const myInfo = useSelector(getMyInfo)
+    const myId = myInfo?.id;
+    const [pictureModal, setPictureModal] = useState(false)
+
+    const onPictureToggle = useCallback(() => {
+        if(id === myId){
+            setPictureModal(!pictureModal)
+        }
+    }, [id, myId, pictureModal])
 
     const [profileMode, setProfileMode] = useState(ProfileModes.BOATS)
     return (
         <div className={classNames(cls.ProfilePage, {}, [className])}>
             <div className={cls.InfoWrapper}>
-                <img src={ProfileImage} className={cls.ProfileImage}/>
+                <img
+                    src={profile?.picture?`${baseUrl}/${profile?.picture}` : ProfileImage}
+                    className={cls.ProfileImage}
+                    onClick={onPictureToggle}
+                />
                 <div>
                     <Typography>
                         Электронная почта: <b>{profile?.email}</b>
@@ -72,6 +87,7 @@ const ProfilePage:React.FC<ProfilePageProps> = ({className}) => {
                     </Typography>
 
                 </Button>
+                <ChangePictureModal open={pictureModal} onCLose={onPictureToggle}/>
             </div>
 
             <div className={cls.ListWrapper}>

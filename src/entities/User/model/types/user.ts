@@ -11,7 +11,8 @@ export interface User{
     createdAt?: string;
     updatedAt?: string;
     roles?: Role[];
-    waitingForStatusConfirmation?: boolean
+    waitingForStatusConfirmation?: boolean;
+    picture?: string;
 
 }
 

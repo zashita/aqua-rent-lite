@@ -7,12 +7,13 @@ import {ReviewsListItem} from "../ReviewsListItem/ReviewsListItem";
 
 export interface ReviewsListProps{
     className?: string;
-    reviewsList? :Review[]
+    reviewsList? :Review[];
+    ownerId?: string
 }
 export const ReviewsList:React.FC<ReviewsListProps> = (props) => {
     const {
         className,
-        reviewsList
+        reviewsList,
     } = props
     return (
         <div className={classNames(cls.ReviewsList, {}, [className])}>

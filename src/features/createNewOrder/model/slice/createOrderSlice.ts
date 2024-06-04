@@ -4,12 +4,14 @@ import {Dayjs} from "dayjs";
 import {createOrder} from "../../services/createOrder/createOrder";
 import {AxiosError} from "axios";
 
+
 export interface OrderCreationState {
     isLoading: boolean,
     userId: string,
     boatId: string,
     error: boolean,
     date: Dayjs,
+    dateEnd: Dayjs,
     message: string;
 }
 
@@ -18,6 +20,7 @@ const initialState: OrderCreationState = {
     userId: '',
     boatId: '',
     date: null,
+    dateEnd: null,
     error: false,
     message: null
 }
@@ -34,6 +37,9 @@ export const createOrderSlice = createSlice({
             },
             setDate: (state, action: PayloadAction<Dayjs>) => {
                 state.date = action.payload;
+            },
+            setDateEnd: (state, action: PayloadAction<Dayjs>) => {
+                state.dateEnd = action.payload;
             },
 
 
@@ -60,10 +66,13 @@ export const createOrderSlice = createSlice({
                          case 'Request failed with status code 405'
                          : state.message = 'Судно уже забронировано на выбранное время';
                          break;
+                         case 'Request failed with status code 403'
+                             : state.message = 'Минимальное время аренды - 1 час, максимальное - 48 часов';
+                         break;
                          default: state.message = action.error.message
                      }
                      // state.error = action.error.name
-                     // console.log(action.error.stack)
+                     console.log(action.error)
                  });
          },
     }

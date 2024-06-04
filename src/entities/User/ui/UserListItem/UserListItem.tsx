@@ -5,13 +5,14 @@ import {AppDispatch} from "app/providers/storeProvider";
 import {useTranslation} from "react-i18next";
 import {classNames} from "shared/lib/classNames/classNames";
 import cls from "./UserListItem.module.scss";
-import {Button, Typography} from "@mui/material";
+import {Typography} from "@mui/material";
 import {User} from "../../model/types/user";
 import {deleteUserById} from "../../services/deleteUserById/deleteUserById";
 import {RoutePath} from "../../../../shared/config/routeConfig/routeConfig";
 import {Card} from "../../../../shared/ui/Card/Card";
 import {makeSeller} from "../../services/makeSeller/makeSeller";
 import {setStatusConfirmed} from "../../services/setStatusConfirmed/setStatusConfirmed";
+import {Button, ButtonSize, ButtonThemes} from "shared/ui/Button/Button";
 
 
 export interface UserListItemProps{
@@ -60,12 +61,17 @@ export const UserListItem = memo((props: UserListItemProps) => {
                         {/*/>*/}
                         <div className={cls.InfoWrapper}>
                             <Typography>
-                                email: <b>{user.email}</b>
+                                Электронная почта: <b>{user.email}</b>
+                            </Typography>
+                            <Typography>
+                                Имя: <b>{user.name}</b>
                             </Typography>
                             <Button
+                                theme={ButtonThemes.PRIMARY_ACCENT}
+                                size={ButtonSize.M}
                                 // onClick={(e) => deleteBoat(e)}>
                                 onClick={(e)=> deleteUser(e)}>
-                                Delete
+                                Удалить
                             </Button>
                             {
                                 user.waitingForStatusConfirmation
@@ -73,6 +79,8 @@ export const UserListItem = memo((props: UserListItemProps) => {
                                 !user.roles.find((role)=> role.value === 'SELLER')
                                 ?
                                     <Button
+                                        theme={ButtonThemes.PRIMARY_ACCENT}
+                                        size={ButtonSize.M}
                                         onClick={(e)=> onMakeSeller(e)}>
                                         Выдать роль арендодателя
                                     </Button>
@@ -82,10 +90,10 @@ export const UserListItem = memo((props: UserListItemProps) => {
 
                         </div>
                         <Typography className = {cls.date}>
-                            created: <b>{user.createdAt.slice(5,10)}</b>
+                            Дата создания: <b>{user.createdAt.slice(5,10)}</b>
                         </Typography>
                         <Typography className = {cls.date}>
-                            updated: <b>{user.updatedAt.slice(5,10)}</b>
+                            Дата изменения: <b>{user.updatedAt.slice(5,10)}</b>
                         </Typography>
                     </Card>
 

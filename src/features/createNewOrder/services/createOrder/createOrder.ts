@@ -12,13 +12,14 @@ import {createOrderActions} from "../../model/slice/createOrderSlice";
 export interface CreateOrder{
     userId: string;
     boatId: string;
-    date: Dayjs;
+    date: number;
+    dateEnd: number;
 }
 export const createOrder = createAsyncThunk<void, CreateOrder, ThunkConfig<string>>(
     'create/createOrder',
     async (order, thunkAPI)=>{
         const {dispatch, extra} = thunkAPI
-        await extra.api.post( '/order', {...order, date: dayjs(order.date).toDate()})
+        await extra.api.post( '/order', order)
             // .then(res => {
             //     console.log(res)
             // })

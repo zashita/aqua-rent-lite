@@ -36,7 +36,6 @@
 .PriceHour{
   color: var(--text-primary);
   font-feature-settings: 'case' on;
-  font-family: Onest;
   font-size: 25px;
   font-style: normal;
   font-weight: 600;
@@ -55,8 +54,7 @@
 }
 
 .LocationText{
-  color: var(--text-accent);
-  font-family: Inter;
+  color: var(--text-accent-inverse);
   font-size: 14px;
   font-style: normal;
   font-weight: 450;
