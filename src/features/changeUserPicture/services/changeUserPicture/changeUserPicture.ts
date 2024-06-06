@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {User, userActions} from "entities/User";
+import {fetchUserProfile, User} from "entities/User";
 import {ThunkConfig} from "app/providers/storeProvider/types/types";
 
 export interface ChangeUserPicture{
@@ -8,11 +8,6 @@ export interface ChangeUserPicture{
     image: File;
 
 }
-// price: number;
-// lakeName: string;
-// passengerCapacity: number;
-// moveType: string;
-// captain: boolean;
 export const changeUserPicture = createAsyncThunk<User, ChangeUserPicture, ThunkConfig<string>>(
     'change/changeUserPicture',
     async (data, thunkAPI)=>{
@@ -24,6 +19,8 @@ export const changeUserPicture = createAsyncThunk<User, ChangeUserPicture, Thunk
         if(!response.data){
             throw new Error()
         }
+        dispatch(fetchUserProfile(response?.data?.id))
+
         return response.data;
     }
 )

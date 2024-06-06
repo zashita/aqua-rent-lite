@@ -1,10 +1,7 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {User, userActions} from "entities/User";
-import axios from "axios";
-import {$api} from "shared/api/api";
-import {AppDispatch} from "app/providers/storeProvider/config/store";
+import {userActions} from "entities/User";
 import {USER_LOCALSTORAGE_KEY} from "shared/const/localStorage";
-import {ThunkConfig} from "../../../../app/providers/storeProvider/types/types";
+import {ThunkConfig} from "app/providers/storeProvider/types/types";
 
 export interface LoginByEmail{
     email: string;

@@ -29,4 +29,6 @@ export interface UserSchema{
     authData?: string;
     currentProfile?: User;
     myInfo?: MyInfo;
+    isLoading?: boolean;
+    waiting?: boolean;
 }

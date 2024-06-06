@@ -1,10 +1,10 @@
-import React, {memo, useEffect, useMemo} from 'react';
+import React, { useMemo} from 'react';
 import cls from './BoatModeration.module.scss'
 import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch} from "../../../../app/providers/storeProvider";
-import {BoatList, BoatListView, fetchAdminBoatList, fetchBoatList, getBoatIsLoading, getBoatList} from "entities/Boat";
+import {AppDispatch} from "app/providers/storeProvider";
+import {BoatList, BoatListView, fetchAdminBoatList, getBoatIsLoading, getBoatList} from "entities/Boat";
 import {Divider, Typography} from "@mui/material";
-import {getMyInfo, getUserAuthData} from "../../../../entities/User";
+import {getMyInfo} from "entities/User";
 
 
 export interface BoatModerationProps{

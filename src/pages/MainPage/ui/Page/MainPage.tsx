@@ -1,8 +1,8 @@
 import React, {useMemo} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch} from "app/providers/storeProvider";
-import {BoatList, BoatListView, fetchBoatList, getBoatIsLoading, getBoatList} from "entities/Boat";
-import {MainPageSkeleton} from "../PageSkeleton/MainPageSkeleton";
+import {BoatList, BoatListView, fetchBoatList, getBoatIsLoading} from "entities/Boat";
+import {MainPageSkeleton} from "../InputBlock/MainPageSkeleton";
 import {getQuery} from "../../model/selectors/getQuery/getQuery";
 import {fetchLakesList} from "entities/Lake";
 import {InputBlock} from '../InputBlock/InputBlock';
@@ -14,9 +14,6 @@ const MainPage = () => {
         dispatch(fetchBoatList())
         dispatch(fetchLakesList())
     }, [dispatch]);
-
-
-
 
     const isLoading = useSelector(getBoatIsLoading)
     const {boatList} = useSelector(getQuery)

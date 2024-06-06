@@ -1,7 +1,7 @@
 import React from 'react';
 import {classNames} from "shared/lib/classNames/classNames";
 import cls from '../BoatPage.module.scss'
-import {Skeleton, Typography} from "@mui/material";
+import {Skeleton} from "@mui/material";
 
 
 

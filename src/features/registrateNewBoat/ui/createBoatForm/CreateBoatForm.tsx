@@ -14,14 +14,14 @@ import cls from './CreateBoatForm.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch} from "app/providers/storeProvider";
 import {jwtDecode} from "jwt-decode";
-import {USER_LOCALSTORAGE_KEY} from "../../../../shared/const/localStorage";
+import {USER_LOCALSTORAGE_KEY} from "shared/const/localStorage";
 import {getBoatCreationData} from "../../model/selectors/getBoatCreationData/getBoatCreationData";
 import {createBoatActions} from "../../model/slice/createBoatSlice";
 import {createBoat} from "../../services/createBoat/createBoat";
 import Uploader from 'shared/ui/Uploader';
-import {BoatTypes, MoveType} from "../../../../entities/Boat";
-import {getLakesList} from "../../../../entities/Lake";
-import {fetchLakesList} from "../../../../entities/Lake/services/fetchLakesList/fetchLakesList";
+import {BoatTypes, MoveType} from "entities/Boat";
+import {getLakesList} from "entities/Lake";
+import {fetchLakesList} from "entities/Lake";
 import {Button, ButtonSize, ButtonThemes} from 'shared/ui/Button/Button';
 
 
@@ -43,6 +43,7 @@ export const CreateBoatForm:React.FC<CreateOrderFormProps> = ({className, onClos
         captain,
         passengerCapacity,
         lakeId,
+        error
     } = useSelector(getBoatCreationData);
 
     useMemo(()=>{
@@ -112,20 +113,24 @@ export const CreateBoatForm:React.FC<CreateOrderFormProps> = ({className, onClos
                 moveType,
                 captain
             }));
-            onClose();
+            setTimeout(() =>{
+                if(!isLoading){
+                    onClose();
+                }
+            }, 500, )
         }
         
         console.log(image)
-    }, [name, userId, type, description, image, price, lakeId, passengerCapacity, moveType, dispatch, captain, onClose]);
+    }, [name, userId, type, description, image, price, lakeId, passengerCapacity, moveType, dispatch, captain]);
     const lakeList = useSelector(getLakesList)
     return (
         <div className={classNames(cls.CreateBoatForm, {}, [className])}>
-            {/*{false && (*/}
-            {/*    <div>*/}
-            {/*        {' '}*/}
-            {/*        Ошибка авторизации*/}
-            {/*    </div>*/}
-            {/*)}*/}
+            {error && (
+                <div>
+                    {' '}
+                    Ошибка при создании лодки
+                </div>
+            )}
             <Typography variant={'h5'}>
                 Введите данные судна
             </Typography>

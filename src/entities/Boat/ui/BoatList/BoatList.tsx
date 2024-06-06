@@ -1,10 +1,7 @@
 import React from 'react';
 import {classNames} from "shared/lib/classNames/classNames";
 import cls from './BoatList.module.scss'
-import {Grid, List} from "@mui/material";
 import {BoatListItem} from "../BoatListItem/BoatListItem";
-import {useSelector} from "react-redux";
-import {getBoatList} from "../../model/selectors/getBoatList/getBoatList";
 import {Boat, BoatListView} from "../../model/types/boat";
 
 

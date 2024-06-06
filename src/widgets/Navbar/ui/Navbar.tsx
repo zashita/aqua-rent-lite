@@ -1,40 +1,42 @@
-import React, {useCallback, useState} from 'react';
+import React, {memo, useCallback, useMemo, useState} from 'react';
 import {classNames} from 'shared/lib/classNames/classNames';
-// import { useTranslation } from 'react-i18next';
-// import { CreateOrderModal } from 'features/AuthByUsername';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { getUserAuthData, userActions } from 'entities/User';
 import cls from './Navbar.module.scss';
 import {Link, Typography} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
-import {getMyInfo, getUserAuthData, setStatusWaiting, userActions} from "entities/User";
+import {getMyInfo, getUserAuthData, getWaiting, setStatusWaiting, userActions} from "entities/User";
 import {LoginModal} from "features/authByEmail";
 import {CreateBoatModal} from 'features/registrateNewBoat'
-import {RoutePath} from "../../../shared/config/routeConfig/routeConfig";
+import {RoutePath} from "shared/config/routeConfig/routeConfig";
 
 import {useNavigate} from "react-router-dom";
 import {NavbarMenu} from './Menu';
 import {Button, ButtonSize, ButtonThemes} from 'shared/ui/Button/Button';
-import {AppDispatch} from "../../../app/providers/storeProvider";
-import Logo from '../../../shared/assets/images/logo/000.png'
-import { ProfileDropdown } from './ProfileDropdown/ProfileDropdown';
+import {AppDispatch} from "app/providers/storeProvider";
+import Logo from 'shared/assets/images/logo/000.png'
+import {fetchMyStatus} from "entities/User";
 
 export interface NavbarProps{
     className?: string;
 }
-export const Navbar:React.FC<NavbarProps> = ({ className }) => {
+export const Navbar:React.FC<NavbarProps> = memo(({ className }) => {
     const dispatch = useDispatch<AppDispatch>();
     const authData = useSelector(getUserAuthData);
+    const waiting = useSelector(getWaiting)
     const [authModal, setAuthModal] = useState(false);
     const toggleModal = useCallback(() => {
         setAuthModal((prevState) => !prevState);
     }, []);
 
-
     const myInfo = useSelector(getMyInfo)
 
     const id = myInfo?.id;
     const roles = myInfo?.roles
+
+    useMemo(() => {
+        dispatch(fetchMyStatus(id))
+    }, [dispatch, id])
+
+
 
     const admin = !!roles?.find((role) => role === 'ADMIN')
     const seller = !!roles?.find((role) => role === 'SELLER')
@@ -90,7 +92,7 @@ export const Navbar:React.FC<NavbarProps> = ({ className }) => {
 
                     >
                         <Typography>
-                            О нас
+                            О сайте
                         </Typography>
                     </Link>
                     {seller?
@@ -155,6 +157,7 @@ export const Navbar:React.FC<NavbarProps> = ({ className }) => {
                             theme={ButtonThemes.PRIMARY_ACCENT}
                             size={ButtonSize.M}
                             onClick={onBecomeSellerClick}
+                            disabled={waiting}
                         >
                             <Typography>
                                 Стать арендодателем
@@ -212,7 +215,7 @@ export const Navbar:React.FC<NavbarProps> = ({ className }) => {
                     href="/about"
                 >
                     <Typography>
-                        Объявление
+                        О сайте
                     </Typography>
                 </Link>
             </div>
@@ -237,4 +240,4 @@ export const Navbar:React.FC<NavbarProps> = ({ className }) => {
 
         </div>
     );
-};
+})

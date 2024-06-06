@@ -1,10 +1,9 @@
 import React from 'react';
 import {classNames} from "shared/lib/classNames/classNames";
 import cls from './AdsPageSkeleton.module.scss'
-import {Skeleton, Typography} from "@mui/material";
-import {Card, CardViewModes} from "../../../../shared/ui/Card/Card";
-import {baseUrl} from "../../../../shared/api/api";
-import VisibilityIcon from "@mui/icons-material/Visibility";
+import {Skeleton} from "@mui/material";
+import {Card, CardViewModes} from "shared/ui/Card/Card";
+
 
 
 export interface MainPageSkeletonProps{

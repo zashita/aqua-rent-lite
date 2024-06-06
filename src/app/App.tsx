@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {Suspense, useEffect} from 'react';
 import {AppRouter} from "./providers/router";
 import {Navbar} from "widgets/Navbar";
 import {useDispatch} from "react-redux";
@@ -14,7 +14,10 @@ function App() {
   return (
       <div>
           <Navbar/>
-          <AppRouter/>
+          <Suspense>
+              <AppRouter/>
+          </Suspense>
+
       </div>
 
   );

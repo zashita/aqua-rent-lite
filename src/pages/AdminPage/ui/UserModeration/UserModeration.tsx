@@ -1,12 +1,10 @@
-import React, {memo, useMemo} from 'react';
-import {classNames} from "shared/lib/classNames/classNames";
+import React, { useMemo} from 'react';
 import cls from './UserModeration.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch} from "app/providers/storeProvider";
 import {fetchUsersList, getMyInfo, getUserList} from "entities/User";
 import {Divider, Typography} from "@mui/material";
 import {UserList} from "entities/User/ui/UserList/UserList";
-import {getMyRoles} from "../../../../shared/lib/getMyRoles/getMyRoles";
 
 
 export interface UserModerationProps{

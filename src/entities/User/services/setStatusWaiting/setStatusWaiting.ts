@@ -1,6 +1,7 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {ThunkConfig} from "app/providers/storeProvider/types/types";
 import {User} from "../../model/types/user";
+import {fetchMyStatus} from "../fetchMyStatus/fetchMyStatus";
 
 export const setStatusWaiting = createAsyncThunk<User, string, ThunkConfig<string>>(
     'user/setStatusWaiting',
@@ -10,6 +11,7 @@ export const setStatusWaiting = createAsyncThunk<User, string, ThunkConfig<strin
         if(!response.data){
             throw new Error();
         }
+        dispatch(fetchMyStatus(id))
         return response.data
     }
 )

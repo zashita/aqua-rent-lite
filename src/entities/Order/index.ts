@@ -11,3 +11,5 @@ export {
 export {
     updateOrderState
 } from './services/updateOrderState/updateOrderState'
+
+export * from './model/types/orderSchema'

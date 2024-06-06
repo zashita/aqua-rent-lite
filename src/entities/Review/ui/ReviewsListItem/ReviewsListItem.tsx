@@ -4,10 +4,9 @@ import cls from './ReviewsListItem.module.scss'
 import {Review} from "../../model/types/review";
 import {Rating, TextField, Typography} from "@mui/material";
 import {Button, ButtonSize, ButtonThemes} from 'shared/ui/Button/Button';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {useDispatch, useSelector} from "react-redux";
-import {getMyInfo} from "../../../User";
-import {AppDispatch} from "../../../../app/providers/storeProvider";
+import {getMyInfo} from "entities/User";
+import {AppDispatch} from "app/providers/storeProvider";
 import {deleteReviewById} from "../../services/deleteById/deleteReviewById";
 import {addAnswer} from "../../services/addAnswer/addAnswer";
 import {fetchBoatById, getCurrentBoat} from "../../../Boat";

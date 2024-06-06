@@ -7,7 +7,7 @@ import {UserModeration} from "../UserModeration/UserModeration";
 import {NotConfirmedUsers} from "../NotConfirmedUsers/NotConfirmedUsers";
 import {Button, ButtonSize, ButtonThemes} from 'shared/ui/Button/Button';
 import {useSelector} from "react-redux";
-import {getMyInfo} from "../../../../entities/User";
+import {getMyInfo} from "entities/User";
 
 
 export interface AdminPageProps{
@@ -34,33 +34,36 @@ const AdminPage:React.FC<AdminPageProps> = memo(({className}) => {
     }
     return (
         <div className={classNames(cls.AdminPage, {}, [className])}>
-            <Button
-                onClick={() => setModerationMode(ModerationModes.BOATS)}
-                theme={ButtonThemes.GHOST_ACCENT}
-                size={ButtonSize.M}
-            >
-                <Typography>
-                    Объявления
-                </Typography>
-            </Button>
-            <Button
-                onClick ={() => setModerationMode(ModerationModes.USERS)}
-                theme={ButtonThemes.GHOST_ACCENT}
-                size={ButtonSize.M}
-            >
-                <Typography>
-                    Пользователи
-                </Typography>
-            </Button>
-            <Button
-                onClick ={() => setModerationMode(ModerationModes.CONFIRMAION)}
-                theme={ButtonThemes.GHOST_ACCENT}
-                size={ButtonSize.M}
-            >
-                <Typography>
-                    Запросы на роль арендодателя
-                </Typography>
-            </Button>
+            <div className = {cls.Buttons}>
+                <Button
+                    onClick={() => setModerationMode(ModerationModes.BOATS)}
+                    theme={ButtonThemes.GHOST_ACCENT}
+                    size={ButtonSize.M}
+                >
+                    <Typography>
+                        Объявления
+                    </Typography>
+                </Button>
+                <Button
+                    onClick ={() => setModerationMode(ModerationModes.USERS)}
+                    theme={ButtonThemes.GHOST_ACCENT}
+                    size={ButtonSize.M}
+                >
+                    <Typography>
+                        Пользователи
+                    </Typography>
+                </Button>
+                <Button
+                    onClick ={() => setModerationMode(ModerationModes.CONFIRMAION)}
+                    theme={ButtonThemes.GHOST_ACCENT}
+                    size={ButtonSize.M}
+                >
+                    <Typography>
+                        Запросы на роль арендодателя
+                    </Typography>
+                </Button>
+            </div>
+
             <div>
                 {moderationMode === ModerationModes.BOATS?
                     <BoatModeration/>:null

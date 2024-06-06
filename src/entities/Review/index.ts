@@ -5,3 +5,5 @@ export {
 export {
     deleteReviewById
 } from './services/deleteById/deleteReviewById'
+
+export * from './model/types/review'

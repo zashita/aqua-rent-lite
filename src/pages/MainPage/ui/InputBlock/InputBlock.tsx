@@ -1,5 +1,4 @@
-import React, {useCallback, useEffect, useMemo} from 'react';
-import {classNames} from "shared/lib/classNames/classNames";
+import React, {useCallback, useMemo} from 'react';
 import cls from './InputBlock.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {getLakesList} from "entities/Lake";
@@ -12,14 +11,12 @@ import {
     InputLabel,
     MenuItem,
     Select,
-    TextField,
     Typography
 } from "@mui/material";
-import {Button, ButtonSize, ButtonThemes} from "../../../../shared/ui/Button/Button";
+import {Button, ButtonSize, ButtonThemes} from "shared/ui/Button/Button";
 import {AppDispatch} from "app/providers/storeProvider";
 import {getQuery} from "../../model/selectors/getQuery/getQuery";
 import {fetchBoatFilteredList} from "../../services/fetchFilteredBoatList/fetchFilteredBoatList";
-import {userActions} from "../../../../entities/User";
 
 
 export interface InputBlockProps{
@@ -77,12 +74,11 @@ export const InputBlock:React.FC<InputBlockProps> = ({className}) => {
             </Typography>
             <div className={cls.Inputs}>
                 <FormControl>
-                    <InputLabel color={'warning'} id="demo-simple-select-label">Тип судна</InputLabel>
+                    <InputLabel id="demo-simple-select-label">Тип судна</InputLabel>
                     <Select
                         value={type}
                         className={cls.Input}
                         label={'Тип судна'}
-                        color={'warning'}
                         // @ts-ignore
                         onChange={(event) => onChangeType(event.target.value)}
                     >
@@ -94,12 +90,11 @@ export const InputBlock:React.FC<InputBlockProps> = ({className}) => {
                     </Select>
                 </FormControl>
                 <FormControl>
-                    <InputLabel color={'warning'} id="demo-simple-select-label">Озеро</InputLabel>
+                    <InputLabel id="demo-simple-select-label">Озеро</InputLabel>
                     <Select
                         label={'Озеро'}
                         value={lakeName}
                         className={cls.Input}
-                        color={'warning'}
                         // @ts-ignore
                         onChange={(event) => onChangeLake(event.target.value)}
                     >
@@ -111,12 +106,11 @@ export const InputBlock:React.FC<InputBlockProps> = ({className}) => {
                     </Select>
                 </FormControl>
                 <FormControl>
-                    <InputLabel color={"warning"} id="demo-simple-select-label">Приводится в движение с помощью</InputLabel>
+                    <InputLabel id="demo-simple-select-label">Приводится в движение с помощью</InputLabel>
                     <Select
                         label={'Приводится в движение с помощью'}
                         value={moveType}
                         className={cls.Input}
-                        color={'warning'}
                         // @ts-ignore
                         onChange={(event) => onChangeMoveType(event.target.value)}
                     >

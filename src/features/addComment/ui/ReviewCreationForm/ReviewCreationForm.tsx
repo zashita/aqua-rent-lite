@@ -1,15 +1,12 @@
-import React, {useCallback, useMemo} from 'react';
+import React, {useCallback} from 'react';
 import {classNames} from "shared/lib/classNames/classNames";
 import cls from './ReviewCreationForm.module.scss'
 import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch} from "../../../../app/providers/storeProvider";
+import {AppDispatch} from "app/providers/storeProvider";
 import {getCommentCreationData} from "../../model/selectors/getCommentCreationData/getCommentCreationData";
-import {Rating, TextareaAutosize, TextField} from "@mui/material";
+import {Rating, TextField} from "@mui/material";
 import {addCommentActions} from "../../model/slice/addComment";
-import {addReview} from "../../services/addReview/addReview";
 import {Button, ButtonSize, ButtonThemes} from 'shared/ui/Button/Button';
-import {Simulate} from "react-dom/test-utils";
-import submit = Simulate.submit;
 
 
 export interface ReviewCreationFormProps{

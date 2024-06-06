@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import {BoatTypes, MoveType} from "../../../../entities/Boat";
+import {createBoat} from "../../services/createBoat/createBoat";
 
 export interface BoatCreationState {
     isLoading: boolean,
@@ -14,6 +15,7 @@ export interface BoatCreationState {
     passengerCapacity: number;
     moveType: string;
     captain: boolean;
+    error: string
 }
 
 const initialState: BoatCreationState = {
@@ -28,6 +30,7 @@ const initialState: BoatCreationState = {
     passengerCapacity: null,
     moveType: null,
     captain: false,
+    error: ''
 }
 
 export const createBoatSlice = createSlice({
@@ -68,19 +71,19 @@ export const createBoatSlice = createSlice({
 
 
         },
-        // extraReducers: (builder) => {
-        //     builder
-        //         .addCase(loginByEmail.pending, (state) => {
-        //             state.error = undefined;
-        //             state.isLoading = true;
-        //         })
-        //         .addCase(loginByEmail.fulfilled, (state) => {
-        //             state.isLoading = false;
-        //         })
-        //         .addCase(loginByEmail.rejected, (state, action) => {
-        //             state.isLoading = false;
-        //         });
-        // },
+        extraReducers: (builder) => {
+            builder
+                .addCase(createBoat.pending, (state) => {
+                    state.error = undefined;
+                    state.isLoading = true;
+                })
+                .addCase(createBoat.fulfilled, (state) => {
+                    state.isLoading = false;
+                })
+                .addCase(createBoat.rejected, (state, action) => {
+                    state.isLoading = false;
+                });
+        },
     }
 )
 

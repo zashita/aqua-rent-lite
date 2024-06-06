@@ -13,6 +13,8 @@ import {Card} from "../../../../shared/ui/Card/Card";
 import {makeSeller} from "../../services/makeSeller/makeSeller";
 import {setStatusConfirmed} from "../../services/setStatusConfirmed/setStatusConfirmed";
 import {Button, ButtonSize, ButtonThemes} from "shared/ui/Button/Button";
+import {fetchUserBoatsOrders} from "../../../../pages/OrdersPage/services/fetchUserBoatsOrders/fetchUserBoatsOrders";
+import {fetchUsersList} from "../../services/fetchUsersList/fetchUsersList";
 
 
 export interface UserListItemProps{
@@ -42,6 +44,7 @@ export const UserListItem = memo((props: UserListItemProps) => {
         event.stopPropagation()
         dispatch(makeSeller(user.id))
         dispatch(setStatusConfirmed(user.id))
+
     }, [user.id, dispatch])
 
         const {t} = useTranslation()
@@ -67,8 +70,9 @@ export const UserListItem = memo((props: UserListItemProps) => {
                                 Имя: <b>{user.name}</b>
                             </Typography>
                             <Button
-                                theme={ButtonThemes.PRIMARY_ACCENT}
+                                theme={ButtonThemes.GHOST_CRITICAL}
                                 size={ButtonSize.M}
+                                disabled={!!user.roles.find((role) => role.value === 'ADMIN')}
                                 // onClick={(e) => deleteBoat(e)}>
                                 onClick={(e)=> deleteUser(e)}>
                                 Удалить
@@ -79,7 +83,7 @@ export const UserListItem = memo((props: UserListItemProps) => {
                                 !user.roles.find((role)=> role.value === 'SELLER')
                                 ?
                                     <Button
-                                        theme={ButtonThemes.PRIMARY_ACCENT}
+                                        theme={ButtonThemes.GHOST_ACCENT}
                                         size={ButtonSize.M}
                                         onClick={(e)=> onMakeSeller(e)}>
                                         Выдать роль арендодателя

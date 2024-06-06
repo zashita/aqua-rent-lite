@@ -34,4 +34,12 @@ padding-left: 40px;
 
 .Buttons{
   margin: 0;
+  display: flex;
+}
+
+.SkeletonButtons{
+  margin: 0;
+  display: flex;
+  padding: 10px 30px;
+  gap: 50px
 }

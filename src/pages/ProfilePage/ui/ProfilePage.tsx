@@ -5,16 +5,15 @@ import ProfileImage from 'shared/assets/images/user/User-avatar.png'
 import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch} from "app/providers/storeProvider";
-import {fetchUserProfile, getMyInfo} from "entities/User";
-import {getCurrentProfile} from "entities/User/model/selectors/getCurrentProfile/getCurrentProfile";
+import {fetchUserProfile, getMyInfo, getUserIsLoading, getCurrentProfile} from "entities/User";
 import {Divider, Typography} from "@mui/material";
 import {getMyId} from "shared/lib/getMyId/getMyId";
-import {Card} from "shared/ui/Card/Card";
 import {BoatList, BoatListView} from "entities/Boat";
 import {OrderList} from "entities/Order";
 import {Button, ButtonSize, ButtonThemes} from "shared/ui/Button/Button";
 import {ChangePictureModal} from "../../../features/changeUserPicture";
-import {baseUrl} from "../../../shared/api/api";
+import {baseUrl} from "shared/api/api";
+import { ProfilePageSkeleton } from './ProfilePageSkeleton';
 
 
 
@@ -28,6 +27,7 @@ export enum ProfileModes {
 const ProfilePage:React.FC<ProfilePageProps> = ({className}) => {
     const dispatch = useDispatch<AppDispatch>();
     const profile = useSelector(getCurrentProfile)
+    const isLoading = useSelector(getUserIsLoading)
     const { id} = useParams();
     const isMine = id === getMyId();
     useMemo(()=>{
@@ -43,7 +43,12 @@ const ProfilePage:React.FC<ProfilePageProps> = ({className}) => {
         }
     }, [id, myId, pictureModal])
 
-    const [profileMode, setProfileMode] = useState(ProfileModes.BOATS)
+    const [profileMode, setProfileMode] = useState(ProfileModes.ORDERS)
+    if(isLoading){
+        return (
+            <ProfilePageSkeleton/>
+        )
+    }
     return (
         <div className={classNames(cls.ProfilePage, {}, [className])}>
             <div className={cls.InfoWrapper}>

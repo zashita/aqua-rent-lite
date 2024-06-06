@@ -1,11 +1,9 @@
 import React, {useMemo} from 'react';
-import {classNames} from "shared/lib/classNames/classNames";
 import cls from './NotConfirmedUsers.module.scss'
 import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch} from "../../../../app/providers/storeProvider";
-import {fetchNotConfirmedUsers, getMyInfo, getUserList} from "entities/User";
+import {AppDispatch} from "app/providers/storeProvider";
+import {fetchNotConfirmedUsers, getMyInfo, getUserList, UserList} from "entities/User";
 import {Divider, Typography} from "@mui/material";
-import {UserList} from "../../../../entities/User/ui/UserList/UserList";
 
 
 export interface NotConfirmedUsersProps{
@@ -25,7 +23,7 @@ export const NotConfirmedUsers:React.FC<NotConfirmedUsersProps> = ({className}) 
     return (
         <div>
             <div className={cls.topContainer}>
-                <Typography>Поиск водного транспорта ({userList?.length.toString()} пользователей)</Typography>
+                <Typography>Кандидаты на роль арендодателя ({userList?.length.toString()} пользователей)</Typography>
             </div>
             <Divider className={cls.divider}/>
             <UserList data={userList} admin={admin}/>

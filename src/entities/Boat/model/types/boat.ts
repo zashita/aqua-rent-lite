@@ -1,5 +1,6 @@
 import {Review} from "../../../Review/model/types/review";
 import {User} from "../../../User";
+import {Order} from "../../../Order";
 
 export interface Boat{
     id: string;
@@ -20,6 +21,7 @@ export interface Boat{
     reviews?: Review[];
     confirmed?: boolean;
     owner?: User;
+    orders?: Order[];
 }
 
 export enum MoveType{

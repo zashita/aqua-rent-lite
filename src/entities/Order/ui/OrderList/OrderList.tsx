@@ -3,8 +3,7 @@ import {classNames} from "shared/lib/classNames/classNames";
 import cls from './OrderList.module.scss'
 import {Order} from "../../model/types/orderSchema";
 import {OrderListItem} from "../OrderListItem/OrderListItem";
-import {Simulate} from "react-dom/test-utils";
-import submit = Simulate.submit;
+
 
 
 export interface OrderListProps{

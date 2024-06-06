@@ -3,13 +3,11 @@ import {classNames} from "shared/lib/classNames/classNames";
 import cls from './OrdersPage.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch} from "app/providers/storeProvider";
-import {orderPageActions} from "../model/slice/ordersPageSlice";
 import {getUserBoatsOrders} from "../model/selectors/getUserBoatsOrders/getUserBoatsOrders";
 import { OrderList } from 'entities/Order';
-import {getMyRoles} from "shared/lib/getMyRoles/getMyRoles";
 import {fetchUserBoatsOrders} from "../services/fetchUserBoatsOrders/fetchUserBoatsOrders";
 import {useParams} from "react-router-dom";
-import {getMyInfo} from "../../../entities/User";
+import {getMyInfo} from "entities/User";
 
 
 export interface OrdersPageProps{

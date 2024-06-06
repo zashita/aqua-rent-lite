@@ -3,6 +3,10 @@ import { USER_LOCALSTORAGE_KEY } from 'shared/const/localStorage';
 import { Boat, BoatSchema } from '../types/boat';
 import {fetchBoatList} from "../../services/fetchBoatList/fetchBoatList";
 import {fetchBoatById} from "../../services/fetchBoatById/fetchBoatById"
+import {deleteBoatById} from "../../services/deleteBoatById/deleteBoatById";
+import {fetchAdminBoatList} from "../../services/fetchAdminBoatList/fetchAdminBoatList";
+import {AppDispatch} from "../../../../app/providers/storeProvider";
+import {useDispatch} from "react-redux";
 
 const initialState: BoatSchema = {};
 
@@ -33,6 +37,7 @@ export const boatSlice = createSlice({
             state.isLoading = false;
             state.currentBoat = action.payload
         })
+
     }
 });
 

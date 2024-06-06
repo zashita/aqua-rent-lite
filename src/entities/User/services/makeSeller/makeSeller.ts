@@ -1,6 +1,7 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {ThunkConfig} from "app/providers/storeProvider/types/types";
 import {User} from "../../model/types/user";
+import {fetchUsersList} from "../fetchUsersList/fetchUsersList";
 
 export const makeSeller = createAsyncThunk<User, string, ThunkConfig<string>>(
     'user/updateOrderRole',
@@ -10,6 +11,8 @@ export const makeSeller = createAsyncThunk<User, string, ThunkConfig<string>>(
         if(!response.data){
             throw new Error();
         }
+        dispatch(fetchUsersList())
+
         return response.data
     }
 )

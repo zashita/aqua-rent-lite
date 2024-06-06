@@ -6,9 +6,9 @@ import {createOrder} from "../../services/createOrder/createOrder";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch} from "app/providers/storeProvider";
 import {getOrderCreationData} from "../../model/selectors/getOrderCreationData/getOrderCreationData";
-import {getCurrentBoat} from "../../../../entities/Boat";
+import {getCurrentBoat} from "entities/Boat";
 import {createOrderActions} from "../../model/slice/createOrderSlice";
-import {getMyInfo} from "../../../../entities/User";
+import {getMyInfo} from "entities/User";
 import {DateTimePicker, LocalizationProvider} from "@mui/x-date-pickers";
 import dayjs, {Dayjs} from "dayjs";
 import {DemoContainer} from "@mui/x-date-pickers/internals/demo";
@@ -61,12 +61,10 @@ export const CreateOrderForm:React.FC<CreateOrderFormProps> = ({className, onClo
      const onSubmitClick = useCallback( () => {
          if(date && id && userId){
              dispatch(createOrder({userId, boatId: id, date: dayjs(date).unix(), dateEnd: dayjs(dateEnd).unix()}));
-             // onClose();
              displayMessage();
-
              console.log(dayjs(date).tz)
          }
-    }, [date, id, userId, dispatch, dateEnd]);
+    }, [date, id, userId, dispatch, dateEnd, error, onClose]);
 
      const [messageOpen, setMessageOpen] = useState(false)
     const displayMessage = () => {

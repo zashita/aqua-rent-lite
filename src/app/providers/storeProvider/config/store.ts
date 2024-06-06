@@ -13,7 +13,7 @@ import {orderPageReducer} from "../../../../pages/OrdersPage";
 import {adsPageReducer} from "../../../../pages/AdsPage";
 
 const extraArg: ThunkExtraArg = {
-    api: $api
+    api: $api,
 }
 
 export const store = configureStore({
@@ -27,8 +27,9 @@ export const store = configureStore({
         lakes: lakeReducer,
         addComment: addCommentReducer,
         ordersPage: orderPageReducer,
-        mainPage: mainPageReducer
+        mainPage: mainPageReducer,
     },
+
     middleware:(getDefaultMiddleware)=>
         getDefaultMiddleware({
             thunk:{

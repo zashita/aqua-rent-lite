@@ -3,22 +3,23 @@ import {classNames} from "shared/lib/classNames/classNames";
 import cls from './OrderListItem.module.scss'
 import {Order, OrderStates} from "../../model/types/orderSchema";
 import {Link, Typography} from "@mui/material";
-import {Card} from "../../../../shared/ui/Card/Card";
+import {Card} from "shared/ui/Card/Card";
 import ProfileImage from 'shared/assets/images/user/User-avatar.png'
 import {useNavigate} from "react-router-dom";
-import {RoutePath} from "../../../../shared/config/routeConfig/routeConfig";
+import {RoutePath} from "shared/config/routeConfig/routeConfig";
 import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch} from "../../../../app/providers/storeProvider";
+import {AppDispatch} from "app/providers/storeProvider";
 import {updateOrderState} from "../../services/updateOrderState/updateOrderState";
-import {fetchUserBoatsOrders} from "../../../../pages/OrdersPage/services/fetchUserBoatsOrders/fetchUserBoatsOrders";
 import {getMyInfo} from "../../../User";
 import {Button, ButtonSize, ButtonThemes} from 'shared/ui/Button/Button';
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import dayjs, {Dayjs} from "dayjs";
-import {Simulate} from "react-dom/test-utils";
-import submit = Simulate.submit;
-import {getUserBoatsOrders} from "../../../../pages/OrdersPage/model/selectors/getUserBoatsOrders/getUserBoatsOrders";
+
+//Исправить
+import {getUserBoatsOrders} from "pages/OrdersPage/model/selectors/getUserBoatsOrders/getUserBoatsOrders";
+import {fetchUserBoatsOrders} from "pages/OrdersPage/services/fetchUserBoatsOrders/fetchUserBoatsOrders";
+
 
 
 dayjs.extend(utc)
@@ -98,7 +99,7 @@ export const OrderListItem:React.FC<OrderListItemProps> = (props) => {
                         Время: {displayedDateEnd.displayedTime}
                     </Typography>
                     <Typography variant='h6'>
-                        Сумма к оплате: {order.price}BYN
+                        Сумма к оплате: {Math.round(order.price)}BYN
                     </Typography>
                     <Card onClick={navigateToUser}>
                         <img src={ProfileImage} className={cls.ProfileImage}/>

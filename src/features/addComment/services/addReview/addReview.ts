@@ -1,11 +1,7 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {User, userActions} from "entities/User";
-import axios from "axios";
-import {$api} from "shared/api/api";
-import {AppDispatch} from "app/providers/storeProvider/config/store";
-import {USER_LOCALSTORAGE_KEY} from "shared/const/localStorage";
 import {ThunkConfig} from "app/providers/storeProvider/types/types";
-import {Review} from "entities/Review/model/types/review";
+import {Review} from "entities/Review";
+import {fetchBoatById} from "entities/Boat";
 
 export interface CreateReview{
     userId: string;
@@ -21,6 +17,7 @@ export const addReview = createAsyncThunk<Review, CreateReview, ThunkConfig<stri
         if(!response.data){
             throw new Error()
         }
+        dispatch(fetchBoatById(response?.data?.boatId))
         return response.data;
     }
 )

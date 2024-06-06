@@ -15,6 +15,8 @@ export {
     fetchUsersList,
 } from './services/fetchUsersList/fetchUsersList'
 
+
+
 export {
     setStatusWaiting
 } from './services/setStatusWaiting/setStatusWaiting'
@@ -50,4 +52,20 @@ export {getCurrentProfile} from './model/selectors/getCurrentProfile/getCurrentP
 export {
     getMyInfo
 } from './model/selectors/getMyInfo/getMyInfo'
+
+export {
+    getUserIsLoading
+} from './model/selectors/getUserIsLoading/getUserIsLoading'
+
+export {fetchMyStatus} from './services/fetchMyStatus/fetchMyStatus'
+
+
+
+export {
+    getWaiting
+} from './model/selectors/getWaiting/getWaiting'
+
+export {
+    UserList
+} from './ui/UserList/UserList'
 

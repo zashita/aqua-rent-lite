@@ -1,11 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {User, userActions} from "entities/User";
-import axios from "axios";
-import {$api} from "shared/api/api";
-import {AppDispatch} from "app/providers/storeProvider/config/store";
-import {USER_LOCALSTORAGE_KEY} from "shared/const/localStorage";
-import {ThunkConfig} from "../../../../app/providers/storeProvider/types/types";
-import {Boat} from "../../../../entities/Boat";
+import {ThunkConfig} from "app/providers/storeProvider/types/types";
+import {Boat} from "entities/Boat";
 
 export interface CreateBoat{
     name: string
@@ -19,11 +14,7 @@ export interface CreateBoat{
     moveType: string;
     captain: boolean;
 }
-// price: number;
-// lakeName: string;
-// passengerCapacity: number;
-// moveType: string;
-// captain: boolean;
+
 export const createBoat = createAsyncThunk<Boat, CreateBoat, ThunkConfig<string>>(
     'create/createBoat',
     async (boat, thunkAPI)=>{

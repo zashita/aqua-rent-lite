@@ -1,12 +1,12 @@
 import React, {useCallback, useState} from 'react';
 import cls from './changePictureModal.module.scss'
 import {Modal, Typography} from "@mui/material";
-import Uploader from "../../../../shared/ui/Uploader";
+import Uploader from "shared/ui/Uploader";
 import {Button, ButtonSize, ButtonThemes} from 'shared/ui/Button/Button';
 import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch} from "../../../../app/providers/storeProvider";
+import {AppDispatch} from "app/providers/storeProvider";
 import {changeUserPicture} from "../../services/changeUserPicture/changeUserPicture";
-import {getMyInfo} from "../../../../entities/User";
+import {getMyInfo} from "entities/User";
 
 
 export interface CreateBoatModalProps{
@@ -23,6 +23,7 @@ export const ChangePictureModal:React.FC<CreateBoatModalProps> = (props) => {
     const onSubmitClick = useCallback(() => {
         if(image && id){
             dispatch(changeUserPicture({id, image}))
+            onCLose();
         }
     }, [dispatch, id, image])
     return (

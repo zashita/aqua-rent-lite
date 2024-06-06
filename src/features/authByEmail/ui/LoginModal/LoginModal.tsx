@@ -1,5 +1,4 @@
 import React from 'react';
-import {classNames} from "shared/lib/classNames/classNames";
 import cls from './LoginModal.module.scss'
 import {Modal} from "@mui/material";
 import {LoginForm} from "../LoginForm/LoginForm";

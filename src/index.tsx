@@ -5,6 +5,7 @@ import {Provider} from "react-redux";
 import {store} from "./app/providers/storeProvider";
 import {BrowserRouter} from "react-router-dom";
 import './app/styles/index.scss'
+import {ErrorBoundary} from "app/providers/ErrorBoundary";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -12,9 +13,11 @@ const root = ReactDOM.createRoot(
 root.render(
     <BrowserRouter>
         <Provider store={store}>
-            <Suspense>
-                <App />
-            </Suspense>
+            <ErrorBoundary>
+                <Suspense fallback="">
+                        <App />
+                </Suspense>
+            </ErrorBoundary>
         </Provider>
     </BrowserRouter>
 
